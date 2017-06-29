@@ -1,4 +1,7 @@
 /* eslint-env mocha */
-import cooker from '.'
+import assert from 'assert'
+// import cooker from '.'
 
-it('cooker', () => {})
+it('cooks', () => {
+  assert(true)
+})
