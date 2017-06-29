@@ -1,6 +1,6 @@
 /* eslint-env mocha */
-import assert from '../../test/assert'
-import { commits } from '../../test/commits'
+import assert from '../../../../test/assert'
+import { commits } from '../../../../test/commits'
 import { getShaListFromSha } from './getShaListFromSha'
 
 it('should return sha list up to master', function(done) {
