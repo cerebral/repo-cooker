@@ -1,3 +1,5 @@
+export const tags = ['release_2017-06-29_1812', 'release_2017-06-29_1815']
+
 export const commits = [
   {
     author: {
@@ -76,5 +78,35 @@ export const commits = [
     scope: 'commis',
     message: 'removed excessive salt',
     files: ['packages/node_modules/@repo-cooker-test/commis/README.md'],
+  },
+  {
+    author: {
+      name: 'Henri Hulski',
+      email: 'henri.hulski@gazeta.pl',
+    },
+    date: '2017-06-29T15:07:22.000Z',
+    sha: '194bd99fcad286821c6d18cf9765a95d741cd018',
+    body: '',
+    issues: [],
+    breaks: [],
+    type: 'chore',
+    scope: 'repo-cooker-test',
+    message: 'remove package from scope',
+    files: ['packages/node_modules/repo-cooker-test/package.json'],
+  },
+  {
+    author: {
+      name: 'Gaspard Bucher',
+      email: 'gaspard@lucidogen.io',
+    },
+    date: '2017-06-29T16:34:23.000Z',
+    sha: 'dabd0553827af3b6afbfc408905b10de8d3cb72d',
+    body: 'we need to evaluate release tags',
+    issues: [],
+    breaks: [],
+    type: 'feat',
+    scope: 'poissonier',
+    message: 'fish speaks german',
+    files: ['packages/node_modules/@repo-cooker-test/poissonier/README.md'],
   },
 ]
