@@ -1,0 +1,1 @@
+export { getLatestReleaseHash } from './getLatestReleaseHash'
