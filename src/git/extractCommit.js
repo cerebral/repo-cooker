@@ -36,7 +36,8 @@ export function extractCommit(repoPath, sha) {
           {},
           {
             author: extractAuthor(commit),
-            date: commit.date(),
+            date: commit.date().toJSON(),
+            sha: commit.sha(),
           },
           extractInfo(commit.message()),
           { files }

@@ -1,13 +1,14 @@
 /* eslint-env mocha */
 import assert from 'assert'
 import { getShaListFromSha } from './getShaListFromSha'
+import { commits } from '../../test/commits'
 
-it('should return list up to master', function(done) {
-  this.timeout(10000)
-  const sha = 'd579c35db272ed0b93c295b6f4c90a1df89899f7'
-  getShaListFromSha('../../test-repo', sha).then(list => {
-    console.log(list)
-    assert.equal(list, [])
-    done()
-  })
+it('should return sha list up to master', function(done) {
+  const sha = commits[0].sha
+  getShaListFromSha('test/repo', sha)
+    .then(list => {
+      assert.deepEqual(list, commits.slice(1).map(commit => commit.sha))
+      done()
+    })
+    .catch(console.log)
 })

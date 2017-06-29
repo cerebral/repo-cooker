@@ -6,8 +6,10 @@
   "scripts": {
     "build": "cross-env BABEL_ENV=production babel src/ --out-dir=lib/ -s",
     "commit": "git-cz",
+    "format": "npm run lint -- --fix",
     "lint": "eslint \"**/*.js\"",
     "prepublish": "npm run build",
+    "pretest": "test -e test/repo || git clone git@github.com:cerebral/repo-cooker-test.git test/repo",
     "test": "mocha --compilers js:babel-register \"src/**/*.test.js\" \"test/**/*.test.js\"",
     "test:watch": "npm run test -- --watch"
   },

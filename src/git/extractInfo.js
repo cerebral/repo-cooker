@@ -37,7 +37,7 @@ export function extractInfo(message) {
     {
       body: body.join('\n').trim(),
       issues,
-      breaks,
+      breaks: breaks.filter(b => b !== ''),
     },
     extractHeader(header)
   )

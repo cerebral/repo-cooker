@@ -13,7 +13,7 @@ function getShaListFromShaToCommit(sha, commit) {
           done = true
           resolve(list)
         } else {
-          list.push(commit.sha())
+          list.unshift(commit.sha())
         }
       })
       .start()
