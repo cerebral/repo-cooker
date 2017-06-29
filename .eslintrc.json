@@ -1,0 +1,28 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 2017,
+    "sourceType": "module"
+  },
+  "env": {
+    "node": true,
+    "es6": true
+  },
+  "plugins": [
+    "prettier"
+  ],
+  "extends": [
+    "standard",
+    "prettier"
+  ],
+  "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "trailingComma": "es5",
+        "singleQuote": true,
+        "semi": false
+      }
+    ],
+    "standard/computed-property-even-spacing": "off"
+  }
+}

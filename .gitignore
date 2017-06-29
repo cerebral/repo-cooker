@@ -1,0 +1,12 @@
+node_modules
+npm-debug.log
+coverage
+.nyc_output
+.DS_Store
+dist
+lib
+build
+*darwin-x64
+yarn-error.log
+yarn.lock
+package-lock.json
