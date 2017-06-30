@@ -1,5 +1,28 @@
-WIP
+## Suggested public API
 
+*package.json*
+```json
+{
+  "scripts": {
+    "publish": "node publish-script.js"
+  }
+}
+```
+
+*publish-script.js*
+```js
+import {run} from 'repo-cooker'
+import {getLatestReleaseHash, getHistoryFromHash, getCommitsContent} from 'repo-cooker/actions'
+
+run('publish', [
+  getLatestReleaseHash,
+  getHistoryFromHash,
+  getCommitsContent
+  ... and so on
+])
+```
+
+## Cerebral requirements
 ```js
 function getLatestReleaseHash () {
     // Find tag by "release_" format in local git
