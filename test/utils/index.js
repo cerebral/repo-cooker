@@ -1,5 +1,5 @@
-export { testAction } from './testAction'
 import { resolve, join } from 'path'
+export { testAction } from './testAction'
 
 const path = resolve(join(__dirname, '..', 'repo'))
 

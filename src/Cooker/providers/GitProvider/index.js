@@ -1,4 +1,4 @@
-import { extractCommit } from './extractCommit'
+import { getCommit } from './getCommit'
 import { getHashListFromHash } from './getHashListFromHash'
 import { getLatestTagMatchingName } from './getLatestTagMatchingName'
 
@@ -8,8 +8,8 @@ export function GitProvider(config) {
   }
   return context => {
     context.git = {
-      extractCommit(hash) {
-        return extractCommit(config.path, hash)
+      getCommit(hash) {
+        return getCommit(config.path, hash)
       },
       getHashListFromHash(hash) {
         return getHashListFromHash(config.path, hash)

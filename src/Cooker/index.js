@@ -7,11 +7,11 @@ export function Cooker({ devtools, git, npm }) {
 
   if (devtools !== null && process.env.NODE_ENV !== 'production') {
     const Devtools = require('function-tree/devtools').default
-    const devtools = new Devtools({
+    const tools = new Devtools({
       host: devtools ? devtools.host : 'localhost:9090',
     })
 
-    devtools.add(ft)
+    tools.add(ft)
   }
   return { run: ft.run, functionTree: ft }
 }

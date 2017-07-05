@@ -1,7 +1,6 @@
 import nodegit from 'nodegit'
-import { extractInfo } from './extractInfo'
 
-function extractAuthor(commit) {
+function getAuthor(commit) {
   const author = commit.author()
   return {
     name: author.name(),
@@ -9,7 +8,7 @@ function extractAuthor(commit) {
   }
 }
 
-function extractChangedFiles(diffList) {
+function getChangedFiles(diffList) {
   const files = []
   return new Promise((resolve, reject) => {
     Promise.all(
@@ -26,22 +25,17 @@ function extractChangedFiles(diffList) {
   })
 }
 
-export function extractCommit(repoPath, sha) {
+export function getCommit(repoPath, hash) {
   return nodegit.Repository
     .open(repoPath)
-    .then(repo => repo.getCommit(sha))
+    .then(repo => repo.getCommit(hash))
     .then(commit =>
-      commit.getDiff().then(extractChangedFiles).then(files =>
-        Object.assign(
-          {},
-          {
-            author: extractAuthor(commit),
-            date: commit.date().toJSON(),
-            hash: commit.sha(),
-          },
-          extractInfo(commit.message()),
-          { files }
-        )
-      )
+      commit.getDiff().then(getChangedFiles).then(files => ({
+        author: getAuthor(commit),
+        date: commit.date().toJSON(),
+        hash: commit.sha(),
+        message: commit.message(),
+        files,
+      }))
     )
 }

@@ -14,6 +14,7 @@ export function deepEqual(a, b, done) {
     assert.equal(JSON.stringify(a, null, 2), JSON.stringify(b, null, 2))
     done()
   } catch (err) {
+    console.log(JSON.stringify(b, null, 2))
     done(err)
   }
 }

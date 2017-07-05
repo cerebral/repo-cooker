@@ -1,4 +1,4 @@
-import { extractHeader } from './extractHeader'
+import { parseHeader } from './parseHeader'
 
 const breakingRe = /^\s*BREAKING CHANGES?:/
 const issuesRe = /^\s*ISSUES CLOSED:\s*(.*)$/
@@ -15,7 +15,8 @@ const issuesRe = /^\s*ISSUES CLOSED:\s*(.*)$/
  * - this
  * - that
  */
-export function extractInfo(message) {
+export function parseCommit(commit) {
+  const message = commit.message
   const lines = message.split('\n')
   const header = lines.shift()
   const body = []
@@ -34,11 +35,12 @@ export function extractInfo(message) {
   })
   return Object.assign(
     {},
+    commit,
     {
       body: body.join('\n').trim(),
       issues,
       breaks: breaks.filter(b => b !== ''),
     },
-    extractHeader(header)
+    parseHeader(header)
   )
 }
