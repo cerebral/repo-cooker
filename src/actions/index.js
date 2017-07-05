@@ -1,4 +1,6 @@
+export { evaluateSemverByPackage } from './evaluateSemverByPackage'
 export { getHistoryFromHash } from './getHistoryFromHash'
 export { getLatestReleaseHash } from './getLatestReleaseHash'
 export { getRawCommitsFromHistory } from './getRawCommitsFromHistory'
+export { groupCommitsByPackage } from './groupCommitsByPackage'
 export { parseCommits } from './parseCommits'

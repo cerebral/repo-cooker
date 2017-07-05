@@ -89,8 +89,8 @@ export const commits = [
       name: 'Gaspard Bucher',
       email: 'gaspard@lucidogen.io',
     },
-    date: '2017-07-05T14:26:25.000Z',
-    hash: 'd5698b72ad3df910916d8919cb165437b2b6b475',
+    date: '2017-07-05T17:22:40.000Z',
+    hash: '9c1074b867a2ff0169530ad159b1da518aa8fa0d',
     message: 'chore(publish): update publish script with renamed actions\n',
     files: [
       '.eslintrc.json',
@@ -226,8 +226,8 @@ export const parsedCommits = [
       name: 'Gaspard Bucher',
       email: 'gaspard@lucidogen.io',
     },
-    date: '2017-07-05T14:26:25.000Z',
-    hash: 'd5698b72ad3df910916d8919cb165437b2b6b475',
+    date: '2017-07-05T17:22:40.000Z',
+    hash: '9c1074b867a2ff0169530ad159b1da518aa8fa0d',
     message: 'chore(publish): update publish script with renamed actions\n',
     files: [
       '.eslintrc.json',
