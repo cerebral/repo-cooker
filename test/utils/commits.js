@@ -1,5 +1,7 @@
 export const tags = ['release_2017-06-29_1812', 'release_2017-06-29_1815']
 
+export const master = 'd5698b72ad3df910916d8919cb165437b2b6b475'
+
 export const commits = [
   {
     author: {
@@ -81,6 +83,24 @@ export const commits = [
     message:
       'feat(poissonier): fish speaks german\n\nwe need to evaluate release tags\n',
     files: ['packages/node_modules/@repo-cooker-test/poissonier/README.md'],
+  },
+  {
+    author: {
+      name: 'Gaspard Bucher',
+      email: 'gaspard@lucidogen.io',
+    },
+    date: '2017-07-05T14:26:25.000Z',
+    hash: 'd5698b72ad3df910916d8919cb165437b2b6b475',
+    message: 'chore(publish): update publish script with renamed actions\n',
+    files: [
+      '.eslintrc.json',
+      '.repo-cooker/link.js',
+      '.repo-cooker/publish.js',
+      'package.json',
+      'scripts/cooker.js',
+      'scripts/link.js',
+      'scripts/publish.js',
+    ],
   },
 ]
 
@@ -200,5 +220,29 @@ export const parsedCommits = [
     type: 'feat',
     scope: 'poissonier',
     summary: 'fish speaks german',
+  },
+  {
+    author: {
+      name: 'Gaspard Bucher',
+      email: 'gaspard@lucidogen.io',
+    },
+    date: '2017-07-05T14:26:25.000Z',
+    hash: 'd5698b72ad3df910916d8919cb165437b2b6b475',
+    message: 'chore(publish): update publish script with renamed actions\n',
+    files: [
+      '.eslintrc.json',
+      '.repo-cooker/link.js',
+      '.repo-cooker/publish.js',
+      'package.json',
+      'scripts/cooker.js',
+      'scripts/link.js',
+      'scripts/publish.js',
+    ],
+    body: '',
+    issues: [],
+    breaks: [],
+    type: 'chore',
+    scope: 'publish',
+    summary: 'update publish script with renamed actions',
   },
 ]
