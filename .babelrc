@@ -6,5 +6,11 @@
         "**/*.test.js"
       ]
     }
-  }
+  },
+  "plugins": [
+    ["module-alias", [
+      { "src": "./test/utils", "expose": "test-utils" },
+      { "src": "./src", "expose": "repo-cooker" }
+    ]]
+  ]
 }

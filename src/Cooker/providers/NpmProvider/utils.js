@@ -1,6 +1,6 @@
 const spawn = require('child_process').spawn
 const request = require('request')
-const npmRegistryUrl = require('npm-registry-url')
+const registryUrl = require('registry-url')
 
 export function runCommand(cmd) {
   return new Promise((resolve, reject) => {
@@ -26,7 +26,7 @@ export function getFromNpmRegistry(packageName) {
       return resolve(cache[packageName])
     }
 
-    request(`${npmRegistryUrl}/${packageName}`, (error, _, body) => {
+    request(`${registryUrl}/${packageName}`, (error, _, body) => {
       if (error) {
         return reject(error)
       }

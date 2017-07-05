@@ -1,6 +1,6 @@
 /* eslint-env mocha */
-import assert from '../../../../test/assert'
-import { tags } from '../../../../test/commits'
+import assert from 'test-utils/assert'
+import { tags } from 'test-utils/commits'
 import { getLatestTagMatchingName } from './getLatestTagMatchingName'
 
 it('should return the latest tag matching given name', function(done) {

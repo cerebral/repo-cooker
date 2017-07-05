@@ -1,19 +1,16 @@
 /* eslint-env mocha */
-import assert from 'assert'
-import FunctionTree from 'function-tree'
-import { MockedProvider } from '../test/mocks'
-import { getLatestReleaseHash } from './actions'
+import { config } from 'test-utils'
+import { tags } from 'test-utils/commits'
+import assert from 'test-utils/assert'
+import * as cook from './actions'
+import { Cooker } from './'
 
-it('cooks', () => {
-  const ft = new FunctionTree([
-    MockedProvider('npm', {}),
-    MockedProvider('git', {
-      extractCommit: () => 'foo',
-      getShaListFromSha: () => 'bar',
-      getLatestTagMatchingName: () => 'mip',
-    }),
+it('cooks', done => {
+  const cooker = Cooker(config)
+  cooker.run([
+    cook.getLatestReleaseHash,
+    ({ props }) => {
+      assert.equal(props.hash, tags[tags.length - 1], done)
+    },
   ])
-
-  ft.run([getLatestReleaseHash])
-  assert(true)
 })
