@@ -1,9 +1,10 @@
+/* eslint-env mocha */
 import { Cooker } from '../../src'
 import * as cook from '../../src/actions'
 import path from 'path'
 import { buildWebsite, publishWebsite } from './actions'
 
-it.only('should publish a repo', function(done) {
+it('should publish a repo', function(done) {
   this.timeout(60000)
 
   const cooker = Cooker({
