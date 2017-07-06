@@ -11,10 +11,24 @@
 
 *publish-script.js*
 ```js
-import {run} from 'repo-cooker'
+import {Cooker} from 'repo-cooker'
 import {getLatestReleaseHash, getHistoryFromHash, getCommitsContent} from 'repo-cooker/actions'
 
-run('publish', [
+const cooker = Cooker({
+  // Devtools settings
+  devtools: {
+    host: 'localhost:9797'
+  },
+
+  // If your repo is located at some path other than
+  // project root
+  path: '.',
+
+  // Additional providers for the actions
+  providers: []
+})
+
+cooker.run('publish', [
   getLatestReleaseHash,
   getHistoryFromHash,
   getCommitsContent
@@ -92,7 +106,7 @@ function getLatestReleaseHash () {
       ]
     }
   */
-  
+
   function evaluateNewVersionByPackage () {
     // Based on type of change, use semver bumping
   },
@@ -150,7 +164,7 @@ function getLatestReleaseHash () {
   function publishWebsite () {
     // Jup
   },
-  
+
   fireworks
 ]
 ```
