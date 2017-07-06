@@ -15,6 +15,7 @@ export function getLatestTagMatchingName(repoPath, regex) {
               .then(ref => nodegit.Commit.lookup(repo, ref.target()))
               .then(commit => ({
                 tag: tagName,
+                hash: commit.sha(),
                 date: commit.date().toJSON(),
               }))
           )
@@ -23,8 +24,7 @@ export function getLatestTagMatchingName(repoPath, regex) {
       .then(tags =>
         tags
           .sort((a, b) => (a.date > b.date ? -1 : 1))
-          .map(tags => tags.tag)
-          .find(tag => regex.test(tag))
+          .find(tag => regex.test(tag.tag))
       )
       .catch(console.log)
   )

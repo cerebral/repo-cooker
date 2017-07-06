@@ -10,7 +10,7 @@ it('cooks', done => {
   cooker.run([
     cook.getLatestReleaseHash,
     ({ props }) => {
-      assert.equal(props.hash, tags[tags.length - 1], done)
+      assert.equal(props.hash, tags[tags.length - 1].hash, done)
     },
   ])
 })

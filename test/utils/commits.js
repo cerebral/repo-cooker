@@ -1,4 +1,15 @@
-export const tags = ['release_2017-06-29_1812', 'release_2017-06-29_1815']
+export const tags = [
+  {
+    tag: 'release_2017-06-29_1812',
+    hash: 'c465e3323fc2c63fbeb91f9b9b43379d28f9b761',
+    date: '2017-06-29T14:52:44.000Z',
+  },
+  {
+    tag: 'release_2017-06-29_1815',
+    hash: '6392594881f1c62eaf3d04cd1ff1c3d8266b99a8',
+    date: '2017-06-29T16:15:45.000Z',
+  },
+]
 
 export const master = 'd5698b72ad3df910916d8919cb165437b2b6b475'
 

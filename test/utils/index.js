@@ -3,4 +3,4 @@ export { testAction } from './testAction'
 
 const path = resolve(join(__dirname, '..', 'repo'))
 
-export const config = { git: { path }, npm: { path }, devtools: null }
+export const config = { path, devtools: null }
