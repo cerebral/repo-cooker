@@ -2,8 +2,10 @@ import FunctionTree from 'function-tree'
 import { NpmProvider } from './providers/NpmProvider'
 import { GitProvider } from './providers/GitProvider'
 
-export function Cooker({ devtools, git, npm }) {
-  const ft = new FunctionTree([NpmProvider(npm), GitProvider(git)])
+export function Cooker({ devtools, path = '.', providers = [] }) {
+  const ft = new FunctionTree(
+    [NpmProvider({ path }), GitProvider({ path })].concat(providers)
+  )
 
   if (devtools !== null && process.env.NODE_ENV !== 'production') {
     const Devtools = require('function-tree/devtools').default
@@ -13,5 +15,6 @@ export function Cooker({ devtools, git, npm }) {
 
     tools.add(ft)
   }
-  return { run: ft.run, functionTree: ft }
+
+  return ft
 }
