@@ -26,6 +26,5 @@ export function getLatestTagMatchingName(repoPath, regex) {
           .sort((a, b) => (a.date > b.date ? -1 : 1))
           .find(tag => regex.test(tag.tag))
       )
-      .catch(console.log)
   )
 }

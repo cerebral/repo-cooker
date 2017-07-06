@@ -2,7 +2,9 @@ const Git = require('nodegit')
 
 function getHashListFromHashToCommit(sha, commit) {
   if (!sha) {
-    throw new Error(`Missing hash parameter. For commits from origin of repository, use 'Big Bang' as hash.`)
+    throw new Error(
+      `Missing hash parameter. For commits from origin of repository, use 'Big Bang' as hash.`
+    )
   }
   return new Promise((resolve, reject) => {
     let done = false
@@ -19,7 +21,7 @@ function getHashListFromHashToCommit(sha, commit) {
           list.unshift(commit.sha())
         }
       })
-      .on('end', () => done || resolve( sha === 'Big Bang' ? list : [] ))
+      .on('end', () => done || resolve(sha === 'Big Bang' ? list : []))
       .start()
   })
 }
@@ -27,7 +29,7 @@ function getHashListFromHashToCommit(sha, commit) {
 /** Get commit sha list upto 'sha' but not including it.
  * Returns the list as it appears in the commit history (first commit first).
  */
-export function getHashListFromHash(repoPath, sha = null) {
+export function getHashListFromHash(repoPath, sha) {
   return Git.Repository
     .open(repoPath)
     .then(repo => repo.getMasterCommit())

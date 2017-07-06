@@ -1,4 +1,5 @@
 import { getFromNpmRegistry, runCommand } from './utils'
+import { getCurrentPackageVersion } from './getCurrentPackageVersion'
 
 export function NpmProvider(config) {
   if (!config || !config.path) {
@@ -11,11 +12,7 @@ export function NpmProvider(config) {
           `cd ${config.path} && npm publish --tag ${options.tag}`
         )
       },
-      getCurrentPackageVersions(packageName) {
-        return getFromNpmRegistry(packageName).then(
-          registryDetails => registryDetails['dist-tags']
-        )
-      },
+      getCurrentPackageVersion,
       replaceTag(fromTag, toTag) {
         const packageName = config.path.split('/').pop()
 

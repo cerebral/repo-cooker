@@ -31,6 +31,10 @@ it('should return an empty list for bad hash', function(done) {
 
 it('should raise an error without hash argument', function(done) {
   getHashListFromHash('test/repo').catch(err => {
-    assert.equal(err.message, `Missing hash parameter. For commits from origin of repository, use 'Big Bang' as hash.`, done)
+    assert.equal(
+      err.message,
+      `Missing hash parameter. For commits from origin of repository, use 'Big Bang' as hash.`,
+      done
+    )
   })
 })
