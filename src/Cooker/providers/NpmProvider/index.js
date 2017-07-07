@@ -1,25 +1,13 @@
-import { getFromNpmRegistry, runCommand } from './utils'
 import { getCurrentPackageVersion } from './getCurrentPackageVersion'
+import { publish } from './publish'
+import { replaceTag } from './replaceTag'
 
 export function NpmProvider(config) {
-  if (!config || !config.path) {
-    throw new Error(`Invalid 'npm' configuration: missing path.`)
-  }
   return context => {
     context.npm = {
-      publish(options) {
-        return runCommand(
-          `cd ${config.path} && npm publish --tag ${options.tag}`
-        )
-      },
+      publish: publish(config),
       getCurrentPackageVersion,
-      replaceTag(fromTag, toTag) {
-        const packageName = config.path.split('/').pop()
-
-        return runCommand(
-          `cd ${config.path} && npm dist-tag add ${packageName} ${toTag} && npm dist-tag rm ${packageName} ${fromTag}`
-        )
-      },
+      replaceTag: replaceTag(config),
     }
     return context
   }

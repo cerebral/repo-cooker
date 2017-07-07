@@ -1,4 +1,4 @@
-import { getFromNpmRegistry } from './utils'
+import { getFromNpmRegistry } from './getFromNpmRegistry'
 
 export function getCurrentPackageVersion(packageName) {
   return getFromNpmRegistry(packageName)

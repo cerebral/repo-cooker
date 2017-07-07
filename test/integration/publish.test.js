@@ -1,4 +1,6 @@
 /* eslint-env mocha */
+import assert from 'test-utils/assert'
+import { testRun } from 'test-utils'
 import { Cooker } from 'repo-cooker'
 import * as cook from 'repo-cooker/actions'
 import path from 'path'
@@ -7,9 +9,13 @@ import { buildWebsite, publishWebsite } from './actions'
 it('should run a publish script without error', function(done) {
   this.timeout(6000)
 
+  const dryRun = testRun()
+
   const cooker = Cooker({
     devtools: null,
+    dryRun,
     path: path.resolve('test', 'repo'),
+    packagesPath: 'packages/node_modules'
   })
 
   cooker
@@ -82,7 +88,9 @@ it('should run a publish script without error', function(done) {
       publishWebsite,
       // Jup
       cook.fireworks,
+      () => {
+        assert.deepEqual(dryRun.commands, [], done)
+      },
     ])
-    .then(() => done())
     .catch(done)
 })

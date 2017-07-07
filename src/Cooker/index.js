@@ -1,10 +1,30 @@
 import FunctionTree from 'function-tree'
+import { join } from 'path'
 import { NpmProvider } from './providers/NpmProvider'
 import { GitProvider } from './providers/GitProvider'
+import { execCommand, logCommand } from './execCommand'
 
-export function Cooker({ devtools, path = '.', providers = [] }) {
+export function Cooker({
+  devtools,
+  path = '.',
+  providers = [],
+  dryRun,
+  packagesPath,
+}) {
+  const runCommand =
+    dryRun === true
+      ? logCommand
+      : typeof dryRun === 'function' ? dryRun : execCommand
+
+  const getPackagePath = packagesPath
+    ? packageName => join(path, packagesPath, packageName)
+    : packageName => path
+
   const ft = new FunctionTree(
-    [NpmProvider({ path }), GitProvider({ path })].concat(providers)
+    [
+      NpmProvider({ path, runCommand, getPackagePath }),
+      GitProvider({ path, runCommand, getPackagePath }),
+    ].concat(providers)
   )
 
   if (devtools !== null && process.env.NODE_ENV !== 'production') {

@@ -1,9 +1,9 @@
 /* eslint-env mocha */
 import assert from 'test-utils/assert'
-import { mockNpm, versions } from 'test-utils/npm'
+import { mockNpmRegistry, versions } from 'test-utils/npm'
 import { getCurrentPackageVersion } from './getCurrentPackageVersion'
 
-mockNpm()
+mockNpmRegistry()
 
 it('should return the list of released versions', function(done) {
   getCurrentPackageVersion('repo-cooker-test').then(version => {

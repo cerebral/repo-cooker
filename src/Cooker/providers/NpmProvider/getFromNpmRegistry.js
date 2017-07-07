@@ -1,25 +1,7 @@
-import { spawn } from 'child_process'
 import request from 'request'
 import registryUrlFn from 'registry-url'
 
 const registryUrl = registryUrlFn()
-
-export function runCommand(cmd) {
-  return new Promise((resolve, reject) => {
-    const child = spawn(cmd)
-    let out = []
-    let err = []
-    child.stdout.on('data', data => out.push(data))
-    child.stderr.on('data', data => err.push(data))
-    child.on('close', function(code) {
-      if (code === 1) {
-        resolve(out)
-      } else {
-        reject(err)
-      }
-    })
-  })
-}
 
 const cache = {}
 export function getFromNpmRegistry(packageName) {

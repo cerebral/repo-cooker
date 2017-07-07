@@ -26,6 +26,11 @@ const cooker = Cooker({
 
   // Additional providers for the actions
   providers: []
+
+  // For monorepo repositories with multiple packages, specify
+  // the subpath to each package. A package should
+  // then be in [path]/[packagesPath]/[packageName]
+  packagesPath: 'packages/node_modules'
 })
 
 cooker.run('publish', [

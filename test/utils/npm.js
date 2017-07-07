@@ -2,7 +2,10 @@
 import simple from 'simple-mock'
 import request from 'request'
 
-export const versions = { 'repo-cooker-test': '0.6.0', '@repo-cooker-test/commis': '2.3.2' }
+export const versions = {
+  'repo-cooker-test': '0.6.0',
+  '@repo-cooker-test/commis': '2.3.2',
+}
 
 const MOCKS = {
   'https://registry.npmjs.org/repo-cooker-test': {
@@ -13,7 +16,7 @@ const MOCKS = {
   },
 }
 
-export function mockNpm() {
+export function mockNpmRegistry() {
   before(() => {
     simple.mock(request, 'get').callFn((path, callback) => {
       const body = MOCKS[path]

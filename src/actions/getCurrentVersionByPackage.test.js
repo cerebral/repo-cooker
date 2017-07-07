@@ -8,7 +8,10 @@ it('should get current versions for each package', done => {
     { name: '@repo-cooker-test/commis' },
     { name: 'repo-cooker-test' },
   ]
-  const currentVersionByPackage = semverByPackage.map(({name}) => ({name, version: versions[name]}))
+  const currentVersionByPackage = semverByPackage.map(({ name }) => ({
+    name,
+    version: versions[name],
+  }))
   testAction(
     getCurrentVersionByPackage,
     { semverByPackage },
