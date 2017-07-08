@@ -41,6 +41,22 @@ it('should run a publish script without error', function(done) {
       args: ['publish', '--tag', 'releasing'],
       options: { cwd },
     },
+    {
+      cmd: 'npm',
+      args: ['dist-tag', 'add', '@repo-cooker-test/commis', 'latest'],
+      options: {
+        cwd:
+          '/Users/gaspard/git/repo-cooker/test/repo/packages/node_modules/@repo-cooker-test/commis',
+      },
+    },
+    {
+      cmd: 'npm',
+      args: ['dist-tag', 'rm', '@repo-cooker-test/commis', 'releasing'],
+      options: {
+        cwd:
+          '/Users/gaspard/git/repo-cooker/test/repo/packages/node_modules/@repo-cooker-test/commis',
+      },
+    },
   ]
 
   cooker
@@ -102,7 +118,7 @@ it('should run a publish script without error', function(done) {
       //   {name: 'http', tag: 'releasing'},
       // }
 
-      cook.mapTemporaryTagToLatest,
+      cook.mapTemporaryNpmTagToLatest,
       // If successful we just map published tags to official release tag
 
       cook.cleanWorkingDirectory,
