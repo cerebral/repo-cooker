@@ -1,12 +1,13 @@
 /* eslint-env mocha */
-import { config } from 'test-utils'
+import { config, DryRun } from 'test-utils'
 import assert from 'test-utils/assert'
 import { Cooker } from 'repo-cooker'
 
 export function testAction(action, input, output, done) {
-  const cooker = Cooker(config)
+  const dryRun = DryRun()
+  const cooker = Cooker(Object.assign({}, config, { dryRun }))
   cooker.run([
-    () => input,
+    () => Object.assign({}, input, { commands: dryRun.commands }),
     action,
     ({ props }) => {
       assert.deepEqual(

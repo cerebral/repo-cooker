@@ -1,8 +1,9 @@
 import FunctionTree from 'function-tree'
 import { join } from 'path'
-import { NpmProvider } from './providers/NpmProvider'
-import { GitProvider } from './providers/GitProvider'
 import { execCommand, logCommand } from './execCommand'
+import { GitProvider } from './providers/GitProvider'
+import { NpmProvider } from './providers/NpmProvider'
+import { PackageJsonProvider } from './providers/PackageJsonProvider'
 
 export function Cooker({
   devtools,
@@ -22,8 +23,9 @@ export function Cooker({
 
   const ft = new FunctionTree(
     [
-      NpmProvider({ path, runCommand, getPackagePath }),
-      GitProvider({ path, runCommand, getPackagePath }),
+      GitProvider({ path }),
+      NpmProvider({ runCommand, getPackagePath }),
+      PackageJsonProvider({ runCommand, getPackagePath }),
     ].concat(providers)
   )
 

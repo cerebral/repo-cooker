@@ -33,14 +33,13 @@ it('should evalute new version from current and semver', done => {
 })
 
 it('should throw errors on invalid current version', testDone => {
-  let err = false
-  const done = (error) => error ? testDone(error) : () => {}
-  [ '2.0.0-beta', '4.5.6.7', '1.2.3b', 'ea2356' ].forEach(version => {
+  const done = error => (error ? testDone(error) : () => {})
+  ;['2.0.0-beta', '4.5.6.7', '1.2.3b', 'ea2356'].forEach(version => {
     testActionThrows(
       evaluateNewVersionByPackage,
       {
         currentVersionByPackage: [{ name: 'foo', version }],
-        semverByPackage: [{ name: 'foo', type: 'major'}],
+        semverByPackage: [{ name: 'foo', type: 'major' }],
       },
       `Invalid version '${version}' for package 'foo' (format should be '[integer].[integer].[integer]').`,
       done
@@ -53,8 +52,8 @@ it('should throw errors on invalid semver type', done => {
   testActionThrows(
     evaluateNewVersionByPackage,
     {
-      currentVersionByPackage: [{ name: 'foo', version: '0.4.5'}],
-      semverByPackage: [{ name: 'foo', type: 'noop'}],
+      currentVersionByPackage: [{ name: 'foo', version: '0.4.5' }],
+      semverByPackage: [{ name: 'foo', type: 'noop' }],
     },
     `Invalid semver type 'noop' for package 'foo'.`,
     done

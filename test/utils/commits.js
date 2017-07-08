@@ -6,12 +6,12 @@ export const tags = [
   },
   {
     tag: 'release_2017-06-29_1815',
-    hash: '6392594881f1c62eaf3d04cd1ff1c3d8266b99a8',
-    date: '2017-06-29T16:15:45.000Z',
+    hash: 'dabd0553827af3b6afbfc408905b10de8d3cb72d',
+    date: '2017-06-29T16:34:23.000Z',
   },
 ]
 
-export const master = 'd5698b72ad3df910916d8919cb165437b2b6b475'
+export const master = 'be939615058a0ebf56d575ff787d1bc5ad668bdd'
 
 export const commits = [
   {
@@ -111,6 +111,20 @@ export const commits = [
       'scripts/cooker.js',
       'scripts/link.js',
       'scripts/publish.js',
+    ],
+  },
+  {
+    author: {
+      name: 'Gaspard Bucher',
+      email: 'gaspard@lucidogen.io',
+    },
+    date: '2017-07-08T14:11:52.000Z',
+    hash: 'be939615058a0ebf56d575ff787d1bc5ad668bdd',
+    message:
+      'fix(commis): fixed something in API.\n\nBREAKING CHANGE:\n\nno more salt in soup\n',
+    files: [
+      'packages/node_modules/@repo-cooker-test/commis/README.md',
+      'packages/node_modules/@repo-cooker-test/commis/package.json',
     ],
   },
 ]
@@ -255,5 +269,25 @@ export const parsedCommits = [
     type: 'chore',
     scope: 'publish',
     summary: 'update publish script with renamed actions',
+  },
+  {
+    author: {
+      name: 'Gaspard Bucher',
+      email: 'gaspard@lucidogen.io',
+    },
+    date: '2017-07-08T14:11:52.000Z',
+    hash: 'be939615058a0ebf56d575ff787d1bc5ad668bdd',
+    message:
+      'fix(commis): fixed something in API.\n\nBREAKING CHANGE:\n\nno more salt in soup\n',
+    files: [
+      'packages/node_modules/@repo-cooker-test/commis/README.md',
+      'packages/node_modules/@repo-cooker-test/commis/package.json',
+    ],
+    body: '',
+    issues: [],
+    breaks: ['no more salt in soup'],
+    type: 'fix',
+    scope: 'commis',
+    summary: 'fixed something in API.',
   },
 ]

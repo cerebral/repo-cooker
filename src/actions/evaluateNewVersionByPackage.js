@@ -15,15 +15,17 @@ function evaluateVersion(group, version, type) {
   if (idx < 0) {
     throw new Error(`Invalid semver type '${type}' for package '${group}'.`)
   }
-  return [].concat
-  ( parts.slice(0, idx)
-  , [ [parts[idx] + 1] ]
-  , parts.slice(idx + 1).map(n => 0)
-  ).join('.')
+  return []
+    .concat(
+      parts.slice(0, idx),
+      [[parts[idx] + 1]],
+      parts.slice(idx + 1).map(n => 0)
+    )
+    .join('.')
 }
 
 function getType(semverByPackage, nameToFind) {
-  const group = semverByPackage.find(({name}) => name === nameToFind)
+  const group = semverByPackage.find(({ name }) => name === nameToFind)
   if (!group) {
     throw new Error(`Missing package '${nameToFind}' in semverByPackage.`)
   }
@@ -37,7 +39,7 @@ export function evaluateNewVersionByPackage({
     (acc, { name, version }) => {
       acc.newVersionByPackage.push({
         name,
-        version: evaluateVersion(name, version, getType(semverByPackage, name))
+        version: evaluateVersion(name, version, getType(semverByPackage, name)),
       })
       return acc
     },
