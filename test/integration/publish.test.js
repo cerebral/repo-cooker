@@ -9,12 +9,13 @@ import { buildWebsite, publishWebsite } from './actions'
 it('should run a publish script without error', function(done) {
   this.timeout(6000)
 
-  const dryRun = DryRun()
+  const basePath = path.resolve('test', 'repo')
+  const dryRun = DryRun(basePath)
 
   const cooker = Cooker({
     devtools: null,
     dryRun,
-    path: path.resolve('test', 'repo'),
+    path: basePath,
     packagesPath: 'packages/node_modules',
   })
 
@@ -23,17 +24,20 @@ it('should run a publish script without error', function(done) {
     commit.breaks.length ? 'major' : typeToSemver[commit.type]
 
   const commands = [
-    '[fs.writeFile] ...ooker-test/commis/package.json ...s": {},\n  "version": "3.0.0"\n} {"encoding":"utf8"}',
+    'fs.writeFile [...ooker-test/commis/package.json] [...s": {},   "version": "3.0.0" }] {"encoding":"utf8"}',
+    'npm publish --tag releasing {"cwd":"PATH/packages/node_modules/@repo-cooker-test/commis"}',
   ]
 
-  const SCOPES = [ 'commis' ]
-  const evaluatePackagesFromCommit =
-        commit => SCOPES.indexOf(commit.scope) >= 0 ? [`@repo-cooker-test/${commit.scope}`] : [] /* packageNames */
+  const SCOPES = ['commis']
+  const evaluatePackagesFromCommit = commit =>
+    SCOPES.indexOf(commit.scope) >= 0
+      ? [`@repo-cooker-test/${commit.scope}`]
+      : [] /* packageNames */
 
   cooker
     .run([
       cook.getLatestReleaseHash,
-      // { hash: "r1084082" }
+      // { hash: "e654cd..." }
 
       // Get list of commit hashes from `props.hash` to master. If `props.hash` is 'Big Bang', returns
       // the full history up to current master. An invalid hash returns an empty list.
@@ -84,6 +88,10 @@ it('should run a publish script without error', function(done) {
       cook.publishUnderTemporaryNpmTag,
       // Need to ensure successful release of all packages, so
       // we publish under a temporary tag first
+      // {temporaryNpmTagByPackage: [
+      //   {name: 'firebase', tag: 'releasing'},
+      //   {name: 'http', tag: 'releasing'},
+      // }
 
       cook.mapTemporaryTagToLatest,
       // If successful we just map published tags to official release tag
@@ -114,10 +122,7 @@ it('should run a publish script without error', function(done) {
       // Jup
 
       cook.fireworks,
-
-      () => {
-        assert.deepEqual(dryRun.commands, commands, done)
-      },
     ])
+    .then(() => assert.deepEqual(dryRun.commands, commands, done))
     .catch(done)
 })

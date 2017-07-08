@@ -7,7 +7,7 @@ it('should write new versions to package.json', done => {
     { name: '@repo-cooker-test/commis', version: '4.5.6' },
   ]
   const commands = [
-    '[fs.writeFile] ...ooker-test/commis/package.json ...s": {},\n  "version": "4.5.6"\n} {"encoding":"utf8"}',
+    'fs.writeFile [...ooker-test/commis/package.json] [...s": {},   "version": "4.5.6" }] {"encoding":"utf8"}',
   ]
   testAction(
     writeVersionToPackages,

@@ -10,7 +10,7 @@ it('should execute npm publish command', function(done) {
   publish('repo-cooker-test', 'TAG').then(() => {
     assert.deepEqual(
       runCommand.commands,
-      ['[npm] publish --tag TAG {"cwd":"PACKAGES/repo-cooker-test"}'],
+      ['npm publish --tag TAG {"cwd":"PACKAGES/repo-cooker-test"}'],
       done
     )
   })

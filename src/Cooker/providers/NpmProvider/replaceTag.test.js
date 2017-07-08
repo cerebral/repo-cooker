@@ -11,8 +11,8 @@ it('should execute npm dist-tag add and remove', function(done) {
     assert.deepEqual(
       runCommand.commands,
       [
-        '[npm] dist-tag add repo-cooker-test TAGB {"cwd":"PACKAGES/repo-cooker-test"}',
-        '[npm] dist-tag rm repo-cooker-test TAGA {"cwd":"PACKAGES/repo-cooker-test"}',
+        'npm dist-tag add repo-cooker-test TAGB {"cwd":"PACKAGES/repo-cooker-test"}',
+        'npm dist-tag rm repo-cooker-test TAGA {"cwd":"PACKAGES/repo-cooker-test"}',
       ],
       done
     )
