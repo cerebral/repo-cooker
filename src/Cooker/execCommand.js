@@ -13,28 +13,24 @@ function findName(cmd) {
   }
 }
 
-export function serializeCommand(cmd, args, options, basePath) {
-  const argsPreview = args
-    .map(
-      arg =>
-        typeof arg === 'string'
-          ? arg
-          : typeof arg === 'function' ? '()' : JSON.stringify(arg)
-    )
-    .map(arg => (arg.length > 30 ? '[...' + arg.slice(-30) + ']' : arg))
-    .join(' ')
-  return `${findName(cmd)} ${argsPreview}${options
-    ? ' ' + JSON.stringify(options)
-    : ''}`
-    .replace(basePath, 'PATH')
-    .replace(/\n/g, ' ')
+export function readableCommand(cmd, args, options) {
+  return {
+    cmd: findName(cmd),
+    args: args
+      .map(arg => (typeof arg === 'function' ? '()' : arg))
+      .map(arg => (arg.length > 100 ? '[data]' : arg)),
+    options,
+  }
 }
 
-export function LogCommand(path) {
-  return function logCommand(cmd, args, options) {
-    console.log(serializeCommand(cmd, args, options, path))
-    return Promise.resolve([])
-  }
+export function logCommand(cmd, args, options) {
+  const command = readableCommand(cmd, args, options)
+  console.log(
+    `\n${command.cmd}\n    ${command.args
+      .map(arg => (typeof arg === 'string' ? arg : JSON.stringify(arg)))
+      .join('\n    ')}${options ? '\n    ' + JSON.stringify(options) : ''}\n`
+  )
+  return Promise.resolve([])
 }
 
 export function runCommand(cmd, args = [], options) {

@@ -12,8 +12,22 @@ it('should publish under temporary npm tag', done => {
     tag: 'releasing',
   }))
   const commands = [
-    'npm publish --tag releasing {"cwd":"PATH/packages/node_modules/@repo-cooker-test/commis"}',
-    'npm publish --tag releasing {"cwd":"PATH/packages/node_modules/@repo-cooker-test/poissonier"}',
+    {
+      cmd: 'npm',
+      args: ['publish', '--tag', 'releasing'],
+      options: {
+        cwd:
+          '/Users/gaspard/git/repo-cooker/test/repo/packages/node_modules/@repo-cooker-test/commis',
+      },
+    },
+    {
+      cmd: 'npm',
+      args: ['publish', '--tag', 'releasing'],
+      options: {
+        cwd:
+          '/Users/gaspard/git/repo-cooker/test/repo/packages/node_modules/@repo-cooker-test/poissonier',
+      },
+    },
   ]
   testAction(
     publishUnderTemporaryNpmTag,

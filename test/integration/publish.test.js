@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 import assert from 'test-utils/assert'
-import { DryRun } from 'test-utils'
+import { runCommandMock } from 'test-utils'
 import { Cooker } from 'repo-cooker'
 import * as cook from 'repo-cooker/actions'
 import path from 'path'
@@ -9,30 +9,39 @@ import { buildWebsite, publishWebsite } from './actions'
 it('should run a publish script without error', function(done) {
   this.timeout(6000)
 
+  const dryRun = runCommandMock()
   const basePath = path.resolve('test', 'repo')
-  const dryRun = DryRun(basePath)
-
+  const packagesPath = 'packages/node_modules'
   const cooker = Cooker({
     devtools: null,
     dryRun,
     path: basePath,
-    packagesPath: 'packages/node_modules',
+    packagesPath,
   })
 
   const typeToSemver = { feat: 'minor', fix: 'patch' }
   const evaluateSemver = commit =>
     commit.breaks.length ? 'major' : typeToSemver[commit.type]
 
-  const commands = [
-    'fs.writeFile [...ooker-test/commis/package.json] [...s": {},   "version": "3.0.0" }] {"encoding":"utf8"}',
-    'npm publish --tag releasing {"cwd":"PATH/packages/node_modules/@repo-cooker-test/commis"}',
-  ]
+  const cwd = path.resolve(basePath, packagesPath, '@repo-cooker-test/commis')
 
   const SCOPES = ['commis']
   const evaluatePackagesFromCommit = commit =>
     SCOPES.indexOf(commit.scope) >= 0
       ? [`@repo-cooker-test/${commit.scope}`]
       : [] /* packageNames */
+
+  const commands = [
+    {
+      cmd: 'fs.writeFile',
+      args: [path.join(cwd, 'package.json'), '[data]', { encoding: 'utf8' }],
+    },
+    {
+      cmd: 'npm',
+      args: ['publish', '--tag', 'releasing'],
+      options: { cwd },
+    },
+  ]
 
   cooker
     .run([

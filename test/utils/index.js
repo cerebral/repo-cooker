@@ -1,7 +1,7 @@
 import { resolve, join } from 'path'
 export { testAction } from './testAction'
 export { testActionThrows } from './testActionThrows'
-export { DryRun } from './DryRun'
+export { runCommandMock } from './runCommandMock'
 
 const path = resolve(join(__dirname, '..', 'repo'))
 

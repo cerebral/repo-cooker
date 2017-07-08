@@ -1,11 +1,11 @@
 /* eslint-env mocha */
 import assert from 'test-utils/assert'
-import { DryRun, config } from 'test-utils'
+import { config, runCommandMock } from 'test-utils'
 import { join } from 'path'
 import { writeVersion as writeVersionFactory } from './writeVersion'
 
 it('should write version to package.json', function(done) {
-  const runCommand = DryRun()
+  const runCommand = runCommandMock()
   const getPackagePath = packageName =>
     join(config.path, config.packagesPath, packageName)
   const writeVersion = writeVersionFactory({ runCommand, getPackagePath })
@@ -13,7 +13,16 @@ it('should write version to package.json', function(done) {
     assert.deepEqual(
       runCommand.commands,
       [
-        'fs.writeFile [...ooker-test/commis/package.json] [...s": {},   "version": "9.9.5" }] {"encoding":"utf8"}',
+        {
+          cmd: 'fs.writeFile',
+          args: [
+            join(getPackagePath('@repo-cooker-test/commis'), 'package.json'),
+            '[data]',
+            {
+              encoding: 'utf8',
+            },
+          ],
+        },
       ],
       done
     )

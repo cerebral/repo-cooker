@@ -1,6 +1,6 @@
 import FunctionTree from 'function-tree'
 import { join } from 'path'
-import { execCommand, LogCommand } from './execCommand'
+import { execCommand, logCommand } from './execCommand'
 import { GitProvider } from './providers/GitProvider'
 import { NpmProvider } from './providers/NpmProvider'
 import { PackageJsonProvider } from './providers/PackageJsonProvider'
@@ -14,7 +14,7 @@ export function Cooker({
 }) {
   const runCommand =
     dryRun === true
-      ? LogCommand(path)
+      ? logCommand
       : typeof dryRun === 'function' ? dryRun : execCommand
 
   const getPackagePath = packagesPath
