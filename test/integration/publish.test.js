@@ -15,7 +15,7 @@ it('should run a publish script without error', function(done) {
     devtools: null,
     dryRun,
     path: path.resolve('test', 'repo'),
-    packagesPath: 'packages/node_modules'
+    packagesPath: 'packages/node_modules',
   })
 
   cooker

@@ -25,13 +25,14 @@ const commitsByPackage = [
   },
 ]
 
-it('run the grouping function for every commit and group commits', done => {
-  const semverByPackage = [
-    { name: 'foo', type: 'patch' },
-    { name: 'bar', type: 'minor' },
-    // noop is filtered out
-    { name: 'baz', type: 'major' },
-  ]
+const semverByPackage = [
+  { name: 'foo', type: 'patch' },
+  { name: 'bar', type: 'minor' },
+  // noop is filtered out
+  { name: 'baz', type: 'major' },
+]
+
+it('should run the grouping function for every commit and group commits', done => {
   const typeToSemver = { feat: 'minor', fix: 'patch' }
   const filter = commit =>
     commit.breaks.length ? 'major' : typeToSemver[commit.type]
