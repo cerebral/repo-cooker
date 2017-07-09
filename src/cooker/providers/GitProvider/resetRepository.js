@@ -6,7 +6,7 @@ const TYPES = {
   hard: nodegit.Reset.TYPE.HARD,
 }
 
-export function resetRepository(path, ref, type) {
+export function resetRepository(path, type, ref) {
   const gitType = TYPES[type]
   if (gitType === 'undefined') {
     throw new Error(

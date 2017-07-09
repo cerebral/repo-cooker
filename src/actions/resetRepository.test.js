@@ -6,7 +6,7 @@ it('should reset repository', done => {
   const commands = [
     {
       cmd: 'resetRepository',
-      args: [config.path, 'HEAD', 'hard'],
+      args: [config.path, 'hard', 'HEAD'],
     },
   ]
   testAction(resetRepository, {}, { commands }, done)

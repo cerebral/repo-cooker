@@ -5,7 +5,7 @@ import { config } from 'test-utils'
 import assert from 'test-utils/assert'
 import { resetRepository } from './resetRepository'
 
-it('reset all changed files in repo', function(done) {
+it('should reset all changed files in repo', done => {
   const path = join(config.path, 'README.md')
   fs.readFile(path, 'utf8', (err, original) => {
     if (err) {
@@ -19,7 +19,7 @@ it('reset all changed files in repo', function(done) {
         if (err) {
           throw new Error(err)
         }
-        resetRepository(config.path, 'HEAD', 'hard').then(() => {
+        resetRepository(config.path, 'hard', 'HEAD').then(() => {
           fs.readFile(path, 'utf8', (err, resetContent) => {
             if (err) {
               throw new Error(err)

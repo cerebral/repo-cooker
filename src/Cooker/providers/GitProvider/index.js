@@ -1,3 +1,4 @@
+import { createTagForCommit } from './createTagForCommit'
 import { getCommit } from './getCommit'
 import { getHashListFromHash } from './getHashListFromHash'
 import { getLatestTagMatchingName } from './getLatestTagMatchingName'
@@ -6,9 +7,13 @@ import { resetRepository } from './resetRepository'
 export function GitProvider({ path, runCommand }) {
   return context => {
     context.git = {
-      resetRepository(ref = 'HEAD', type = 'hard') {
+      createTagForCommit(tag, message = '', ref = 'HEAD') {
         // Has side effects so we wrap with runCommand
-        return runCommand(resetRepository, [path, ref, type])
+        return runCommand(createTagForCommit, [path, tag, message, ref])
+      },
+      resetRepository(type = 'hard', ref = 'HEAD') {
+        // Has side effects so we wrap with runCommand
+        return runCommand(resetRepository, [path, type, ref])
       },
       getCommit(hash) {
         return getCommit(path, hash)
@@ -16,8 +21,8 @@ export function GitProvider({ path, runCommand }) {
       getHashListFromHash(hash) {
         return getHashListFromHash(path, hash)
       },
-      getLatestTagMatchingName(name) {
-        return getLatestTagMatchingName(path, name)
+      getLatestTagMatchingName(tag) {
+        return getLatestTagMatchingName(path, tag)
       },
     }
     return context
