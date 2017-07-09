@@ -44,18 +44,16 @@ it('should run a publish script without error', function(done) {
     {
       cmd: 'npm',
       args: ['dist-tag', 'add', '@repo-cooker-test/commis', 'latest'],
-      options: {
-        cwd:
-          '/Users/gaspard/git/repo-cooker/test/repo/packages/node_modules/@repo-cooker-test/commis',
-      },
+      options: { cwd },
     },
     {
       cmd: 'npm',
       args: ['dist-tag', 'rm', '@repo-cooker-test/commis', 'releasing'],
-      options: {
-        cwd:
-          '/Users/gaspard/git/repo-cooker/test/repo/packages/node_modules/@repo-cooker-test/commis',
-      },
+      options: { cwd },
+    },
+    {
+      cmd: 'resetRepository',
+      args: [basePath, 'HEAD', 'hard'],
     },
   ]
 
@@ -121,11 +119,12 @@ it('should run a publish script without error', function(done) {
       cook.mapTemporaryNpmTagToLatest,
       // If successful we just map published tags to official release tag
 
-      cook.cleanWorkingDirectory,
-      // Clean up our mess
+      cook.resetRepository,
+      // Version information is not stored in package.json so we
+      // cleanup repo now.
 
       cook.tagCurrentCommit,
-      // Talk to github to tag current commit with the name format:
+      // Tag current commit with the name format:
       // release_2018-08-20_0800
 
       cook.pushTagToRepo,

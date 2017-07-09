@@ -20,12 +20,13 @@ export function Cooker({
   const getPackagePath = packagesPath
     ? packageName => join(path, packagesPath, packageName)
     : packageName => path
+  const config = { path, getPackagePath, runCommand }
 
   const ft = new FunctionTree(
     [
-      GitProvider({ path }),
-      NpmProvider({ runCommand, getPackagePath }),
-      PackageJsonProvider({ runCommand, getPackagePath }),
+      GitProvider(config),
+      NpmProvider(config),
+      PackageJsonProvider(config),
     ].concat(providers)
   )
 

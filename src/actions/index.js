@@ -1,4 +1,4 @@
-export { cleanWorkingDirectory } from './cleanWorkingDirectory'
+export { resetRepository } from './resetRepository'
 export { createReleaseNotes } from './createReleaseNotes'
 export { evaluateNewVersionByPackage } from './evaluateNewVersionByPackage'
 export { evaluateSemverByPackage } from './evaluateSemverByPackage'
