@@ -1,4 +1,5 @@
 /* eslint-env mocha */
+import simple from 'simple-mock'
 import { runCommandMock } from 'test-utils'
 import assert from 'test-utils/assert'
 import { mockNpmRegistry } from 'test-utils/npm'
@@ -7,8 +8,16 @@ import * as cook from 'repo-cooker/actions'
 import path from 'path'
 import { buildWebsite, publishWebsite } from './actions'
 
+const isoString = '2017-07-09T19:06:31.620Z'
+
 describe('publish script', () => {
-  mockNpmRegistry()
+  before(() => {
+    mockNpmRegistry()
+    simple.mock(Date.prototype, 'toISOString').returnWith(isoString)
+  })
+  after(() => {
+    simple.restore()
+  })
 
   it('should run a publish script without error', function(done) {
     this.timeout(6000)
@@ -58,6 +67,10 @@ describe('publish script', () => {
       {
         cmd: 'resetRepository',
         args: [basePath, 'hard', 'HEAD'],
+      },
+      {
+        cmd: 'createTagForCommit',
+        args: [basePath, 'release_2017-07-09_1906', '', 'HEAD'],
       },
     ]
 
