@@ -11,3 +11,5 @@ yarn-error.log
 yarn.lock
 package-lock.json
 /test/repo
+/.nyc_output
+/coverage
