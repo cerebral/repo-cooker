@@ -6,7 +6,7 @@ import { getCurrentVersionByPackage } from './'
 
 describe('getCurrentVersionByPackage', () => {
   before(mockNpmRegistry)
-  after(()=> simple.restore())
+  after(() => simple.restore())
 
   it('should get current versions for each package', done => {
     const semverByPackage = [

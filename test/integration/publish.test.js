@@ -72,6 +72,12 @@ describe('publish script', () => {
         cmd: 'createTagForCommit',
         args: [basePath, 'release_2017-07-09_1906', '', 'HEAD'],
       },
+      {
+        // Due to issues with credentials, it is simpler to just run a
+        // git command for this operation.
+        cmd: 'git',
+        args: ['push', 'origin', 'release_2017-07-09_1906'],
+      },
     ]
 
     cooker
@@ -142,14 +148,41 @@ describe('publish script', () => {
 
         cook.tagCurrentCommit,
         // Tag current commit with the name format:
-        // release_2018-08-20_0800
+        // { tag: {
+        //     name: 'release_2018-08-20_0800',
+        //     date: '2017-07-09T19:06:31.620Z', // ISO string
+        //   }
+        // }
 
-        cook.pushTagToRepo,
-        // Self explanatory :)
+        cook.pushTagToRemote,
+        // Pushes tag to remote repository
 
-        cook.createReleaseNotes,
-        // Based on parsed information create release notes
-        // by packages and type of changes
+        cook.createReleaseNotes(release => ``),
+        // The `release` object has this format:
+        // {
+        //   tag: 'release_2017-09-07_0900',
+        //   date: '2017-07-09T19:06:31.620Z', // ISO string
+        //   fix: [
+        //     {
+        //       name: 'packageName',
+        //       version: 'new.package.version',
+        //       commits: [], // see above for commit format
+        //     },
+        //     {
+        //       name: 'otherPackage',
+        //       version: 'new.other.version',
+        //       commits: [], // see above for commit format
+        //     },
+        //   ],
+        //   feat: [
+        //     // same as 'fix'
+        //   ],
+        //   breaks: [
+        //     // same as 'fix'
+        //   ],
+        // }
+        //
+        // The action outputs this:
         // { releaseNotes: "Woop woop" }
 
         cook.updateGithubWithReleaseNotes,

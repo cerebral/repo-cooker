@@ -11,10 +11,6 @@ export function GitProvider({ path, runCommand }) {
         // Has side effects so we wrap with runCommand
         return runCommand(createTagForCommit, [path, tag, message, ref])
       },
-      resetRepository(type = 'hard', ref = 'HEAD') {
-        // Has side effects so we wrap with runCommand
-        return runCommand(resetRepository, [path, type, ref])
-      },
       getCommit(hash) {
         return getCommit(path, hash)
       },
@@ -23,6 +19,13 @@ export function GitProvider({ path, runCommand }) {
       },
       getLatestTagMatchingName(tag) {
         return getLatestTagMatchingName(path, tag)
+      },
+      pushTagToRemote(tagName, remoteName = 'origin') {
+        return runCommand('git', ['push', remoteName, tagName])
+      },
+      resetRepository(type = 'hard', ref = 'HEAD') {
+        // Has side effects so we wrap with runCommand
+        return runCommand(resetRepository, [path, type, ref])
       },
     }
     return context
