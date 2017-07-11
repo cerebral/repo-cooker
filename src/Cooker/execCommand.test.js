@@ -14,7 +14,7 @@ describe('execCommand', () => {
   it('should output commands to console', done => {
     logCommand('hello', ['a', 'b', 'c'], { some: 'option' }).then(() => {
       assert.deepEqual(
-        [ ['\nhello\n    a\n    b\n    c\n    {"some":"option"}\n'] ],
+        [['\nhello\n    a\n    b\n    c\n    {"some":"option"}\n']],
         logs,
         done
       )

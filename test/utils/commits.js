@@ -127,6 +127,16 @@ export const commits = [
       'packages/node_modules/@repo-cooker-test/commis/package.json',
     ],
   },
+  {
+    author: {
+      name: 'Gaspard Bucher',
+      email: 'gaspard@lucidogen.io',
+    },
+    date: '2017-07-11T08:53:22.000Z',
+    hash: 'a50098c42782cb2a3a0360fe4fa7d7ba58f5318d',
+    message: 'chore(repo-cooker): add repository url, fix example script\n',
+    files: ['package.json', 'scripts/publish.js'],
+  },
 ]
 
 export const parsedCommits = [
@@ -289,5 +299,21 @@ export const parsedCommits = [
     type: 'fix',
     scope: 'commis',
     summary: 'fixed something in API.',
+  },
+  {
+    author: {
+      name: 'Gaspard Bucher',
+      email: 'gaspard@lucidogen.io',
+    },
+    date: '2017-07-11T08:53:22.000Z',
+    hash: 'a50098c42782cb2a3a0360fe4fa7d7ba58f5318d',
+    message: 'chore(repo-cooker): add repository url, fix example script\n',
+    files: ['package.json', 'scripts/publish.js'],
+    body: '',
+    issues: [],
+    breaks: [],
+    type: 'chore',
+    scope: 'repo-cooker',
+    summary: 'add repository url, fix example script',
   },
 ]

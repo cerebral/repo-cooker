@@ -1,4 +1,4 @@
-const Git = require('nodegit')
+const nodegit = require('nodegit')
 
 function getHashListFromHashToCommit(sha, commit) {
   if (!sha) {
@@ -30,7 +30,7 @@ function getHashListFromHashToCommit(sha, commit) {
  * Returns the list as it appears in the commit history (first commit first).
  */
 export function getHashListFromHash(repoPath, sha) {
-  return Git.Repository
+  return nodegit.Repository
     .open(repoPath)
     .then(repo => repo.getMasterCommit())
     .then(commit => getHashListFromHashToCommit(sha, commit))

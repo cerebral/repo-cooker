@@ -1,11 +1,12 @@
 /* eslint-env mocha */
-import simple from 'simple-mock'
-import { runCommandMock } from 'test-utils'
-import assert from 'test-utils/assert'
-import { mockNpmRegistry } from 'test-utils/npm'
+import path from 'path'
+import request from 'request'
 import { Cooker } from 'repo-cooker'
 import * as cook from 'repo-cooker/actions'
-import path from 'path'
+import { runCommandMock } from 'test-utils'
+import simple from 'simple-mock'
+import assert from 'test-utils/assert'
+import { mockNpmRegistry } from 'test-utils/npm'
 import { buildWebsite, publishWebsite } from './actions'
 
 const isoString = '2017-07-09T19:06:31.620Z'
@@ -14,6 +15,18 @@ describe('publish script', () => {
   before(() => {
     mockNpmRegistry()
     simple.mock(Date.prototype, 'toISOString').returnWith(isoString)
+    simple.mock(request, 'post').callFn(({ url, form }, callback) => {
+      callback(
+        null,
+        { statusCode: 201 },
+        JSON.stringify({
+          name: form.name,
+          tag_name: form.tag_name,
+          body: form.body,
+          created_at: new Date().toISOString(),
+        })
+      )
+    })
   })
   after(() => {
     simple.restore()
@@ -77,6 +90,15 @@ describe('publish script', () => {
         // git command for this operation.
         cmd: 'git',
         args: ['push', 'origin', 'release_2017-07-09_1906'],
+      },
+      {
+        cmd: 'createRelease',
+        args: [
+          basePath,
+          'release_2017-07-09_1906',
+          'some release notes',
+          'master',
+        ],
       },
     ]
 
@@ -157,7 +179,7 @@ describe('publish script', () => {
         cook.pushTagToRemote,
         // Pushes tag to remote repository
 
-        cook.createReleaseNotes(release => ``),
+        cook.createReleaseNotes(release => `some release notes`),
         // The `release` object has this format:
         // {
         //   tag: 'release_2017-09-07_0900',
@@ -185,9 +207,10 @@ describe('publish script', () => {
         // The action outputs this:
         // { releaseNotes: "Woop woop" }
 
-        cook.updateGithubWithReleaseNotes,
+        cook.createGithubRelease,
         // Send release notes to github on release tag, using name format:
         // Release 2018-08-20 08:00
+        // { githubRelease } // See https://developer.github.com/v3/repos/releases/#create-a-release
 
         buildWebsite,
         // Yeah... you know

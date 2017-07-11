@@ -17,8 +17,8 @@ const MOCKS = {
 }
 
 export function mockNpmRegistry() {
-  simple.mock(request, 'get').callFn((path, callback) => {
-    const body = MOCKS[path]
+  simple.mock(request, 'get').callFn((url, callback) => {
+    const body = MOCKS[url]
     callback(null, null, JSON.stringify(body))
   })
 }
