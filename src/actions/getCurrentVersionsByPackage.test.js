@@ -2,9 +2,9 @@
 import simple from 'simple-mock'
 import { testAction } from 'test-utils'
 import { mockNpmRegistry, versions } from 'test-utils/npm'
-import { getCurrentVersionByPackage } from './'
+import { getCurrentVersionsByPackage } from './'
 
-describe('getCurrentVersionByPackage', () => {
+describe('getCurrentVersionsByPackage', () => {
   before(mockNpmRegistry)
   after(() => simple.restore())
 
@@ -13,14 +13,14 @@ describe('getCurrentVersionByPackage', () => {
       { name: '@repo-cooker-test/commis' },
       { name: 'repo-cooker-test' },
     ]
-    const currentVersionByPackage = semverByPackage.map(({ name }) => ({
+    const currentVersionsByPackage = semverByPackage.map(({ name }) => ({
       name,
       version: versions[name],
     }))
     testAction(
-      getCurrentVersionByPackage,
+      getCurrentVersionsByPackage,
       { semverByPackage },
-      { currentVersionByPackage },
+      { currentVersionsByPackage },
       done
     )
   })

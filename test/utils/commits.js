@@ -6,8 +6,8 @@ export const tags = [
   },
   {
     tag: 'release_2017-06-29_1815',
-    hash: 'dabd0553827af3b6afbfc408905b10de8d3cb72d',
-    date: '2017-06-29T16:34:23.000Z',
+    hash: '6392594881f1c62eaf3d04cd1ff1c3d8266b99a8',
+    date: '2017-06-29T16:15:45.000Z',
   },
 ]
 

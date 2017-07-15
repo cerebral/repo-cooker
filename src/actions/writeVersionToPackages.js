@@ -1,9 +1,9 @@
 export function writeVersionToPackages({
   packageJson,
-  props: { newVersionByPackage },
+  props: { newVersionsByPackage },
 }) {
   return Promise.all(
-    newVersionByPackage.map(({ name, version }) =>
+    newVersionsByPackage.map(({ name, version }) =>
       packageJson.writeVersion(name, version)
     )
   ).then(() => ({}))

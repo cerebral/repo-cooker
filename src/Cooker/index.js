@@ -1,41 +1,28 @@
 import FunctionTree from 'function-tree'
-import { join } from 'path'
-import { execCommand, logCommand } from './execCommand'
+import { ConfigProvider } from './providers/ConfigProvider'
 import { GithubProvider } from './providers/GithubProvider'
 import { GitProvider } from './providers/GitProvider'
 import { NpmProvider } from './providers/NpmProvider'
 import { PackageJsonProvider } from './providers/PackageJsonProvider'
+import { createConfig } from '../helpers/createConfig'
 
-export function Cooker({
-  devtools,
-  path = '.',
-  providers = [],
-  dryRun,
-  packagesPath,
-}) {
-  const runCommand =
-    dryRun === true
-      ? logCommand
-      : typeof dryRun === 'function' ? dryRun : execCommand
-
-  const getPackagePath = packagesPath
-    ? packageName => join(path, packagesPath, packageName)
-    : packageName => path
-  const config = { path, getPackagePath, runCommand }
+export function Cooker(options) {
+  const config = createConfig(options)
 
   const ft = new FunctionTree(
     [
+      ConfigProvider(config),
       GitProvider(config),
       GithubProvider(config),
       NpmProvider(config),
       PackageJsonProvider(config),
-    ].concat(providers)
+    ].concat(options.providers || [])
   )
 
-  if (devtools !== null && process.env.NODE_ENV !== 'production') {
+  if (options.devtools !== null && process.env.NODE_ENV !== 'production') {
     const Devtools = require('function-tree/devtools').default
     const tools = new Devtools({
-      host: devtools ? devtools.host : 'localhost:9090',
+      host: options.devtools ? options.devtools.host : 'localhost:9090',
     })
 
     tools.add(ft)

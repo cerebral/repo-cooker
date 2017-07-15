@@ -32,17 +32,17 @@ function getType(semverByPackage, nameToFind) {
   return group.type
 }
 
-export function evaluateNewVersionByPackage({
-  props: { currentVersionByPackage, semverByPackage },
+export function evaluateNewVersionsByPackage({
+  props: { currentVersionsByPackage, semverByPackage },
 }) {
-  return currentVersionByPackage.reduce(
+  return currentVersionsByPackage.reduce(
     (acc, { name, version }) => {
-      acc.newVersionByPackage.push({
+      acc.newVersionsByPackage.push({
         name,
         version: evaluateVersion(name, version, getType(semverByPackage, name)),
       })
       return acc
     },
-    { newVersionByPackage: [] }
+    { newVersionsByPackage: [] }
   )
 }

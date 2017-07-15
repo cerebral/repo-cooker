@@ -7,21 +7,28 @@ function getHashListFromHashToCommit(sha, commit) {
     )
   }
   return new Promise((resolve, reject) => {
-    let done = false
+    let hitPreviousRelease = false
     const list = []
     commit
       .history()
       .on('commit', commit => {
-        if (done) {
-          // discard
-        } else if (commit.sha() === sha) {
-          done = true
-          resolve(list)
+        if (hitPreviousRelease) {
+          return
+        }
+
+        if (commit.sha() === sha) {
+          hitPreviousRelease = true
         } else {
           list.unshift(commit.sha())
         }
       })
-      .on('end', () => done || resolve(sha === 'Big Bang' ? list : []))
+      .on('end', () => {
+        if (hitPreviousRelease || list.length < 50) {
+          resolve(list)
+        } else {
+          resolve([])
+        }
+      })
       .start()
   })
 }

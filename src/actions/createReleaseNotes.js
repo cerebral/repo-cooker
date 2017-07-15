@@ -1,22 +1,22 @@
 const match = (commit, type) =>
   commit.type === type || (type === 'breaks' && commit.breaks.length)
 
-function extract(commitsByPackage, newVersionByPackage, type) {
+function extract(commitsByPackage, newVersionsByPackage, type) {
   return commitsByPackage
     .map(group => ({
       name: group.name,
-      version: newVersionByPackage.find(({ name }) => name === group.name)
+      version: newVersionsByPackage.find(({ name }) => name === group.name)
         .version,
       commits: group.commits.filter(commit => match(commit, type)),
     }))
     .filter(({ commits }) => commits.length)
 }
 
-function summarizeRelease({ commitsByPackage, newVersionByPackage, tag }) {
+function summarizeRelease({ commitsByPackage, newVersionsByPackage, tag }) {
   return Object.assign({}, tag, {
-    fix: extract(commitsByPackage, newVersionByPackage, 'fix'),
-    feat: extract(commitsByPackage, newVersionByPackage, 'feat'),
-    breaks: extract(commitsByPackage, newVersionByPackage, 'breaks'),
+    fix: extract(commitsByPackage, newVersionsByPackage, 'fix'),
+    feat: extract(commitsByPackage, newVersionsByPackage, 'feat'),
+    breaks: extract(commitsByPackage, newVersionsByPackage, 'breaks'),
   })
 }
 

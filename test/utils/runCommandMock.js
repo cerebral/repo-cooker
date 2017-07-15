@@ -1,4 +1,4 @@
-import { readableCommand } from 'repo-cooker/Cooker/execCommand'
+import { readableCommand } from 'repo-cooker/helpers/execCommand'
 
 export function runCommandMock() {
   const commands = []
