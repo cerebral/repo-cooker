@@ -13,12 +13,18 @@ function findName(cmd) {
   }
 }
 
+function isStringified(string) {
+  return Boolean(
+    typeof string === 'string' && string.match(/(\{|\[)[\s\S]*(\}|\])$/)
+  )
+}
+
 export function readableCommand(cmd, args, options) {
   return {
     cmd: findName(cmd),
     args: args
       .map(arg => (typeof arg === 'function' ? '()' : arg))
-      .map(arg => (arg.length > 100 ? '[data]' : arg)),
+      .map(arg => (isStringified(arg) ? '[data]' : arg)),
     options,
   }
 }

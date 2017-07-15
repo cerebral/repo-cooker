@@ -15,9 +15,10 @@ function getPackageDetails(path) {
   })
 }
 
-export function writeVersion({ runCommand, getPackagePath }) {
+export function writeVersion({ runCommand, packagesPaths }) {
   return function writeVersion(packageName, version) {
-    const path = join(getPackagePath(packageName), 'package.json')
+    const path = join(packagesPaths[packageName], 'package.json')
+
     return getPackageDetails(path)
       .then(details => Object.assign({}, details, { version }))
       .then(newDetails =>

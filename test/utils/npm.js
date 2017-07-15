@@ -3,7 +3,7 @@ import simple from 'simple-mock'
 import request from 'request'
 
 export const versions = {
-  'repo-cooker-test': '0.6.0',
+  'repo-cooker-test': '0.0.1',
   '@repo-cooker-test/commis': '2.3.2',
 }
 

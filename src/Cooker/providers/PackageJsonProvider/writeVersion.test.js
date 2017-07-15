@@ -6,9 +6,10 @@ import { writeVersion as writeVersionFactory } from './writeVersion'
 
 it('should write version to package.json', function(done) {
   const runCommand = runCommandMock()
-  const getPackagePath = packageName =>
-    join(config.path, config.packagesPath, packageName)
-  const writeVersion = writeVersionFactory({ runCommand, getPackagePath })
+  const writeVersion = writeVersionFactory({
+    runCommand,
+    packagesPaths: config.packagesPaths,
+  })
   writeVersion('@repo-cooker-test/commis', '9.9.5').then(() => {
     assert.deepEqual(
       runCommand.commands,
@@ -16,7 +17,10 @@ it('should write version to package.json', function(done) {
         {
           cmd: 'fs.writeFile',
           args: [
-            join(getPackagePath('@repo-cooker-test/commis'), 'package.json'),
+            join(
+              config.packagesPaths['@repo-cooker-test/commis'],
+              'package.json'
+            ),
             '[data]',
             {
               encoding: 'utf8',

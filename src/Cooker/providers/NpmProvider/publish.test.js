@@ -1,12 +1,14 @@
 /* eslint-env mocha */
 import assert from 'test-utils/assert'
-import { runCommandMock } from 'test-utils'
+import { config, runCommandMock } from 'test-utils'
 import { publish as publishFactory } from './publish'
 
 it('should execute npm publish command', function(done) {
   const runCommand = runCommandMock()
-  const getPackagePath = packageName => `PACKAGES/${packageName}`
-  const publish = publishFactory({ runCommand, getPackagePath })
+  const publish = publishFactory({
+    runCommand,
+    packagesPaths: config.packagesPaths,
+  })
   publish('repo-cooker-test', 'TAG').then(() => {
     assert.deepEqual(
       runCommand.commands,
@@ -14,7 +16,7 @@ it('should execute npm publish command', function(done) {
         {
           cmd: 'npm',
           args: ['publish', '--tag', 'TAG'],
-          options: { cwd: 'PACKAGES/repo-cooker-test' },
+          options: { cwd: config.packagesPaths['repo-cooker-test'] },
         },
       ],
       done

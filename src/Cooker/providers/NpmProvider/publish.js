@@ -1,8 +1,8 @@
 export function publish(config) {
-  const { runCommand, getPackagePath } = config
+  const { runCommand, packagesPaths } = config
 
   return function publish(packageName, tag) {
-    const cwd = getPackagePath(packageName)
+    const cwd = packagesPaths[packageName]
     return runCommand('npm', ['publish', '--tag', tag], { cwd })
   }
 }

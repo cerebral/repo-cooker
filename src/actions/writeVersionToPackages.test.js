@@ -4,19 +4,14 @@ import { config, testAction } from 'test-utils'
 import { writeVersionToPackages } from './'
 
 it('should write new versions to package.json', done => {
-  const newVersionByPackage = [
+  const newVersionsByPackage = [
     { name: '@repo-cooker-test/commis', version: '4.5.6' },
   ]
   const commands = [
     {
       cmd: 'fs.writeFile',
       args: [
-        join(
-          config.path,
-          config.packagesPath,
-          '@repo-cooker-test/commis',
-          'package.json'
-        ),
+        join(config.packagesPaths['@repo-cooker-test/commis'], 'package.json'),
         '[data]',
         { encoding: 'utf8' },
       ],
@@ -24,7 +19,7 @@ it('should write new versions to package.json', done => {
   ]
   testAction(
     writeVersionToPackages,
-    { newVersionByPackage },
+    { newVersionsByPackage },
     { commands },
     done
   )

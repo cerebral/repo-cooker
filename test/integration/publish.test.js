@@ -37,19 +37,28 @@ describe('publish script', () => {
 
     const dryRun = runCommandMock()
     const basePath = path.resolve('test', 'repo')
-    const packagesPath = 'packages/node_modules'
     const cooker = Cooker({
       devtools: null,
       dryRun,
       path: basePath,
-      packagesPath,
+      packagesGlobs: [
+        'packages/node_modules/*',
+        'packages/node_modules/@repo-cooker-test/*',
+        '!packages/node_modules/@repo-cooker-test',
+      ],
     })
 
     const typeToSemver = { feat: 'minor', fix: 'patch' }
     const evaluateSemver = commit =>
       commit.breaks.length ? 'major' : typeToSemver[commit.type]
 
-    const cwd = path.resolve(basePath, packagesPath, '@repo-cooker-test/commis')
+    const cwd = path.resolve(
+      basePath,
+      'packages',
+      'node_modules',
+      '@repo-cooker-test',
+      'commis'
+    )
 
     const SCOPES = ['commis']
     const evaluatePackagesFromCommit = commit =>
@@ -135,16 +144,16 @@ describe('publish script', () => {
         //   {name: 'http', type: 'minor'},
         // ]}
 
-        cook.getCurrentVersionByPackage,
+        cook.getCurrentVersionsByPackage,
         // Go to NPM and grab current version of packages
         // {currentVersionByPackage: [
         //   {name: 'firebase', version: '1.6.0'},
         //   {name: 'http', version: '1.6.4'},
         // ]}
 
-        cook.evaluateNewVersionByPackage,
+        cook.evaluateNewVersionsByPackage,
         // Based on type of change, use semver bumping
-        // {newVersionByPackage: [
+        // {newVersionsByPackage: [
         //   {name: 'firebase', version: '1.6.1'},
         //   {name: 'http', version: '1.7.0'},
         // ]}
@@ -220,7 +229,9 @@ describe('publish script', () => {
 
         cook.fireworks,
       ])
-      .then(() => assert.deepEqual(dryRun.commands, commands, done))
+      .then(() => {
+        assert.deepEqual(dryRun.commands, commands, done)
+      })
       .catch(done)
   })
 })

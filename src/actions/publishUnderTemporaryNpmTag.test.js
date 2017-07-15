@@ -1,13 +1,13 @@
 /* eslint-env mocha */
-import { testAction } from 'test-utils'
+import { config, testAction } from 'test-utils'
 import { publishUnderTemporaryNpmTag } from './'
 
 it('should publish under temporary npm tag', done => {
-  const newVersionByPackage = [
+  const newVersionsByPackage = [
     { name: '@repo-cooker-test/commis', version: '3.0.0' },
     { name: '@repo-cooker-test/poissonier', version: '1.2.3' },
   ]
-  const temporaryNpmTagByPackage = newVersionByPackage.map(({ name }) => ({
+  const temporaryNpmTagByPackage = newVersionsByPackage.map(({ name }) => ({
     name,
     tag: 'releasing',
   }))
@@ -16,22 +16,20 @@ it('should publish under temporary npm tag', done => {
       cmd: 'npm',
       args: ['publish', '--tag', 'releasing'],
       options: {
-        cwd:
-          '/Users/gaspard/git/repo-cooker/test/repo/packages/node_modules/@repo-cooker-test/commis',
+        cwd: config.packagesPaths['@repo-cooker-test/commis'],
       },
     },
     {
       cmd: 'npm',
       args: ['publish', '--tag', 'releasing'],
       options: {
-        cwd:
-          '/Users/gaspard/git/repo-cooker/test/repo/packages/node_modules/@repo-cooker-test/poissonier',
+        cwd: config.packagesPaths['@repo-cooker-test/poissonier'],
       },
     },
   ]
   testAction(
     publishUnderTemporaryNpmTag,
-    { newVersionByPackage },
+    { newVersionsByPackage },
     { temporaryNpmTagByPackage, commands },
     done
   )
