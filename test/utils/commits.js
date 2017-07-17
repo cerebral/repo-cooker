@@ -137,6 +137,16 @@ export const commits = [
     message: 'chore(repo-cooker): add repository url, fix example script\n',
     files: ['package.json', 'scripts/publish.js'],
   },
+  {
+    author: {
+      name: 'Christian Alfoni',
+      email: 'christianalfoni@gmail.com',
+    },
+    date: '2017-07-16T16:32:25.000Z',
+    hash: '9b973a6a2eb010fa5e866a4bd9ba307f4fb13fe1',
+    message: 'feat(commis): depends on poissonier\n',
+    files: ['packages/node_modules/@repo-cooker-test/commis/package.json'],
+  },
 ]
 
 export const parsedCommits = [
@@ -315,5 +325,21 @@ export const parsedCommits = [
     type: 'chore',
     scope: 'repo-cooker',
     summary: 'add repository url, fix example script',
+  },
+  {
+    author: {
+      name: 'Christian Alfoni',
+      email: 'christianalfoni@gmail.com',
+    },
+    date: '2017-07-16T16:32:25.000Z',
+    hash: '9b973a6a2eb010fa5e866a4bd9ba307f4fb13fe1',
+    message: 'feat(commis): depends on poissonier\n',
+    files: ['packages/node_modules/@repo-cooker-test/commis/package.json'],
+    body: '',
+    issues: [],
+    breaks: [],
+    type: 'feat',
+    scope: 'commis',
+    summary: 'depends on poissonier',
   },
 ]

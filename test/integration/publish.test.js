@@ -144,6 +144,11 @@ describe('publish script', () => {
         //   {name: 'http', type: 'minor'},
         // ]}
 
+        cook.relatedPackagesByPackage,
+        // Returns {relatedPackagesByPackage: {cerebral: ['function-tree']}}
+        // This is needed to evaluate change of version bump related to related
+        // package update
+
         cook.getCurrentVersionsByPackage,
         // Go to NPM and grab current version of packages
         // {currentVersionByPackage: [

@@ -1,11 +1,11 @@
 import { writeVersion } from './writeVersion'
-import { getPackageVersion } from './getPackageVersion'
+import { getRelatedPackages } from './getRelatedPackages'
 
 export function PackageJsonProvider(config) {
   return context => {
     context.packageJson = {
       writeVersion: writeVersion(config),
-      getPackageVersion: getPackageVersion(config),
+      getRelatedPackages: getRelatedPackages(config),
     }
     return context
   }
