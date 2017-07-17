@@ -17,9 +17,13 @@ describe('getCurrentVersionsByPackage', () => {
       name,
       version: versions[name],
     }))
+    const relatedPackagesByPackage = {
+      '@repo-cooker-test/commis': [],
+      'repo-cooker-test': [],
+    }
     testAction(
       getCurrentVersionsByPackage,
-      { semverByPackage },
+      { semverByPackage, relatedPackagesByPackage },
       { currentVersionsByPackage },
       done
     )

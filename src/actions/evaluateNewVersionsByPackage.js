@@ -33,13 +33,30 @@ function getType(semverByPackage, nameToFind) {
 }
 
 export function evaluateNewVersionsByPackage({
-  props: { currentVersionsByPackage, semverByPackage },
+  props: {
+    currentVersionsByPackage,
+    semverByPackage,
+    relatedPackagesByPackage,
+  },
 }) {
   return currentVersionsByPackage.reduce(
     (acc, { name, version }) => {
+      let type = getType(semverByPackage, name)
+      const relatedPackage = acc.newVersionsByPackage.find(
+        newVersionPackage =>
+          relatedPackagesByPackage[name].indexOf(newVersionPackage.name) >= 0
+      )
+      if (
+        relatedPackage &&
+        TYPES.indexOf(getType(semverByPackage, relatedPackage.name)) <
+          TYPES.indexOf(getType(semverByPackage, name))
+      ) {
+        type = getType(semverByPackage, relatedPackage.name)
+      }
+
       acc.newVersionsByPackage.push({
         name,
-        version: evaluateVersion(name, version, getType(semverByPackage, name)),
+        version: evaluateVersion(name, version, type),
       })
       return acc
     },
