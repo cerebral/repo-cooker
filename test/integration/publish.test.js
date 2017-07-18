@@ -48,10 +48,6 @@ describe('publish script', () => {
       ],
     })
 
-    const typeToSemver = { feat: 'minor', fix: 'patch' }
-    const evaluateSemver = commit =>
-      commit.breaks.length ? 'major' : typeToSemver[commit.type]
-
     const cwd = path.resolve(
       basePath,
       'packages',
@@ -59,12 +55,6 @@ describe('publish script', () => {
       '@repo-cooker-test',
       'commis'
     )
-
-    const SCOPES = ['commis']
-    const evaluatePackagesFromCommit = commit =>
-      SCOPES.indexOf(commit.scope) >= 0
-        ? [`@repo-cooker-test/${commit.scope}`]
-        : [] /* packageNames */
 
     const commands = [
       {
@@ -127,15 +117,14 @@ describe('publish script', () => {
         cook.parseCommits,
         // { commits: [{hash, author, ..., type, scope, summary, issues, breaks, body}]}
 
-        // A factory that takes a mapping function from a commit to
-        // a list of package names.
-        cook.groupCommitsByPackage(evaluatePackagesFromCommit),
-        // {commitsByPackage: [
-        //   {name: 'firebase', commits: [{hash: "2424", ...}]},
-        //   {name: 'http', commits: [{hash: "2424", ...}]},
-        // ]}
+        // Groups commits by matching files changed by defined packages paths
+        cook.groupCommitsByPackage,
+        // {commitsByPackage: {
+        //   'firebase': [{hash: "2424", ...}],
+        //   'http': [{hash: "2424", ...}]
+        // }
 
-        cook.evaluateSemverByPackage(evaluateSemver),
+        cook.evaluateSemverByPackage,
         // Based on parsed commit figure out type of release
         // repo-cooker will automatically use the highest in
         // 'major' > 'minor' > 'patch' > 'noop'
@@ -151,17 +140,17 @@ describe('publish script', () => {
 
         cook.getCurrentVersionsByPackage,
         // Go to NPM and grab current version of packages
-        // {currentVersionsByPackage: [
-        //   {name: 'firebase', version: '1.6.0'},
-        //   {name: 'http', version: '1.6.4'},
-        // ]}
+        // {currentVersionsByPackage: {
+        //   'firebase' '1.6.0',
+        //   'http': '1.6.4',
+        // }}
 
         cook.evaluateNewVersionsByPackage,
         // Based on type of change, use semver bumping
-        // {newVersionsByPackage: [
-        //   {name: 'firebase', version: '1.6.1'},
-        //   {name: 'http', version: '1.7.0'},
-        // ]}
+        // {newVersionsByPackage: {
+        //   'firebase': '1.6.1',
+        //   'http': '1.7.0',
+        // }}
 
         cook.writeVersionToPackages,
         // Just write the new version to package.json of packages

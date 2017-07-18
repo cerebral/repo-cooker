@@ -2,12 +2,13 @@ const match = (commit, type) =>
   commit.type === type || (type === 'breaks' && commit.breaks.length)
 
 function extract(commitsByPackage, newVersionsByPackage, type) {
-  return commitsByPackage
-    .map(group => ({
-      name: group.name,
-      version: newVersionsByPackage.find(({ name }) => name === group.name)
-        .version,
-      commits: group.commits.filter(commit => match(commit, type)),
+  const packages = Object.keys(commitsByPackage)
+
+  return packages
+    .map(name => ({
+      name,
+      version: newVersionsByPackage[name],
+      commits: commitsByPackage[name].filter(commit => match(commit, type)),
     }))
     .filter(({ commits }) => commits.length)
 }

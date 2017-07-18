@@ -16,11 +16,11 @@ function getContent(path) {
 }
 
 export function write({ runCommand, packagesPaths }) {
-  return function write(packageName, newContent) {
+  return function write(packageName, newContentCb) {
     const path = join(packagesPaths[packageName], 'package.json')
 
     return getContent(path)
-      .then(content => Object.assign({}, content, newContent))
+      .then(content => Object.assign({}, content, newContentCb(content)))
       .then(newContent =>
         runCommand(writeFile, [
           path,

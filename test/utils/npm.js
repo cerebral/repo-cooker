@@ -6,6 +6,7 @@ export const versions = {
   'repo-cooker-test': '0.0.1',
   '@repo-cooker-test/commis': '2.3.2',
   '@repo-cooker-test/poissonier': '0.0.1',
+  '@repo-cooker-test/pastry-chef': '0.0.1',
 }
 
 const MOCKS = {
@@ -17,6 +18,9 @@ const MOCKS = {
   },
   'https://registry.npmjs.org/@repo-cooker-test/poissonier': {
     'dist-tags': { latest: versions['@repo-cooker-test/poissonier'] },
+  },
+  'https://registry.npmjs.org/@repo-cooker-test/pastry-chef': {
+    'dist-tags': { latest: versions['@repo-cooker-test/pastry-chef'] },
   },
 }
 

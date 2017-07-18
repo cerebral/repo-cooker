@@ -2,42 +2,26 @@
 import { testAction } from 'test-utils'
 import { evaluateSemverByPackage } from './'
 
-const commitsByPackage = [
-  {
-    name: 'foo',
-    commits: [{ type: 'fix', breaks: [] }],
-  },
-  {
-    name: 'bar',
-    commits: [{ type: 'feat', breaks: [] }],
-  },
-  {
-    name: 'noop',
-    commits: [{ type: 'noop', breaks: [] }],
-  },
-  {
-    name: 'baz',
-    commits: [
-      { type: 'fix', breaks: [] },
-      { type: 'feat', breaks: [] },
-      { type: 'fix', breaks: ['x'] },
-    ],
-  },
-]
+const commitsByPackage = {
+  foo: [{ type: 'fix', breaks: [] }],
+  bar: [{ type: 'feat', breaks: [] }],
+  noop: [{ type: 'noop', breaks: [] }],
+  baz: [
+    { type: 'fix', breaks: [] },
+    { type: 'feat', breaks: [] },
+    { type: 'fix', breaks: ['x'] },
+  ],
+}
 
-const semverByPackage = [
-  { name: 'foo', type: 'patch' },
-  { name: 'bar', type: 'minor' },
-  // noop is filtered out
-  { name: 'baz', type: 'major' },
-]
+const semverByPackage = {
+  foo: 'patch',
+  bar: 'minor',
+  baz: 'major',
+}
 
 it('should run the grouping function for every commit and group commits', done => {
-  const typeToSemver = { feat: 'minor', fix: 'patch' }
-  const filter = commit =>
-    commit.breaks.length ? 'major' : typeToSemver[commit.type]
   testAction(
-    evaluateSemverByPackage(filter),
+    evaluateSemverByPackage,
     { commitsByPackage },
     { semverByPackage },
     done

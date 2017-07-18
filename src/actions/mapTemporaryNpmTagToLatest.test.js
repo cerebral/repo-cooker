@@ -3,14 +3,14 @@ import { config, testAction } from 'test-utils'
 import { mapTemporaryNpmTagToLatest } from './'
 
 it('should replace temporary tag with latest', done => {
-  const temporaryNpmTagByPackage = [
-    { name: '@repo-cooker-test/commis', tag: 'releasing' },
-    { name: '@repo-cooker-test/poissonier', tag: 'releasing' },
-  ]
-  const latestNpmTagByPackage = temporaryNpmTagByPackage.map(({ name }) => ({
-    name,
-    tag: 'latest',
-  }))
+  const temporaryNpmTagByPackage = {
+    '@repo-cooker-test/commis': 'releasing',
+    '@repo-cooker-test/poissonier': 'releasing',
+  }
+  const latestNpmTagByPackage = {
+    '@repo-cooker-test/commis': 'latest',
+    '@repo-cooker-test/poissonier': 'latest',
+  }
 
   const commands = [
     {

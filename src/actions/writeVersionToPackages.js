@@ -1,46 +1,39 @@
-function createNewContent(content, version, versionsByPackage) {
-  /*
-    We need to grab versions of any dependencies and fill it in
-  */
-  const dependencies = Object.keys(content.dependencies || {}).reduce(
-    (acc, dependency) => {
-      const pckg = versionsByPackage.find(({ name }) => name === dependency)
+function createWriteCallback(name, newVersionsByPackage) {
+  return function writeCallback(content) {
+    const version = newVersionsByPackage[name]
 
-      acc.dependencies[dependency] = pckg
-        ? pckg.version
-        : acc.dependencies[dependency]
+    /*
+      If there are any dependencies we need to fill in the correct
+      version from related packages, them being bumped or not
+    */
+    const dependencies =
+      content.dependencies &&
+      Object.keys(content.dependencies).reduce((dependencies, dependency) => {
+        dependencies[dependency] = newVersionsByPackage[dependency]
+          ? newVersionsByPackage[dependency]
+          : dependencies[dependency]
 
-      return acc
-    },
-    {
-      dependencies: {},
-    }
-  )
+        return dependencies
+      }, {})
 
-  return Object.assign(
-    {},
-    content,
-    { version },
-    content.depenendices ? dependencies : {}
-  )
+    return Object.assign(
+      {},
+      content,
+      { version },
+      dependencies ? { dependencies } : {}
+    )
+  }
 }
 
 export function writeVersionToPackages({
   packageJson,
-  props: { newVersionsByPackage, currentVersionsByPackage },
+  props: { newVersionsByPackage },
 }) {
+  const packages = Object.keys(newVersionsByPackage)
+
   return Promise.all(
-    newVersionsByPackage.map(({ name, version }) =>
-      packageJson.write(
-        name,
-        createNewContent(
-          version,
-          // By combining new versions and current versions we
-          // will get a complete list of all possible package versions,
-          // also for dependencies
-          newVersionsByPackage.concat(currentVersionsByPackage)
-        )
-      )
+    packages.map(name =>
+      packageJson.write(name, createWriteCallback(name, newVersionsByPackage))
     )
   ).then(() => ({}))
 }

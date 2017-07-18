@@ -1,10 +1,15 @@
 export function mapTemporaryNpmTagToLatest({ npm, props }) {
+  const packages = Object.keys(props.temporaryNpmTagByPackage)
+
   return Promise.all(
-    props.temporaryNpmTagByPackage.map(({ name, tag }) =>
-      npm.replaceTag(name, tag, 'latest').then(() => ({
-        name,
-        tag: 'latest',
-      }))
+    packages.map(name =>
+      npm.replaceTag(name, props.temporaryNpmTagByPackage[name], 'latest')
     )
-  ).then(latestNpmTagByPackage => ({ latestNpmTagByPackage }))
+  ).then(latestNpmTagByPackage => ({
+    latestNpmTagByPackage: packages.reduce((temporaryNpmTagByPackage, name) => {
+      temporaryNpmTagByPackage[name] = 'latest'
+
+      return temporaryNpmTagByPackage
+    }, {}),
+  }))
 }
