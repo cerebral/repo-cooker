@@ -32,6 +32,23 @@ function getType(semverByPackage, nameToFind) {
   return group.type
 }
 
+function getAffectedUnchangedPackages(
+  name,
+  semverByPackage,
+  relatedPackagesByPackage
+) {
+  return Object.keys(relatedPackagesByPackage).reduce((acc, packageName) => {
+    if (
+      !semverByPackage.find(({ name }) => name === packageName) &&
+      relatedPackagesByPackage[packageName].indexOf(name) >= 0
+    ) {
+      return acc.concat(packageName)
+    }
+
+    return acc
+  }, [])
+}
+
 export function evaluateNewVersionsByPackage({
   props: {
     currentVersionsByPackage,
@@ -39,10 +56,13 @@ export function evaluateNewVersionsByPackage({
     relatedPackagesByPackage,
   },
 }) {
-  return currentVersionsByPackage.reduce(
-    (acc, { name, version }) => {
+  return semverByPackage
+    .reduce((acc, { name }) => {
+      const version = currentVersionsByPackage.find(
+        currentVersionPckg => currentVersionPckg.name === name
+      ).version
       let type = getType(semverByPackage, name)
-      const relatedPackage = acc.newVersionsByPackage.find(
+      const relatedPackage = acc.find(
         newVersionPackage =>
           relatedPackagesByPackage[name].indexOf(newVersionPackage.name) >= 0
       )
@@ -54,12 +74,43 @@ export function evaluateNewVersionsByPackage({
         type = getType(semverByPackage, relatedPackage.name)
       }
 
-      acc.newVersionsByPackage.push({
+      /*
+        There might be an update to a "core" package, meaning that packages
+        without changes might need to bump version due to a dependency to a "core"
+        package
+      */
+      const affectedUnchangedPackages = getAffectedUnchangedPackages(
+        name,
+        semverByPackage,
+        relatedPackagesByPackage
+      )
+
+      affectedUnchangedPackages.forEach(affectedUnchangedPackage => {
+        acc.push({
+          name: affectedUnchangedPackage,
+          version: evaluateVersion(affectedUnchangedPackage, version, type),
+        })
+      })
+
+      acc.push({
         name,
         version: evaluateVersion(name, version, type),
       })
+
       return acc
-    },
-    { newVersionsByPackage: [] }
-  )
+    }, [])
+    .reduce(
+      (acc, evaluatedVersion) => {
+        if (
+          !acc.newVersionsByPackage.find(
+            ({ name }) => evaluatedVersion.name === name
+          )
+        ) {
+          acc.newVersionsByPackage.push(evaluatedVersion)
+        }
+
+        return acc
+      },
+      { newVersionsByPackage: [] }
+    )
 }

@@ -19,8 +19,22 @@ function byRelatedPackages(relatedPackagesByPackage) {
 }
 
 export function getCurrentVersionsByPackage({ npm, props }) {
+  const packages = props.semverByPackage.concat(
+    ...props.semverByPackage
+      .reduce((acc, { name }) => {
+        return acc.concat(props.relatedPackagesByPackage[name])
+      }, [])
+      .reduce((acc, pckgName) => {
+        if (acc.indexOf(pckgName) === -1) {
+          return acc.concat({ name: pckgName })
+        }
+
+        return acc
+      }, [])
+  )
+
   return Promise.all(
-    props.semverByPackage.map(({ name }) =>
+    packages.map(({ name }) =>
       npm.getCurrentPackageVersion(name).then(version => ({
         name,
         version,

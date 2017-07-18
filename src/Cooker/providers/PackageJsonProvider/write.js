@@ -3,7 +3,7 @@ import { readFile, writeFile } from 'fs'
 
 const options = { encoding: 'utf8' }
 
-function getPackageDetails(path) {
+function getContent(path) {
   return new Promise((resolve, reject) => {
     readFile(path, options, (err, data) => {
       if (err) {
@@ -15,16 +15,16 @@ function getPackageDetails(path) {
   })
 }
 
-export function writeVersion({ runCommand, packagesPaths }) {
-  return function writeVersion(packageName, version) {
+export function write({ runCommand, packagesPaths }) {
+  return function write(packageName, newContent) {
     const path = join(packagesPaths[packageName], 'package.json')
 
-    return getPackageDetails(path)
-      .then(details => Object.assign({}, details, { version }))
-      .then(newDetails =>
+    return getContent(path)
+      .then(content => Object.assign({}, content, newContent))
+      .then(newContent =>
         runCommand(writeFile, [
           path,
-          JSON.stringify(newDetails, null, 2),
+          JSON.stringify(newContent, null, 2),
           options,
         ])
       )
