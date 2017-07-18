@@ -1,4 +1,8 @@
-function createWriteCallback(name, newVersionsByPackage) {
+function createWriteCallback(
+  name,
+  newVersionsByPackage,
+  currentVersionsByPackage
+) {
   return function writeCallback(content) {
     const version = newVersionsByPackage[name]
 
@@ -9,9 +13,10 @@ function createWriteCallback(name, newVersionsByPackage) {
     const dependencies =
       content.dependencies &&
       Object.keys(content.dependencies).reduce((dependencies, dependency) => {
-        dependencies[dependency] = newVersionsByPackage[dependency]
-          ? newVersionsByPackage[dependency]
-          : dependencies[dependency]
+        dependencies[dependency] =
+          newVersionsByPackage[dependency] ||
+          currentVersionsByPackage[dependency] ||
+          dependencies[dependency]
 
         return dependencies
       }, {})
@@ -27,13 +32,20 @@ function createWriteCallback(name, newVersionsByPackage) {
 
 export function writeVersionToPackages({
   packageJson,
-  props: { newVersionsByPackage },
+  props: { newVersionsByPackage, currentVersionsByPackage },
 }) {
   const packages = Object.keys(newVersionsByPackage)
 
   return Promise.all(
     packages.map(name =>
-      packageJson.write(name, createWriteCallback(name, newVersionsByPackage))
+      packageJson.write(
+        name,
+        createWriteCallback(
+          name,
+          newVersionsByPackage,
+          currentVersionsByPackage
+        )
+      )
     )
   ).then(() => ({}))
 }
