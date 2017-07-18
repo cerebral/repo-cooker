@@ -1,9 +1,13 @@
 /* eslint-env mocha */
 import { join } from 'path'
 import { config, testAction } from 'test-utils'
+import { versions } from 'test-utils/npm'
 import { writeVersionToPackages } from './'
 
 it('should write new versions to package.json', done => {
+  const currentVersionsByPackage = {
+    '@repo-cooker-test/commis': versions['@repo-cooker-test/commis'],
+  }
   const newVersionsByPackage = {
     '@repo-cooker-test/commis': '4.5.6',
   }
@@ -19,7 +23,7 @@ it('should write new versions to package.json', done => {
   ]
   testAction(
     writeVersionToPackages,
-    { newVersionsByPackage },
+    { newVersionsByPackage, currentVersionsByPackage },
     { commands },
     done
   )
