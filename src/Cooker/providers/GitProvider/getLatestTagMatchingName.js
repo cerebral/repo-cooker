@@ -23,10 +23,7 @@ export function getLatestTagMatchingName(repoPath, regex) {
       )
       .then(tags => {
         return tags
-          .sort(
-            (a, b) =>
-              new Date(a.date).getTime() > new Date(b.date).getTime() ? -1 : 1
-          )
+          .sort((a, b) => (a.date > b.date ? -1 : 1))
           .find(tag => regex.test(tag.tag))
       })
   )

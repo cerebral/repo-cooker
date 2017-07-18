@@ -3,12 +3,22 @@ import { testAction, testActionThrows } from 'test-utils'
 import { evaluateNewVersionsByPackage } from './'
 
 const relatedPackagesByPackage = {
-  package0: [],
-  package1: [],
-  package2: [],
-  package3: [],
-  package4: [],
-  package5: ['package1'],
+  dependedOn: {
+    package0: [],
+    package1: [],
+    package2: [],
+    package3: [],
+    package4: [],
+    package5: ['package1'],
+  },
+  dependedBy: {
+    package0: [],
+    package1: ['package5'],
+    package2: [],
+    package3: [],
+    package4: [],
+    package5: [],
+  },
 }
 const tests = [
   { current: '0.3.9', type: 'minor', version: '0.4.0' },
@@ -20,15 +30,16 @@ const tests = [
 ].reduce(
   (acc, { current, type, version }, idx) => {
     const name = `package${idx}`
-    acc.currentVersionsByPackage.push({ name, version: current })
-    acc.semverByPackage.push({ name, type })
-    acc.newVersionsByPackage.push({ name, version })
+    acc.currentVersionsByPackage[name] = current
+    acc.semverByPackage[name] = type
+    acc.newVersionsByPackage[name] = version
+
     return acc
   },
   {
-    currentVersionsByPackage: [],
-    semverByPackage: [],
-    newVersionsByPackage: [],
+    currentVersionsByPackage: {},
+    semverByPackage: {},
+    newVersionsByPackage: {},
     relatedPackagesByPackage,
   }
 )
@@ -70,9 +81,12 @@ describe('evaluateNewVersionsByPackage', () => {
     testActionThrows(
       evaluateNewVersionsByPackage,
       {
-        currentVersionsByPackage: [{ name: 'foo', version: '0.4.5' }],
-        semverByPackage: [{ name: 'foo', type: 'noop' }],
-        relatedPackagesByPackage: { foo: [] },
+        currentVersionsByPackage: { foo: '0.4.5' },
+        semverByPackage: { foo: 'noop' },
+        relatedPackagesByPackage: {
+          dependedOn: { foo: [] },
+          dependedBy: { foo: [] },
+        },
       },
       `Invalid semver type 'noop' for package 'foo'.`,
       done

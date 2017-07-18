@@ -24,31 +24,6 @@ function evaluateVersion(group, version, type) {
     .join('.')
 }
 
-function getType(semverByPackage, nameToFind) {
-  const group = semverByPackage.find(({ name }) => name === nameToFind)
-  if (!group) {
-    throw new Error(`Missing package '${nameToFind}' in semverByPackage.`)
-  }
-  return group.type
-}
-
-function getAffectedUnchangedPackages(
-  name,
-  semverByPackage,
-  relatedPackagesByPackage
-) {
-  return Object.keys(relatedPackagesByPackage).reduce((acc, packageName) => {
-    if (
-      !semverByPackage.find(({ name }) => name === packageName) &&
-      relatedPackagesByPackage[packageName].indexOf(name) >= 0
-    ) {
-      return acc.concat(packageName)
-    }
-
-    return acc
-  }, [])
-}
-
 export function evaluateNewVersionsByPackage({
   props: {
     currentVersionsByPackage,
@@ -56,61 +31,53 @@ export function evaluateNewVersionsByPackage({
     relatedPackagesByPackage,
   },
 }) {
-  return semverByPackage
-    .reduce((acc, { name }) => {
-      const version = currentVersionsByPackage.find(
-        currentVersionPckg => currentVersionPckg.name === name
-      ).version
-      let type = getType(semverByPackage, name)
-      const relatedPackage = acc.find(
-        newVersionPackage =>
-          relatedPackagesByPackage[name].indexOf(newVersionPackage.name) >= 0
-      )
+  const packages = Object.keys(semverByPackage)
+  const newVersionsByPackage = packages.reduce((newVersionsByPackage, name) => {
+    const currentVersion = currentVersionsByPackage[name]
+    const dependedOnPackages = relatedPackagesByPackage.dependedOn[name]
+    const dependedByPackages = relatedPackagesByPackage.dependedBy[name]
+    /*
+      Grab correct type of bump by passing in specific package bump, but then
+      also go through what the package depends on, in case one of those packages
+      has a higher bump
+    */
+    const type = dependedOnPackages.reduce((dependedOnType, dependedOnName) => {
       if (
-        relatedPackage &&
-        TYPES.indexOf(getType(semverByPackage, relatedPackage.name)) <
-          TYPES.indexOf(getType(semverByPackage, name))
+        semverByPackage[dependedOnName] &&
+        TYPES.indexOf(semverByPackage[dependedOnName]) <
+          TYPES.indexOf(dependedOnType)
       ) {
-        type = getType(semverByPackage, relatedPackage.name)
+        return semverByPackage[dependedOnName]
       }
 
-      /*
-        There might be an update to a "core" package, meaning that packages
-        without changes might need to bump version due to a dependency to a "core"
-        package
-      */
-      const affectedUnchangedPackages = getAffectedUnchangedPackages(
-        name,
-        semverByPackage,
-        relatedPackagesByPackage
-      )
+      return dependedOnType
+    }, semverByPackage[name])
 
-      affectedUnchangedPackages.forEach(affectedUnchangedPackage => {
-        acc.push({
-          name: affectedUnchangedPackage,
-          version: evaluateVersion(affectedUnchangedPackage, version, type),
-        })
-      })
+    newVersionsByPackage[name] = evaluateVersion(name, currentVersion, type)
 
-      acc.push({
-        name,
-        version: evaluateVersion(name, version, type),
-      })
-
-      return acc
-    }, [])
-    .reduce(
-      (acc, evaluatedVersion) => {
-        if (
-          !acc.newVersionsByPackage.find(
-            ({ name }) => evaluatedVersion.name === name
+    /*
+      Grab packages that has not changed, but has the currently iterated semver package as dependency,
+      we need to bump that version as well with same version bump
+    */
+    const newVersionsByUnchangedPackage = dependedByPackages.reduce(
+      (newVersionsByUnchangedPackage, dependedByName) => {
+        if (!semverByPackage[dependedByName]) {
+          newVersionsByUnchangedPackage[dependedByName] = evaluateVersion(
+            dependedByName,
+            currentVersionsByPackage[dependedByName],
+            type
           )
-        ) {
-          acc.newVersionsByPackage.push(evaluatedVersion)
         }
 
-        return acc
+        return newVersionsByUnchangedPackage
       },
-      { newVersionsByPackage: [] }
+      {}
     )
+
+    return Object.assign(newVersionsByPackage, newVersionsByUnchangedPackage)
+  }, {})
+
+  return {
+    newVersionsByPackage,
+  }
 }

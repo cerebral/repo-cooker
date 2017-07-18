@@ -4,9 +4,9 @@ import { config, testAction } from 'test-utils'
 import { writeVersionToPackages } from './'
 
 it('should write new versions to package.json', done => {
-  const newVersionsByPackage = [
-    { name: '@repo-cooker-test/commis', version: '4.5.6' },
-  ]
+  const newVersionsByPackage = {
+    '@repo-cooker-test/commis': '4.5.6',
+  }
   const commands = [
     {
       cmd: 'fs.writeFile',

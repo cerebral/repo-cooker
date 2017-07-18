@@ -1,15 +1,13 @@
-function byRelatedPackages(relatedPackagesByPackage) {
+function sortByNumberOfDependencies(dependedOn) {
   return function sort(packA, packB) {
     if (
-      relatedPackagesByPackage[packA.name].length >
-        relatedPackagesByPackage[packB.name].length ||
-      relatedPackagesByPackage[packA.name].indexOf(packB.name) >= 0
+      dependedOn[packA.name].length > dependedOn[packB.name].length ||
+      dependedOn[packA.name].indexOf(packB.name) >= 0
     ) {
       return 1
     } else if (
-      relatedPackagesByPackage[packA.name].length <
-        relatedPackagesByPackage[packB.name].length ||
-      relatedPackagesByPackage[packB.name].indexOf(packA.name) >= 0
+      dependedOn[packA.name].length < dependedOn[packB.name].length ||
+      dependedOn[packB.name].indexOf(packA.name) >= 0
     ) {
       return -1
     }
@@ -18,31 +16,46 @@ function byRelatedPackages(relatedPackagesByPackage) {
   }
 }
 
-export function getCurrentVersionsByPackage({ npm, props }) {
-  const packages = props.semverByPackage.concat(
-    ...props.semverByPackage
-      .reduce((acc, { name }) => {
-        return acc.concat(props.relatedPackagesByPackage[name])
-      }, [])
-      .reduce((acc, pckgName) => {
-        if (acc.indexOf(pckgName) === -1) {
-          return acc.concat({ name: pckgName })
-        }
+function getRelatedSemverPackages(semverPackages, relatedPackagesByPackage) {
+  return semverPackages
+    .reduce((relatedPackages, name) => {
+      return semverPackages.concat(
+        relatedPackagesByPackage.dependedOn[name],
+        relatedPackagesByPackage.dependedBy[name]
+      )
+    }, [])
+    .reduce((uniqueRelatedPackages, name) => {
+      if (uniqueRelatedPackages.indexOf(name) === -1) {
+        return uniqueRelatedPackages.concat(name)
+      }
 
-        return acc
-      }, [])
+      return uniqueRelatedPackages
+    }, [])
+}
+
+export function getCurrentVersionsByPackage({ npm, props }) {
+  const { semverByPackage, relatedPackagesByPackage } = props
+  const semverPackages = Object.keys(semverByPackage)
+  const relatedSemverPackages = getRelatedSemverPackages(
+    semverPackages,
+    relatedPackagesByPackage
   )
+  const packages = semverPackages.concat(relatedSemverPackages)
 
   return Promise.all(
-    packages.map(({ name }) =>
+    packages.map(name =>
       npm.getCurrentPackageVersion(name).then(version => ({
         name,
         version,
       }))
     )
-  ).then(currentVersionsByPackage => ({
-    currentVersionsByPackage: currentVersionsByPackage.sort(
-      byRelatedPackages(props.relatedPackagesByPackage)
-    ),
+  ).then(packages => ({
+    currentVersionsByPackage: packages
+      .sort(sortByNumberOfDependencies(relatedPackagesByPackage.dependedOn))
+      .reduce((currentVersionsByPackage, pckg) => {
+        currentVersionsByPackage[pckg.name] = pckg.version
+
+        return currentVersionsByPackage
+      }, {}),
   }))
 }

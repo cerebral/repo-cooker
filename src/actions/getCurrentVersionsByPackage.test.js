@@ -9,17 +9,75 @@ describe('getCurrentVersionsByPackage', () => {
   after(() => simple.restore())
 
   it('should get current versions for each package', done => {
-    const semverByPackage = [
-      { name: '@repo-cooker-test/commis' },
-      { name: 'repo-cooker-test' },
-    ]
-    const currentVersionsByPackage = semverByPackage.map(({ name }) => ({
-      name,
-      version: versions[name],
-    }))
+    const semverByPackage = {
+      '@repo-cooker-test/commis': 'minor',
+      'repo-cooker-test': 'minor',
+    }
+    const currentVersionsByPackage = {
+      '@repo-cooker-test/commis': versions['@repo-cooker-test/commis'],
+      'repo-cooker-test': versions['repo-cooker-test'],
+    }
     const relatedPackagesByPackage = {
-      '@repo-cooker-test/commis': [],
-      'repo-cooker-test': [],
+      dependedOn: {
+        '@repo-cooker-test/commis': [],
+        'repo-cooker-test': [],
+      },
+      dependedBy: {
+        '@repo-cooker-test/commis': [],
+        'repo-cooker-test': [],
+      },
+    }
+    testAction(
+      getCurrentVersionsByPackage,
+      { semverByPackage, relatedPackagesByPackage },
+      { currentVersionsByPackage },
+      done
+    )
+  })
+
+  it('should get current versions for depending packages', done => {
+    const semverByPackage = {
+      '@repo-cooker-test/commis': 'minor',
+    }
+    const currentVersionsByPackage = {
+      'repo-cooker-test': versions['repo-cooker-test'],
+      '@repo-cooker-test/commis': versions['@repo-cooker-test/commis'],
+    }
+    const relatedPackagesByPackage = {
+      dependedOn: {
+        '@repo-cooker-test/commis': ['repo-cooker-test'],
+        'repo-cooker-test': [],
+      },
+      dependedBy: {
+        '@repo-cooker-test/commis': [],
+        'repo-cooker-test': ['@repo-cooker-test/commis'],
+      },
+    }
+    testAction(
+      getCurrentVersionsByPackage,
+      { semverByPackage, relatedPackagesByPackage },
+      { currentVersionsByPackage },
+      done
+    )
+  })
+
+  it('should get current versions for depending by packages', done => {
+    const semverByPackage = {
+      '@repo-cooker-test/commis': 'minor',
+    }
+    const currentVersionsByPackage = {
+      '@repo-cooker-test/commis': versions['@repo-cooker-test/commis'],
+      'repo-cooker-test': versions['repo-cooker-test'],
+    }
+    const relatedPackagesByPackage = {
+      dependedOn: {
+        '@repo-cooker-test/commis': [],
+        'repo-cooker-test': ['@repo-cooker-test/commis'],
+      },
+      dependedBy: {
+        '@repo-cooker-test/commis': ['repo-cooker-test'],
+        'repo-cooker-test': [],
+      },
     }
     testAction(
       getCurrentVersionsByPackage,

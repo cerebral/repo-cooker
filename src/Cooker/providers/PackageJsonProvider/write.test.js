@@ -10,7 +10,7 @@ it('should write to package.json', function(done) {
     runCommand,
     packagesPaths: config.packagesPaths,
   })
-  write('@repo-cooker-test/commis', { foo: 'bar' }).then(() => {
+  write('@repo-cooker-test/commis', () => ({ foo: 'bar' })).then(() => {
     assert.deepEqual(
       runCommand.commands,
       [

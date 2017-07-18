@@ -3,14 +3,15 @@ import { config, testAction } from 'test-utils'
 import { publishUnderTemporaryNpmTag } from './'
 
 it('should publish under temporary npm tag', done => {
-  const newVersionsByPackage = [
-    { name: '@repo-cooker-test/commis', version: '3.0.0' },
-    { name: '@repo-cooker-test/poissonier', version: '1.2.3' },
-  ]
-  const temporaryNpmTagByPackage = newVersionsByPackage.map(({ name }) => ({
-    name,
-    tag: 'releasing',
-  }))
+  const newVersionsByPackage = {
+    '@repo-cooker-test/commis': '3.0.0',
+    '@repo-cooker-test/poissonier': '1.2.3',
+  }
+  const temporaryNpmTagByPackage = {
+    '@repo-cooker-test/commis': 'releasing',
+    '@repo-cooker-test/poissonier': 'releasing',
+  }
+
   const commands = [
     {
       cmd: 'npm',

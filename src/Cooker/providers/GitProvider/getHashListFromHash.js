@@ -6,6 +6,7 @@ function getHashListFromHashToCommit(sha, commit) {
       `Missing hash parameter. For commits from origin of repository, use 'Big Bang' as hash.`
     )
   }
+
   return new Promise((resolve, reject) => {
     let hitPreviousRelease = false
     const list = []

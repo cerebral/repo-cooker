@@ -8,32 +8,26 @@ const makeCommit = name => {
 }
 
 it('run template on release summary', done => {
-  const commitsByPackage = [
-    {
-      name: 'foo',
-      commits: [
-        'foo_feat_breaks',
-        'foo_fix_breaks',
-        'foo_feat',
-        'foo_fix',
-        'foo_chore',
-      ].map(makeCommit),
-    },
-    {
-      name: 'bar',
-      commits: [
-        'bar_feat_breaks',
-        'bar_fix_breaks',
-        'bar_feat',
-        'bar_fix',
-        'bar_chore',
-      ].map(makeCommit),
-    },
-  ]
-  const newVersionsByPackage = [
-    { name: 'bar', version: 'new.bar.version' },
-    { name: 'foo', version: 'new.foo.version' },
-  ]
+  const commitsByPackage = {
+    foo: [
+      'foo_feat_breaks',
+      'foo_fix_breaks',
+      'foo_feat',
+      'foo_fix',
+      'foo_chore',
+    ].map(makeCommit),
+    bar: [
+      'bar_feat_breaks',
+      'bar_fix_breaks',
+      'bar_feat',
+      'bar_fix',
+      'bar_chore',
+    ].map(makeCommit),
+  }
+  const newVersionsByPackage = {
+    bar: 'new.bar.version',
+    foo: 'new.foo.version',
+  }
   const tag = { name: 'super_awesome_release_tag', date: 'SOME_ISO_DATE' }
 
   const releaseNotes = Object.assign({ templateRun: 'OK' }, tag, {
