@@ -151,7 +151,7 @@ describe('publish script', () => {
 
         cook.getCurrentVersionsByPackage,
         // Go to NPM and grab current version of packages
-        // {currentVersionByPackage: [
+        // {currentVersionsByPackage: [
         //   {name: 'firebase', version: '1.6.0'},
         //   {name: 'http', version: '1.6.4'},
         // ]}

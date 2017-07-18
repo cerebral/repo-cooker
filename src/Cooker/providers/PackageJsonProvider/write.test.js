@@ -2,15 +2,15 @@
 import assert from 'test-utils/assert'
 import { config, runCommandMock } from 'test-utils'
 import { join } from 'path'
-import { writeVersion as writeVersionFactory } from './writeVersion'
+import { write as writeFactory } from './write'
 
-it('should write version to package.json', function(done) {
+it('should write to package.json', function(done) {
   const runCommand = runCommandMock()
-  const writeVersion = writeVersionFactory({
+  const write = writeFactory({
     runCommand,
     packagesPaths: config.packagesPaths,
   })
-  writeVersion('@repo-cooker-test/commis', '9.9.5').then(() => {
+  write('@repo-cooker-test/commis', { foo: 'bar' }).then(() => {
     assert.deepEqual(
       runCommand.commands,
       [
