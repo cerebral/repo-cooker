@@ -138,21 +138,21 @@ describe('publish script', () => {
         // This is needed to evaluate change of version bump related to related
         // package update
 
-        cook.getCurrentVersionsByPackage,
+        cook.getCurrentVersionByPackage,
         // Go to NPM and grab current version of packages
-        // {currentVersionsByPackage: {
-        //   'firebase' '1.6.0',
+        // {currentVersionByPackage: {
+        //   'firebase': '1.6.0',
         //   'http': '1.6.4',
         // }}
 
-        cook.evaluateNewVersionsByPackage,
+        cook.evaluateNewVersionByPackage,
         // Based on type of change, use semver bumping
-        // {newVersionsByPackage: {
+        // {newVersionByPackage: {
         //   'firebase': '1.6.1',
         //   'http': '1.7.0',
         // }}
 
-        cook.writeVersionToPackages,
+        cook.writeVersionsToPackages,
         // Just write the new version to package.json of packages
         // this is temporary for release and does not need to be pushed to repo
 
