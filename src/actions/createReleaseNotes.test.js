@@ -24,7 +24,7 @@ it('run template on release summary', done => {
       'bar_chore',
     ].map(makeCommit),
   }
-  const newVersionsByPackage = {
+  const newVersionByPackage = {
     bar: 'new.bar.version',
     foo: 'new.foo.version',
   }
@@ -72,7 +72,7 @@ it('run template on release summary', done => {
     createReleaseNotes(release =>
       Object.assign({ templateRun: 'OK' }, release)
     ),
-    { commitsByPackage, newVersionsByPackage, tag },
+    { commitsByPackage, newVersionByPackage, tag },
     { releaseNotes },
     done
   )

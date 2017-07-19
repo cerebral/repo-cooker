@@ -2,13 +2,13 @@
 import { join } from 'path'
 import { config, testAction } from 'test-utils'
 import { versions } from 'test-utils/npm'
-import { writeVersionToPackages } from './'
+import { writeVersionsToPackages } from './'
 
 it('should write new versions to package.json', done => {
-  const currentVersionsByPackage = {
-    '@repo-cooker-test/commis': versions['@repo-cooker-test/commis'],
+  const currentVersionByPackage = {
+    '@repo-cooker-test/poissonnier': versions['@repo-cooker-test/poissonnier'],
   }
-  const newVersionsByPackage = {
+  const newVersionByPackage = {
     '@repo-cooker-test/commis': '4.5.6',
   }
   const commands = [
@@ -22,8 +22,8 @@ it('should write new versions to package.json', done => {
     },
   ]
   testAction(
-    writeVersionToPackages,
-    { newVersionsByPackage, currentVersionsByPackage },
+    writeVersionsToPackages,
+    { newVersionByPackage, currentVersionByPackage },
     { commands },
     done
   )

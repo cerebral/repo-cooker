@@ -1,23 +1,23 @@
 const match = (commit, type) =>
   commit.type === type || (type === 'breaks' && commit.breaks.length)
 
-function extract(commitsByPackage, newVersionsByPackage, type) {
+function extract(commitsByPackage, newVersionByPackage, type) {
   const packages = Object.keys(commitsByPackage)
 
   return packages
     .map(name => ({
       name,
-      version: newVersionsByPackage[name],
+      version: newVersionByPackage[name],
       commits: commitsByPackage[name].filter(commit => match(commit, type)),
     }))
     .filter(({ commits }) => commits.length)
 }
 
-function summarizeRelease({ commitsByPackage, newVersionsByPackage, tag }) {
+function summarizeRelease({ commitsByPackage, newVersionByPackage, tag }) {
   return Object.assign({}, tag, {
-    fix: extract(commitsByPackage, newVersionsByPackage, 'fix'),
-    feat: extract(commitsByPackage, newVersionsByPackage, 'feat'),
-    breaks: extract(commitsByPackage, newVersionsByPackage, 'breaks'),
+    fix: extract(commitsByPackage, newVersionByPackage, 'fix'),
+    feat: extract(commitsByPackage, newVersionByPackage, 'feat'),
+    breaks: extract(commitsByPackage, newVersionByPackage, 'breaks'),
   })
 }
 
