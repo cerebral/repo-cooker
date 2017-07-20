@@ -31,9 +31,7 @@ const MOCKS = {
   'https://registry.npmjs.org/@repo-cooker-test/pastry-chef': {
     'dist-tags': { latest: versions['@repo-cooker-test/pastry-chef'] },
   },
-  'https://registry.npmjs.org/@repo-cooker-test/sous-chef': {
-    'dist-tags': { latest: versions['@repo-cooker-test/sous-chef'] },
-  },
+  'https://registry.npmjs.org/@repo-cooker-test/sous-chef': {},
 }
 
 export function mockNpmRegistry() {

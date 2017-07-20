@@ -30,4 +30,23 @@ describe('getCurrentVersionByPackage', () => {
       done
     )
   })
+
+  it('should default to null when no NPM release available', done => {
+    const semverByPackage = {
+      '@repo-cooker-test/sous-chef': 'minor',
+    }
+    const currentVersionByPackage = {
+      '@repo-cooker-test/sous-chef': null,
+    }
+    const relatedPackagesByPackage = {
+      '@repo-cooker-test/sous-chef': [],
+    }
+
+    testAction(
+      getCurrentVersionByPackage,
+      { semverByPackage, relatedPackagesByPackage },
+      { currentVersionByPackage },
+      done
+    )
+  })
 })

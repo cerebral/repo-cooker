@@ -77,4 +77,17 @@ describe('evaluateNewVersionByPackage', () => {
       done
     )
   })
+
+  it('should evaluate to 1.0.0 when no current version available', done => {
+    testAction(
+      evaluateNewVersionByPackage,
+      {
+        currentVersionByPackage: { foo: null },
+        semverByPackage: { foo: 'noop' },
+        relatedPackagesByPackage: { foo: [] },
+      },
+      { newVersionByPackage: { foo: '1.0.0' } },
+      done
+    )
+  })
 })
