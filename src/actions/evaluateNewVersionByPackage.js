@@ -42,13 +42,17 @@ export function evaluateNewVersionByPackage({
   const newVersionByPackage = Object.keys(
     semverByPackage
   ).reduce((newVersionByPackage, packageName) => {
-    newVersionByPackage[packageName] = evaluateVersion(
-      currentVersionByPackage[packageName],
-      RTYPES[resolve(packageName)],
-      // Error reporting
-      packageName,
-      semverByPackage[packageName]
-    )
+    newVersionByPackage[packageName] =
+      currentVersionByPackage[packageName] === null
+        ? '1.0.0'
+        : evaluateVersion(
+            currentVersionByPackage[packageName],
+            RTYPES[resolve(packageName)],
+            // Error reporting
+            packageName,
+            semverByPackage[packageName]
+          )
+
     return newVersionByPackage
   }, {})
 
