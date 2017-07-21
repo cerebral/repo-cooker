@@ -3,6 +3,8 @@ export function publish(config) {
 
   return function publish(packageName, tag) {
     const cwd = packagesPaths[packageName]
-    return runCommand('npm', ['publish', '--tag', tag], { cwd })
+    return runCommand('npm', ['publish', '--tag', tag, '--access', 'public'], {
+      cwd,
+    })
   }
 }

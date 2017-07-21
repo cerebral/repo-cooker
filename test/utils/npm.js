@@ -16,22 +16,22 @@ const MOCKS = {
   'https://registry.npmjs.org/repo-cooker-test': {
     'dist-tags': { latest: versions['repo-cooker-test'] },
   },
-  'https://registry.npmjs.org/@repo-cooker-test/commis': {
+  'https://registry.npmjs.org/@repo-cooker-test%2Fcommis': {
     'dist-tags': { latest: versions['@repo-cooker-test/commis'] },
   },
-  'https://registry.npmjs.org/@repo-cooker-test/entremetier': {
+  'https://registry.npmjs.org/@repo-cooker-test%2Fentremetier': {
     'dist-tags': { latest: versions['@repo-cooker-test/entremetier'] },
   },
-  'https://registry.npmjs.org/@repo-cooker-test/executive-chef': {
+  'https://registry.npmjs.org/@repo-cooker-test%2Fexecutive-chef': {
     'dist-tags': { latest: versions['@repo-cooker-test/executive-chef'] },
   },
-  'https://registry.npmjs.org/@repo-cooker-test/poissonier': {
+  'https://registry.npmjs.org/@repo-cooker-test%2Fpoissonier': {
     'dist-tags': { latest: versions['@repo-cooker-test/poissonier'] },
   },
-  'https://registry.npmjs.org/@repo-cooker-test/pastry-chef': {
+  'https://registry.npmjs.org/@repo-cooker-test%2Fpastry-chef': {
     'dist-tags': { latest: versions['@repo-cooker-test/pastry-chef'] },
   },
-  'https://registry.npmjs.org/@repo-cooker-test/sous-chef': {},
+  'https://registry.npmjs.org/@repo-cooker-test%2Fsous-chef': {},
 }
 
 export function mockNpmRegistry() {

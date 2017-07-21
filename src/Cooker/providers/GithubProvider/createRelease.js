@@ -34,37 +34,39 @@ function getRepositoryInfo(path) {
   })
 }
 
-export function createRelease(path, tagName, body, target) {
+export function createRelease(path, tagName, body) {
   // POST /repos/:owner/:repo/releases
-  const form = {
+  const form = JSON.stringify({
     tag_name: tagName,
-    target_commitish: target,
     name: tagName,
     body,
     draft: false,
     prerelease: false,
+  })
+
+  const headers = {
+    'User-Agent': 'repo-cooker',
+    Authorization: `token ${process.env.GITHUB_TOKEN}`,
   }
 
   return new Promise((resolve, reject) => {
     getRepositoryInfo(path)
       .then(({ domain, owner, repo }) => {
         if (domain !== 'github.com') {
-          return reject(
+          reject(
             new Error(
               `Release to domain '${domain}' is not supported (please use 'github.com').`
             )
           )
         }
-        const url = `${domain}/repos/${owner}/${repo}/releases`
-        return request.post({ url, form }, (err, response, body) => {
+        const url = `https://api.${domain}/repos/${owner}/${repo}/releases`
+        return request.post({ url, headers, form }, (err, response, body) => {
           if (err) {
             reject(new Error(err))
           } else if (response.statusCode === 201) {
             resolve(JSON.parse(body))
           } else {
-            reject(
-              new Error(`Invalid response status (${response.statusCode}).`)
-            )
+            reject(new Error(body))
           }
         })
       })

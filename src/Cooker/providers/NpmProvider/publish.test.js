@@ -15,7 +15,7 @@ it('should execute npm publish command', function(done) {
       [
         {
           cmd: 'npm',
-          args: ['publish', '--tag', 'TAG'],
+          args: ['publish', '--tag', 'TAG', '--access', 'public'],
           options: { cwd: config.packagesPaths['repo-cooker-test'] },
         },
       ],

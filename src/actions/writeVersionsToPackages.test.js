@@ -13,7 +13,7 @@ it('should write new versions to package.json', done => {
   }
   const commands = [
     {
-      cmd: 'fs.writeFile',
+      cmd: 'writeFile',
       args: [
         join(config.packagesPaths['@repo-cooker-test/commis'], 'package.json'),
         '[data]',

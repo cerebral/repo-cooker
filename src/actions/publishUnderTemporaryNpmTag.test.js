@@ -15,14 +15,14 @@ it('should publish under temporary npm tag', done => {
   const commands = [
     {
       cmd: 'npm',
-      args: ['publish', '--tag', 'releasing'],
+      args: ['publish', '--tag', 'releasing', '--access', 'public'],
       options: {
         cwd: config.packagesPaths['@repo-cooker-test/commis'],
       },
     },
     {
       cmd: 'npm',
-      args: ['publish', '--tag', 'releasing'],
+      args: ['publish', '--tag', 'releasing', '--access', 'public'],
       options: {
         cwd: config.packagesPaths['@repo-cooker-test/poissonier'],
       },

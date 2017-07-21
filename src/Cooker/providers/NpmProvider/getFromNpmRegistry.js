@@ -10,18 +10,21 @@ export function getFromNpmRegistry(packageName) {
       return resolve(cache[packageName])
     }
 
-    request.get(`${registryUrl}${packageName}`, (error, response, body) => {
-      if (response && response.statusCode === 404) {
-        cache[packageName] = null
-        return resolve(cache[packageName])
-      }
+    request.get(
+      `${registryUrl}${packageName.replace('/', '%2F')}`,
+      (error, response, body) => {
+        if (response && response.statusCode === 404) {
+          cache[packageName] = null
+          return resolve(cache[packageName])
+        }
 
-      if (error) {
-        return reject(error)
-      }
+        if (error) {
+          return reject(error)
+        }
 
-      cache[packageName] = JSON.parse(body)
-      resolve(cache[packageName])
-    })
+        cache[packageName] = JSON.parse(body)
+        resolve(cache[packageName])
+      }
+    )
   })
 }

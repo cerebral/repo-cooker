@@ -1,3 +1,13 @@
+
+## GETTING READY
+
+Things to check before gettings started:
+
+1. Monorepo has correct 'repository' entry in package.json
+2. Names in individual packages package.json file is correct (matches glob path). For example, a package in 'packages/@foo/bar' should have '@foo/bar' as name.
+3. GITHUB_TOKEN is set in the environment where the script runs.
+4. .npmrc has an authToken (npm login).
+
 ## Suggested public API
 
 *package.json*
@@ -33,7 +43,7 @@ const cooker = Cooker({
   packagesPath: 'packages/node_modules'
 })
 
-cooker.run('publish', [
+cooker.cook('publish', [
   cook.getLatestReleaseHash,
   cook.getHistoryFromHash,
   // ... and so on
