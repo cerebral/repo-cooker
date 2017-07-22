@@ -32,14 +32,17 @@ export function readableCommand(cmd, args, options) {
 export function logCommand(cmd, args, options) {
   const command = readableCommand(cmd, args, options)
   console.log(
-    `\n${command.cmd}\n    ${command.args
+    `\n\x1b[33m${command.cmd}\x1b[0m\n    ${command.args
       .map(arg => (typeof arg === 'string' ? arg : JSON.stringify(arg)))
-      .join('\n    ')}${options ? '\n    ' + JSON.stringify(options) : ''}\n`
+      .join('\n    ')}${options ? '\n    ' + JSON.stringify(options) : ''}`
   )
   return Promise.resolve([])
 }
 
-export function runCommand(cmd, args = [], options) {
+const FAIL = '\x1b[31m    FAIL\x1b[0m'
+const PASS = '\x1b[32m    OK\x1b[0m'
+
+export function execCommand(cmd, args = [], options) {
   if (typeof cmd === 'function') {
     if (options) {
       throw new Error(
@@ -48,7 +51,19 @@ export function runCommand(cmd, args = [], options) {
     } else if (!Array.isArray(args)) {
       throw new Error(`Please provide function arguments as an Array.`)
     }
-    return cmd(...args)
+    return new Promise((resolve, reject) => {
+      cmd(...args)
+        .then(x => {
+          logCommand(cmd, args, options)
+          console.log(PASS)
+          resolve(x)
+        })
+        .catch(err => {
+          logCommand(cmd, args, options)
+          console.log(FAIL)
+          reject(err)
+        })
+    })
   }
   return new Promise((resolve, reject) => {
     const child = spawn(cmd, args, options || {})
@@ -58,9 +73,13 @@ export function runCommand(cmd, args = [], options) {
     child.stderr.on('data', data => err.push(data))
     child.on('close', function(code) {
       if (code === 0) {
-        resolve(out)
+        logCommand(cmd, args, options)
+        console.log(PASS)
+        resolve(out.join(''))
       } else {
-        reject(err)
+        logCommand(cmd, args, options)
+        console.log(FAIL)
+        reject(new Error(err.join('')))
       }
     })
   })

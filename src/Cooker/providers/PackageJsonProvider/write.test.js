@@ -15,7 +15,7 @@ it('should write to package.json', function(done) {
       runCommand.commands,
       [
         {
-          cmd: 'fs.writeFile',
+          cmd: 'writeFile',
           args: [
             join(
               config.packagesPaths['@repo-cooker-test/commis'],

@@ -27,6 +27,19 @@ export function Cooker(options) {
 
     tools.add(ft)
   }
+  ft.cook = (name, ...args) =>
+    ft.run(name, ...args).catch(err => {
+      console.log('')
+      console.log(err.payload.error.message)
+      console.log(err.payload.error.stack)
+      if (options.devtools) {
+        // Keep it running
+      } else {
+        const displayName = typeof name === 'string' ? `${name}: ` : ''
+        console.log(`\n\x1b[31m** ${displayName}execution FAILED **\x1b[0m`)
+        process.exit(-1)
+      }
+    })
 
   return ft
 }

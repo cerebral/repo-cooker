@@ -12,7 +12,8 @@ export function getLatestTagMatchingName(repoPath, regex) {
           list.map(tagName =>
             nodegit.Reference
               .lookup(repo, `refs/tags/${tagName}`)
-              .then(ref => nodegit.Commit.lookup(repo, ref.target()))
+              .then(ref => ref.peel(nodegit.Object.TYPE.COMMIT))
+              .then(ref => nodegit.Commit.lookup(repo, ref.id()))
               .then(commit => ({
                 tag: tagName,
                 hash: commit.sha(),

@@ -8,26 +8,30 @@ function getHashListFromHashToCommit(sha, commit) {
   }
 
   return new Promise((resolve, reject) => {
-    let hitPreviousRelease = false
+    let reachedHash = false
     const list = []
     commit
       .history()
       .on('commit', commit => {
-        if (hitPreviousRelease) {
+        if (reachedHash) {
           return
         }
 
         if (commit.sha() === sha) {
-          hitPreviousRelease = true
+          reachedHash = true
         } else {
           list.unshift(commit.sha())
         }
       })
       .on('end', () => {
-        if (hitPreviousRelease || list.length < 50) {
+        if (reachedHash || sha === 'Big Bang') {
           resolve(list)
         } else {
-          resolve([])
+          reject(
+            new Error(
+              `Invalid hash value '${sha}' (not found in commit history).`
+            )
+          )
         }
       })
       .start()
@@ -40,6 +44,6 @@ function getHashListFromHashToCommit(sha, commit) {
 export function getHashListFromHash(repoPath, sha) {
   return nodegit.Repository
     .open(repoPath)
-    .then(repo => repo.getMasterCommit())
+    .then(repo => repo.getHeadCommit())
     .then(commit => getHashListFromHashToCommit(sha, commit))
 }

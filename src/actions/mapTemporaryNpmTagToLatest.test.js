@@ -11,18 +11,22 @@ it('should replace temporary tag with latest', done => {
     '@repo-cooker-test/commis': 'latest',
     '@repo-cooker-test/poissonier': 'latest',
   }
+  const newVersionByPackage = {
+    '@repo-cooker-test/commis': '1.2.3',
+    '@repo-cooker-test/poissonier': '4.5.6',
+  }
 
   const commands = [
     {
       cmd: 'npm',
-      args: ['dist-tag', 'add', '@repo-cooker-test/commis', 'latest'],
+      args: ['dist-tag', 'add', '@repo-cooker-test/commis@1.2.3', 'latest'],
       options: {
         cwd: config.packagesPaths['@repo-cooker-test/commis'],
       },
     },
     {
       cmd: 'npm',
-      args: ['dist-tag', 'add', '@repo-cooker-test/poissonier', 'latest'],
+      args: ['dist-tag', 'add', '@repo-cooker-test/poissonier@4.5.6', 'latest'],
       options: {
         cwd: config.packagesPaths['@repo-cooker-test/poissonier'],
       },
@@ -45,7 +49,7 @@ it('should replace temporary tag with latest', done => {
 
   testAction(
     mapTemporaryNpmTagToLatest,
-    { temporaryNpmTagByPackage },
+    { temporaryNpmTagByPackage, newVersionByPackage },
     { latestNpmTagByPackage, commands },
     done
   )

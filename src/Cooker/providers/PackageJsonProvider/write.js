@@ -1,5 +1,5 @@
 import { join } from 'path'
-import { readFile, writeFile } from 'fs'
+import { readFile, writeFile as fsWriteFile } from 'fs'
 
 const options = { encoding: 'utf8' }
 
@@ -12,6 +12,17 @@ function getContent(path) {
         resolve(JSON.parse(data))
       }
     })
+  })
+}
+
+function writeFile(path, data, options) {
+  return new Promise((resolve, reject) => {
+    fsWriteFile(
+      path,
+      data,
+      options || {},
+      err => (err ? reject(err) : resolve())
+    )
   })
 }
 

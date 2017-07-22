@@ -1,11 +1,11 @@
 export const tags = [
   {
-    tag: 'release_2017-06-29_1812',
+    tag: 'release_2017-07-21_1413',
     hash: 'c465e3323fc2c63fbeb91f9b9b43379d28f9b761',
     date: '2017-06-29T14:52:44.000Z',
   },
   {
-    tag: 'release_2017-06-29_1815',
+    tag: 'release_2017-07-21_1546',
     hash: 'dabd0553827af3b6afbfc408905b10de8d3cb72d',
     date: '2017-06-29T16:34:23.000Z',
   },
@@ -146,6 +146,31 @@ export const commits = [
     hash: '9b973a6a2eb010fa5e866a4bd9ba307f4fb13fe1',
     message: 'feat(commis): depends on poissonier\n',
     files: ['packages/node_modules/@repo-cooker-test/commis/package.json'],
+  },
+  {
+    author: {
+      name: 'Christian Alfoni',
+      email: 'christianalfoni@gmail.com',
+    },
+    date: '2017-07-20T19:20:50.000Z',
+    hash: 'ad1a1b97bb36fff1ddd6a1970d20296970b1c720',
+    message: 'Initial run of publish script\n',
+    files: [
+      '.babelrc',
+      'package.json',
+      'scripts/cooker.js',
+      'scripts/publish.js',
+    ],
+  },
+  {
+    author: {
+      name: 'Gaspard Bucher',
+      email: 'gaspard@lucidogen.io',
+    },
+    date: '2017-07-21T16:11:30.000Z',
+    hash: 'c15e818703b5e235529beae1973125c1817cc06f',
+    message: 'chore(repo-cooker): fix publish script\n',
+    files: ['package.json', 'scripts/cooker.js', 'scripts/publish.js'],
   },
 ]
 
@@ -341,5 +366,41 @@ export const parsedCommits = [
     type: 'feat',
     scope: 'commis',
     summary: 'depends on poissonier',
+  },
+
+  {
+    author: {
+      name: 'Christian Alfoni',
+      email: 'christianalfoni@gmail.com',
+    },
+    date: '2017-07-20T19:20:50.000Z',
+    hash: 'ad1a1b97bb36fff1ddd6a1970d20296970b1c720',
+    message: 'Initial run of publish script\n',
+    files: [
+      '.babelrc',
+      'package.json',
+      'scripts/cooker.js',
+      'scripts/publish.js',
+    ],
+    body: '',
+    issues: [],
+    breaks: [],
+    summary: 'Initial run of publish script',
+  },
+  {
+    author: {
+      name: 'Gaspard Bucher',
+      email: 'gaspard@lucidogen.io',
+    },
+    date: '2017-07-21T16:11:30.000Z',
+    hash: 'c15e818703b5e235529beae1973125c1817cc06f',
+    message: 'chore(repo-cooker): fix publish script\n',
+    files: ['package.json', 'scripts/cooker.js', 'scripts/publish.js'],
+    body: '',
+    issues: [],
+    breaks: [],
+    type: 'chore',
+    scope: 'repo-cooker',
+    summary: 'fix publish script',
   },
 ]

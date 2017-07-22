@@ -58,17 +58,17 @@ describe('publish script', () => {
 
     const commands = [
       {
-        cmd: 'fs.writeFile',
+        cmd: 'writeFile',
         args: [path.join(cwd, 'package.json'), '[data]', { encoding: 'utf8' }],
       },
       {
         cmd: 'npm',
-        args: ['publish', '--tag', 'releasing'],
+        args: ['publish', '--tag', 'releasing', '--access', 'public'],
         options: { cwd },
       },
       {
         cmd: 'npm',
-        args: ['dist-tag', 'add', '@repo-cooker-test/commis', 'latest'],
+        args: ['dist-tag', 'add', '@repo-cooker-test/commis@3.0.0', 'latest'],
         options: { cwd },
       },
       {
@@ -101,6 +101,8 @@ describe('publish script', () => {
       },
     ]
 
+    // Normal usage would use cooker.cook() because this catches and displays
+    // errors.
     cooker
       .run([
         cook.getLatestReleaseHash,
@@ -157,6 +159,9 @@ describe('publish script', () => {
         // this is temporary for release and does not need to be pushed to repo
 
         cook.publishUnderTemporaryNpmTag,
+        // Needs npm to be logged in:
+        // > npm login
+        //
         // Need to ensure successful release of all packages, so
         // we publish under a temporary tag first
         // {temporaryNpmTagByPackage: [
@@ -211,6 +216,9 @@ describe('publish script', () => {
         // { releaseNotes: "Woop woop" }
 
         cook.createGithubRelease,
+        // Needs a GITHUB_TOKEN in ENV. Get one from
+        // https://github.com/settings/tokens
+        //
         // Send release notes to github on release tag, using name format:
         // Release 2018-08-20 08:00
         // { githubRelease } // See https://developer.github.com/v3/repos/releases/#create-a-release

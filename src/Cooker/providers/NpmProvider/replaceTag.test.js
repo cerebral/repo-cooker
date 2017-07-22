@@ -9,13 +9,13 @@ it('should execute npm dist-tag add and remove', function(done) {
     runCommand,
     packagesPaths: config.packagesPaths,
   })
-  replaceTag('repo-cooker-test', 'TAGA', 'TAGB').then(() => {
+  replaceTag('repo-cooker-test', '1.2.3', 'TAGA', 'TAGB').then(() => {
     assert.deepEqual(
       runCommand.commands,
       [
         {
           cmd: 'npm',
-          args: ['dist-tag', 'add', 'repo-cooker-test', 'TAGB'],
+          args: ['dist-tag', 'add', 'repo-cooker-test@1.2.3', 'TAGB'],
           options: { cwd: config.packagesPaths['repo-cooker-test'] },
         },
         {

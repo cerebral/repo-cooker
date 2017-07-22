@@ -15,13 +15,14 @@ describe('createRelease', () => {
 
   before(() => {
     simple.mock(request, 'post').callFn(({ url, form }, callback) => {
+      const data = JSON.parse(form)
       callback(
         null,
         { statusCode: 201 },
         JSON.stringify({
-          name: form.name,
-          tag_name: form.tag_name,
-          body: form.body,
+          name: data.name,
+          tag_name: data.tag_name,
+          body: data.body,
           created_at: release.created_at,
         })
       )
@@ -30,10 +31,10 @@ describe('createRelease', () => {
 
   after(() => simple.restore())
 
-  it('publish release to github', function(done) {
+  it('should publish release to github', function(done) {
     createRelease(config.path, release.name, release.body)
       .then(response => {
-        assert.deepEqual(release, response, done)
+        assert.deepEqual(response, release, done)
       })
       .catch(done)
   })
