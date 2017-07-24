@@ -1,11 +1,13 @@
 /* eslint-env mocha */
-import { config } from 'test-utils'
+import { config, runCommandMock } from 'test-utils'
 import assert from 'test-utils/assert'
 import { Cooker } from 'repo-cooker'
 
-export function testActionThrows(action, input, error, done) {
+export function testActionThrows(action, input, error, done, extraConfig = {}) {
+  const dryRun = runCommandMock()
+  const cooker = Cooker(Object.assign({}, config, { dryRun }, extraConfig))
+
   let errorThrown = false
-  const cooker = Cooker(config)
   cooker
     .run([() => input, action])
     .catch(err => {

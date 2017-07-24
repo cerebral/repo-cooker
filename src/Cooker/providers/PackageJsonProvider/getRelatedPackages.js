@@ -10,7 +10,12 @@ export function getRelatedPackages(config) {
             .readFileSync(join(config.packagesPaths[name], 'package.json'))
             .toString()
         )
-        const dependencies = info.dependencies || {}
+        const dependencies = Object.assign(
+          {},
+          info.peerDependencies || {},
+          info.devDependencies || {},
+          info.dependencies || {}
+        )
         if (info.name !== name) {
           throw new Error(
             `Invalid package.json (name entry '${info.name}' does not match package name '${name}').`

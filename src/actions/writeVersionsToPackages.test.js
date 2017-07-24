@@ -4,27 +4,78 @@ import { config, testAction } from 'test-utils'
 import { versions } from 'test-utils/npm'
 import { writeVersionsToPackages } from './'
 
-it('should write new versions to package.json', done => {
-  const currentVersionByPackage = {
-    '@repo-cooker-test/poissonnier': versions['@repo-cooker-test/poissonnier'],
+describe('writeNewVersionsToPackages', () => {
+  const written = {}
+  const dryRun = (cmd, args) => {
+    written[args[0]] = JSON.parse(args[1])
   }
-  const newVersionByPackage = {
-    '@repo-cooker-test/commis': '4.5.6',
-  }
-  const commands = [
-    {
-      cmd: 'writeFile',
-      args: [
-        join(config.packagesPaths['@repo-cooker-test/commis'], 'package.json'),
-        '[data]',
-        { encoding: 'utf8' },
-      ],
-    },
-  ]
-  testAction(
-    writeVersionsToPackages,
-    { newVersionByPackage, currentVersionByPackage },
-    { commands },
-    done
-  )
+
+  it('should write other versions in package.json', done => {
+    const currentVersionByPackage = versions
+    const newVersionByPackage = {
+      '@repo-cooker-test/commis': '4.5.6',
+      '@repo-cooker-test/poissonier': '1.2.3',
+      '@repo-cooker-test/entremetier': '2.3.4',
+      '@repo-cooker-test/pastry-chef': '5.3.4',
+    }
+    const writtenContent = {
+      [join(
+        config.packagesPaths['@repo-cooker-test/commis'],
+        'package.json'
+      )]: {
+        name: '@repo-cooker-test/commis',
+        license: 'MIT',
+        description: '',
+        dependencies: {
+          '@repo-cooker-test/poissonier': '^1.2.3',
+        },
+        scripts: {},
+        version: '4.5.6',
+      },
+      [join(
+        config.packagesPaths['@repo-cooker-test/poissonier'],
+        'package.json'
+      )]: {
+        name: '@repo-cooker-test/poissonier',
+        version: '1.2.3',
+        description: '',
+        devDependencies: {
+          '@repo-cooker-test/entremetier': '^2.3.4',
+        },
+        scripts: {},
+        license: 'MIT',
+      },
+      [join(
+        config.packagesPaths['@repo-cooker-test/entremetier'],
+        'package.json'
+      )]: {
+        name: '@repo-cooker-test/entremetier',
+        version: '2.3.4',
+        description: '',
+        scripts: {},
+        license: 'MIT',
+      },
+      [join(
+        config.packagesPaths['@repo-cooker-test/pastry-chef'],
+        'package.json'
+      )]: {
+        name: '@repo-cooker-test/pastry-chef',
+        version: '5.3.4',
+        description: '',
+        peerDependencies: {
+          '@repo-cooker-test/sous-chef': '^0.3.9',
+        },
+        scripts: {},
+        license: 'MIT',
+      },
+    }
+
+    testAction(
+      writeVersionsToPackages,
+      { newVersionByPackage, currentVersionByPackage, written },
+      { written: writtenContent },
+      done,
+      { dryRun }
+    )
+  })
 })
