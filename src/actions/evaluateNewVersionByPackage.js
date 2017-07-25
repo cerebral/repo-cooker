@@ -1,17 +1,17 @@
 const TYPES = ['major', 'minor', 'patch']
 const RTYPES = ['patch', 'minor', 'major']
-const PART_RE = /^\d+$/
 
-const valid = PART_RE.test.bind(PART_RE)
+const VERSION_RE = /^(\d+)\.(\d+)\.(\d+)/
 
 function evaluateVersion(version, type, packageName, semver) {
-  const rawParts = version.split('.')
-  if (rawParts.length !== 3 || !rawParts.every(valid)) {
+  const re = VERSION_RE.exec(version)
+  if (!re) {
     throw new Error(
-      `Invalid version '${version}' for package '${packageName}' (format should be '[integer].[integer].[integer]').`
+      `Invalid version '${version}' for package '${packageName}' (format should be '[integer].[integer].[integer][anything]').`
     )
   }
-  const parts = rawParts.map(l => parseInt(l))
+
+  const parts = [re[1], re[2], re[3]].map(l => parseInt(l))
   let idx = TYPES.indexOf(type)
   if (idx < 0) {
     throw new Error(

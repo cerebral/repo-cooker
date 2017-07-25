@@ -3,9 +3,9 @@ import { config, runCommandMock } from 'test-utils'
 import assert from 'test-utils/assert'
 import { Cooker } from 'repo-cooker'
 
-export function testAction(action, input, output, done) {
+export function testAction(action, input, output, done, extraConfig = {}) {
   const dryRun = runCommandMock()
-  const cooker = Cooker(Object.assign({}, config, { dryRun }))
+  const cooker = Cooker(Object.assign({}, config, { dryRun }, extraConfig))
 
   cooker
     .run([

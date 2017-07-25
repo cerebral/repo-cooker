@@ -1,3 +1,27 @@
+function updateField(
+  content,
+  currentVersionByPackage,
+  newVersionByPackage,
+  name
+) {
+  if (!content[name]) {
+    return {}
+  }
+  const currentDeps = content[name]
+  return {
+    [name]: Object.keys(content[name]).reduce((dependencies, dependency) => {
+      dependencies[dependency] =
+        dependency in newVersionByPackage
+          ? `^${newVersionByPackage[dependency]}`
+          : dependency in currentVersionByPackage
+            ? `^${currentVersionByPackage[dependency]}`
+            : currentDeps[dependency]
+
+      return dependencies
+    }, {}),
+  }
+}
+
 function createWriteCallback(
   name,
   newVersionByPackage,
@@ -7,27 +31,31 @@ function createWriteCallback(
     const version = newVersionByPackage[name]
 
     /*
-      If there are any dependencies we need to fill in the correct
-      version from related packages, them being bumped or not
+      If there are any dependencies, peerDependencies or devDependencies, we
+      need to fill in the correct version from related packages.
     */
-    const dependencies =
-      content.dependencies &&
-      Object.keys(content.dependencies).reduce((dependencies, dependency) => {
-        dependencies[dependency] =
-          dependency in newVersionByPackage
-            ? `^${newVersionByPackage[dependency]}`
-            : dependency in currentVersionByPackage
-              ? `^${currentVersionByPackage[dependency]}`
-              : dependencies[dependency]
-
-        return dependencies
-      }, {})
-
     return Object.assign(
       {},
       content,
       { version },
-      dependencies ? { dependencies } : {}
+      updateField(
+        content,
+        currentVersionByPackage,
+        newVersionByPackage,
+        'dependencies'
+      ),
+      updateField(
+        content,
+        currentVersionByPackage,
+        newVersionByPackage,
+        'devDependencies'
+      ),
+      updateField(
+        content,
+        currentVersionByPackage,
+        newVersionByPackage,
+        'peerDependencies'
+      )
     )
   }
 }

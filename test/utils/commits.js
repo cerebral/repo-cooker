@@ -11,7 +11,7 @@ export const tags = [
   },
 ]
 
-export const master = 'be939615058a0ebf56d575ff787d1bc5ad668bdd'
+export const master = '492980b1aead601c4391e380f5e61f9d9adabff0'
 
 export const commits = [
   {
@@ -171,6 +171,20 @@ export const commits = [
     hash: 'c15e818703b5e235529beae1973125c1817cc06f',
     message: 'chore(repo-cooker): fix publish script\n',
     files: ['package.json', 'scripts/cooker.js', 'scripts/publish.js'],
+  },
+  {
+    author: {
+      name: 'Gaspard Bucher',
+      email: 'gaspard@lucidogen.io',
+    },
+    date: '2017-07-24T10:58:18.000Z',
+    hash: '492980b1aead601c4391e380f5e61f9d9adabff0',
+    message: 'chore(monorepo): add devDependencies and peerDependencies\n',
+    files: [
+      'packages/node_modules/@repo-cooker-test/commis/package.json',
+      'packages/node_modules/@repo-cooker-test/pastry-chef/package.json',
+      'packages/node_modules/@repo-cooker-test/poissonier/package.json',
+    ],
   },
 ]
 
@@ -402,5 +416,25 @@ export const parsedCommits = [
     type: 'chore',
     scope: 'repo-cooker',
     summary: 'fix publish script',
+  },
+  {
+    author: {
+      name: 'Gaspard Bucher',
+      email: 'gaspard@lucidogen.io',
+    },
+    date: '2017-07-24T10:58:18.000Z',
+    hash: '492980b1aead601c4391e380f5e61f9d9adabff0',
+    message: 'chore(monorepo): add devDependencies and peerDependencies\n',
+    files: [
+      'packages/node_modules/@repo-cooker-test/commis/package.json',
+      'packages/node_modules/@repo-cooker-test/pastry-chef/package.json',
+      'packages/node_modules/@repo-cooker-test/poissonier/package.json',
+    ],
+    body: '',
+    issues: [],
+    breaks: [],
+    type: 'chore',
+    scope: 'monorepo',
+    summary: 'add devDependencies and peerDependencies',
   },
 ]
