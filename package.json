@@ -12,7 +12,7 @@
     "lint": "eslint \"**/*.js\"",
     "prepublish": "npm run build",
     "pretest": "test -e test/repo || git clone git@github.com:cerebral/repo-cooker-test.git test/repo",
-    "test": "mocha -r test/checkCommits --compilers js:babel-register \"src/**/*.test.js\" \"test/integration/*.test.js\"",
+    "test": "mocha --compilers js:babel-register \"src/**/*.test.js\" \"test/integration/*.test.js\"",
     "test:watch": "npm run test -- --watch"
   },
   "repository": {
