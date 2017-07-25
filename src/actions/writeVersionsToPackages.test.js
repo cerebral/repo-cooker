@@ -4,7 +4,7 @@ import { config, testAction } from 'test-utils'
 import { versions } from 'test-utils/npm'
 import { writeVersionsToPackages } from './'
 
-describe('writeNewVersionsToPackages', () => {
+describe('writeVersionsToPackages', () => {
   const written = {}
   const dryRun = (cmd, args) => {
     written[args[0]] = JSON.parse(args[1])
@@ -29,7 +29,9 @@ describe('writeNewVersionsToPackages', () => {
         dependencies: {
           '@repo-cooker-test/poissonier': '^1.2.3',
         },
-        scripts: {},
+        scripts: {
+          test: "echo 'test script OK'",
+        },
         version: '4.5.6',
       },
       [join(

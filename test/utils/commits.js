@@ -11,7 +11,7 @@ export const tags = [
   },
 ]
 
-export const master = '492980b1aead601c4391e380f5e61f9d9adabff0'
+export const master = 'ddc3d6745845aedbf6170900fec1a4e6a748ab2b'
 
 export const commits = [
   {
@@ -185,6 +185,16 @@ export const commits = [
       'packages/node_modules/@repo-cooker-test/pastry-chef/package.json',
       'packages/node_modules/@repo-cooker-test/poissonier/package.json',
     ],
+  },
+  {
+    author: {
+      name: 'Gaspard Bucher',
+      email: 'gaspard@lucidogen.io',
+    },
+    date: '2017-07-25T12:59:12.000Z',
+    hash: 'ddc3d6745845aedbf6170900fec1a4e6a748ab2b',
+    message: 'chore(commis): add dummy script for testing\n',
+    files: ['packages/node_modules/@repo-cooker-test/commis/package.json'],
   },
 ]
 
@@ -436,5 +446,21 @@ export const parsedCommits = [
     type: 'chore',
     scope: 'monorepo',
     summary: 'add devDependencies and peerDependencies',
+  },
+  {
+    author: {
+      name: 'Gaspard Bucher',
+      email: 'gaspard@lucidogen.io',
+    },
+    date: '2017-07-25T12:59:12.000Z',
+    hash: 'ddc3d6745845aedbf6170900fec1a4e6a748ab2b',
+    message: 'chore(commis): add dummy script for testing\n',
+    files: ['packages/node_modules/@repo-cooker-test/commis/package.json'],
+    body: '',
+    issues: [],
+    breaks: [],
+    type: 'chore',
+    scope: 'commis',
+    summary: 'add dummy script for testing',
   },
 ]

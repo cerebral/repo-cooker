@@ -158,6 +158,9 @@ describe('publish script', () => {
         // Just write the new version to package.json of packages
         // this is temporary for release and does not need to be pushed to repo
 
+        cook.runNpmScript('prepublish'),
+        // Run the `prepublish` script in all packages if it exists
+
         cook.publishUnderTemporaryNpmTag,
         // Needs npm to be logged in:
         // > npm login
@@ -216,7 +219,7 @@ describe('publish script', () => {
         // { releaseNotes: "Woop woop" }
 
         cook.createGithubRelease,
-        // Needs a GITHUB_TOKEN in ENV. Get one from
+        // Needs a REPO_COOKER_GITHUB_TOKEN in ENV. Get one from
         // https://github.com/settings/tokens
         //
         // Send release notes to github on release tag, using name format:
