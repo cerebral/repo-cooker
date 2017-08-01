@@ -68,7 +68,7 @@ describe('publish script', () => {
       },
       {
         cmd: 'npm',
-        args: ['dist-tag', 'add', '@repo-cooker-test/commis@3.0.0', 'latest'],
+        args: ['dist-tag', 'add', '@repo-cooker-test/commis@3.0.0-dabd05', 'next'],
         options: { cwd },
       },
       {
@@ -154,6 +154,11 @@ describe('publish script', () => {
         //   'http': '1.7.0',
         // }}
 
+        cook.remap(
+          'newVersionByPackage',
+          (version, props) => `${version}-${props.hash.slice(0, 6)}`
+        ),
+
         cook.writeVersionsToPackages,
         // Just write the new version to package.json of packages
         // this is temporary for release and does not need to be pushed to repo
@@ -172,7 +177,7 @@ describe('publish script', () => {
         //   {name: 'http', tag: 'releasing'},
         // }
 
-        cook.mapTemporaryNpmTagToLatest,
+        cook.mapTemporaryNpmTagTo('next'),
         // If successful we just map published tags to official release tag
 
         cook.resetRepository,

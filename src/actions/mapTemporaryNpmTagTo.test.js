@@ -1,15 +1,15 @@
 /* eslint-env mocha */
 import { config, testAction } from 'test-utils'
-import { mapTemporaryNpmTagToLatest } from './'
+import { mapTemporaryNpmTagTo } from './'
 
-it('should replace temporary tag with latest', done => {
+it('should replace temporary tag with given name', done => {
   const temporaryNpmTagByPackage = {
     '@repo-cooker-test/commis': 'releasing',
     '@repo-cooker-test/poissonier': 'releasing',
   }
-  const latestNpmTagByPackage = {
-    '@repo-cooker-test/commis': 'latest',
-    '@repo-cooker-test/poissonier': 'latest',
+  const foobarNpmTagByPackage = {
+    '@repo-cooker-test/commis': 'foobar',
+    '@repo-cooker-test/poissonier': 'foobar',
   }
   const newVersionByPackage = {
     '@repo-cooker-test/commis': '1.2.3',
@@ -19,14 +19,14 @@ it('should replace temporary tag with latest', done => {
   const commands = [
     {
       cmd: 'npm',
-      args: ['dist-tag', 'add', '@repo-cooker-test/commis@1.2.3', 'latest'],
+      args: ['dist-tag', 'add', '@repo-cooker-test/commis@1.2.3', 'foobar'],
       options: {
         cwd: config.packagesPaths['@repo-cooker-test/commis'],
       },
     },
     {
       cmd: 'npm',
-      args: ['dist-tag', 'add', '@repo-cooker-test/poissonier@4.5.6', 'latest'],
+      args: ['dist-tag', 'add', '@repo-cooker-test/poissonier@4.5.6', 'foobar'],
       options: {
         cwd: config.packagesPaths['@repo-cooker-test/poissonier'],
       },
@@ -48,9 +48,9 @@ it('should replace temporary tag with latest', done => {
   ]
 
   testAction(
-    mapTemporaryNpmTagToLatest,
+    mapTemporaryNpmTagTo('foobar'),
     { temporaryNpmTagByPackage, newVersionByPackage },
-    { latestNpmTagByPackage, commands },
+    { foobarNpmTagByPackage, commands },
     done
   )
 })
