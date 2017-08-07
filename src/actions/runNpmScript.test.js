@@ -1,7 +1,6 @@
 /* eslint-env mocha */
 import { config, testAction } from 'test-utils'
 import { runNpmScript } from './'
-import { execCommand } from '../helpers/execCommand'
 
 it('should run npm script if exists', done => {
   const commands = [
