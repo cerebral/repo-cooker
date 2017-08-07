@@ -68,7 +68,12 @@ describe('publish script', () => {
       },
       {
         cmd: 'npm',
-        args: ['dist-tag', 'add', '@repo-cooker-test/commis@3.0.0-dabd05', 'next'],
+        args: [
+          'dist-tag',
+          'add',
+          '@repo-cooker-test/commis@3.0.0-dabd05',
+          'next',
+        ],
         options: { cwd },
       },
       {

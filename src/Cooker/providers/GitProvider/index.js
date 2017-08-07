@@ -1,5 +1,7 @@
 import { createTagForCommit } from './createTagForCommit'
+import { getBranches } from './getBranches'
 import { getCommit } from './getCommit'
+import { getCurrentBranch } from './getCurrentBranch'
 import { getHashListFromHash } from './getHashListFromHash'
 import { getLatestTagMatchingName } from './getLatestTagMatchingName'
 import { resetRepository } from './resetRepository'
@@ -11,8 +13,14 @@ export function GitProvider({ path, runCommand }) {
         // Has side effects so we wrap with runCommand
         return runCommand(createTagForCommit, [path, tag, message, ref])
       },
+      getBranches() {
+        return getBranches(path)
+      },
       getCommit(hash) {
         return getCommit(path, hash)
+      },
+      getCurrentBranch() {
+        return getCurrentBranch(path)
       },
       getHashListFromHash(hash) {
         return getHashListFromHash(path, hash)
