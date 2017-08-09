@@ -8,24 +8,23 @@ export function getLatestTagMatchingName(repoPath, regex) {
     nodegit.Tag
       .list(repo)
       .then(list =>
-        Promise.all(
-          list.map(tagName =>
-            nodegit.Reference
-              .lookup(repo, `refs/tags/${tagName}`)
-              .then(ref => ref.peel(nodegit.Object.TYPE.COMMIT))
-              .then(ref => nodegit.Commit.lookup(repo, ref.id()))
-              .then(commit => ({
-                tag: tagName,
-                hash: commit.sha(),
-                date: commit.date().toJSON(),
-              }))
-          )
-        )
+        list
+          .sort((a, b) => (a > b ? -1 : 1))
+          .find(tagName => regex.test(tagName))
       )
-      .then(tags => {
-        return tags
-          .sort((a, b) => (a.date > b.date ? -1 : 1))
-          .find(tag => regex.test(tag.tag))
-      })
+      .then(
+        tagName =>
+          tagName
+            ? nodegit.Reference
+                .lookup(repo, `refs/tags/${tagName}`)
+                .then(ref => ref.peel(nodegit.Object.TYPE.COMMIT))
+                .then(ref => nodegit.Commit.lookup(repo, ref.id()))
+                .then(commit => ({
+                  tag: tagName,
+                  hash: commit.sha(),
+                  date: commit.date().toJSON(),
+                }))
+            : null
+      )
   )
 }
