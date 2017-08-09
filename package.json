@@ -1,8 +1,8 @@
 {
   "name": "repo-cooker",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "description": "",
-  "bin": "bin/index.js",
+  "main": "lib/index.js",
   "scripts": {
     "start": "babel-watch src/index.js --watch src",
     "build": "cross-env BABEL_ENV=production babel src/ --out-dir=lib/ -s",
