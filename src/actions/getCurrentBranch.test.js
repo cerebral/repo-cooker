@@ -11,7 +11,7 @@ it('should find the name of the current branch', done => {
     {
       branch: {
         date: master.date,
-        name: 'master',
+        name: 'next',
         hash: master.hash,
       },
     },

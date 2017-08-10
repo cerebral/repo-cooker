@@ -12,7 +12,7 @@ it('should list branches', done => {
       branches: [
         {
           date: master.date,
-          name: 'master',
+          name: 'next',
           hash: master.hash,
         },
       ],

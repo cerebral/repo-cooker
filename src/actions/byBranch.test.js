@@ -7,7 +7,7 @@ it('should go down current branch', done => {
     [
       byBranch,
       {
-        master: () => ({ success: true }),
+        next: () => ({ success: true }),
         otherwise: [],
       },
     ],

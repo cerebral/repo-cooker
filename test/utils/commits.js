@@ -11,7 +11,7 @@ export const tags = [
   },
 ]
 
-export const master = 'ddc3d6745845aedbf6170900fec1a4e6a748ab2b'
+export const master = 'dc0e6dfc41148cde76656204693213bf7c2c0ad0'
 
 export const commits = [
   {
@@ -195,6 +195,35 @@ export const commits = [
     hash: 'ddc3d6745845aedbf6170900fec1a4e6a748ab2b',
     message: 'chore(commis): add dummy script for testing\n',
     files: ['packages/node_modules/@repo-cooker-test/commis/package.json'],
+  },
+
+  {
+    author: {
+      name: 'Gaspard Bucher',
+      email: 'gaspard@lucidogen.io',
+    },
+    date: '2017-08-10T13:45:19.000Z',
+    hash: '7061aa80efacfb4101740b417e3957296244467e',
+    message: 'feat(repo-cooker-test): auto publish using travis\n',
+    files: [
+      '.babelrc',
+      '.travis.yml',
+      'package.json',
+      'scripts/cooker.js',
+      'scripts/publish.js',
+      'scripts/releaseNotesTemplate.js',
+    ],
+  },
+  {
+    author: {
+      name: 'Gaspard Bucher',
+      email: 'gaspard@lucidogen.io',
+    },
+    date: '2017-08-10T13:55:08.000Z',
+    hash: 'dc0e6dfc41148cde76656204693213bf7c2c0ad0',
+    message:
+      'fix(repo-cooker-test): npm does not need more then auth token in .npmrc\n',
+    files: ['.travis.yml'],
   },
 ]
 
@@ -462,5 +491,46 @@ export const parsedCommits = [
     type: 'chore',
     scope: 'commis',
     summary: 'add dummy script for testing',
+  },
+
+  {
+    author: {
+      name: 'Gaspard Bucher',
+      email: 'gaspard@lucidogen.io',
+    },
+    date: '2017-08-10T13:45:19.000Z',
+    hash: '7061aa80efacfb4101740b417e3957296244467e',
+    message: 'feat(repo-cooker-test): auto publish using travis\n',
+    files: [
+      '.babelrc',
+      '.travis.yml',
+      'package.json',
+      'scripts/cooker.js',
+      'scripts/publish.js',
+      'scripts/releaseNotesTemplate.js',
+    ],
+    body: '',
+    issues: [],
+    breaks: [],
+    type: 'feat',
+    scope: 'repo-cooker-test',
+    summary: 'auto publish using travis',
+  },
+  {
+    author: {
+      name: 'Gaspard Bucher',
+      email: 'gaspard@lucidogen.io',
+    },
+    date: '2017-08-10T13:55:08.000Z',
+    hash: 'dc0e6dfc41148cde76656204693213bf7c2c0ad0',
+    message:
+      'fix(repo-cooker-test): npm does not need more then auth token in .npmrc\n',
+    files: ['.travis.yml'],
+    body: '',
+    issues: [],
+    breaks: [],
+    type: 'fix',
+    scope: 'repo-cooker-test',
+    summary: 'npm does not need more then auth token in .npmrc',
   },
 ]
