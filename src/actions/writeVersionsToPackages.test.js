@@ -5,9 +5,10 @@ import { versions } from 'test-utils/npm'
 import { writeVersionsToPackages } from './'
 
 describe('writeVersionsToPackages', () => {
-  const written = {}
+  const written = []
   const dryRun = (cmd, args) => {
-    written[args[0]] = JSON.parse(args[1])
+    written.push(Object.assign({ path: args[0] }, JSON.parse(args[1])))
+    written.sort((a, b) => (a.path < b.path ? -1 : 1))
   }
 
   it('should write other versions in package.json', done => {
@@ -18,11 +19,12 @@ describe('writeVersionsToPackages', () => {
       '@repo-cooker-test/entremetier': '2.3.4',
       '@repo-cooker-test/pastry-chef': '5.3.4',
     }
-    const writtenContent = {
-      [join(
-        config.packagesPaths['@repo-cooker-test/commis'],
-        'package.json'
-      )]: {
+    const writtenContent = [
+      {
+        path: join(
+          config.packagesPaths['@repo-cooker-test/commis'],
+          'package.json'
+        ),
         name: '@repo-cooker-test/commis',
         license: 'MIT',
         description: '',
@@ -34,33 +36,22 @@ describe('writeVersionsToPackages', () => {
         },
         version: '4.5.6',
       },
-      [join(
-        config.packagesPaths['@repo-cooker-test/poissonier'],
-        'package.json'
-      )]: {
-        name: '@repo-cooker-test/poissonier',
-        version: '1.2.3',
-        description: '',
-        devDependencies: {
-          '@repo-cooker-test/entremetier': '^2.3.4',
-        },
-        scripts: {},
-        license: 'MIT',
-      },
-      [join(
-        config.packagesPaths['@repo-cooker-test/entremetier'],
-        'package.json'
-      )]: {
+      {
+        path: join(
+          config.packagesPaths['@repo-cooker-test/entremetier'],
+          'package.json'
+        ),
         name: '@repo-cooker-test/entremetier',
         version: '2.3.4',
         description: '',
         scripts: {},
         license: 'MIT',
       },
-      [join(
-        config.packagesPaths['@repo-cooker-test/pastry-chef'],
-        'package.json'
-      )]: {
+      {
+        path: join(
+          config.packagesPaths['@repo-cooker-test/pastry-chef'],
+          'package.json'
+        ),
         name: '@repo-cooker-test/pastry-chef',
         version: '5.3.4',
         description: '',
@@ -70,7 +61,21 @@ describe('writeVersionsToPackages', () => {
         scripts: {},
         license: 'MIT',
       },
-    }
+      {
+        path: join(
+          config.packagesPaths['@repo-cooker-test/poissonier'],
+          'package.json'
+        ),
+        name: '@repo-cooker-test/poissonier',
+        version: '1.2.3',
+        description: '',
+        devDependencies: {
+          '@repo-cooker-test/entremetier': '^2.3.4',
+        },
+        scripts: {},
+        license: 'MIT',
+      },
+    ]
 
     testAction(
       writeVersionsToPackages,
