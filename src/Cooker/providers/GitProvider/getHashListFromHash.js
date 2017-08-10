@@ -1,49 +1,70 @@
 const nodegit = require('nodegit')
 
-function getHashListFromHashToCommit(sha, commit) {
-  if (!sha) {
+function getHashListFromHashToHash(repo, fromHash, toHash) {
+  if (!fromHash || !toHash) {
     throw new Error(
       `Missing hash parameter. For commits from origin of repository, use 'Big Bang' as hash.`
     )
   }
 
   return new Promise((resolve, reject) => {
-    let reachedHash = false
     const list = []
-    commit
-      .history()
-      .on('commit', commit => {
-        if (reachedHash) {
-          return
-        }
 
-        if (commit.sha() === sha) {
-          reachedHash = true
-        } else {
-          list.unshift(commit.sha())
-        }
-      })
-      .on('end', () => {
-        if (reachedHash || sha === 'Big Bang') {
-          resolve(list)
-        } else {
+    const revwalk = repo.createRevWalk()
+    const walk = () =>
+      revwalk
+        .next()
+        .then(oid => {
+          const hash = oid.tostrS()
+          if (hash === fromHash) {
+            resolve(list)
+          } else {
+            list.unshift(hash)
+            return walk()
+          }
+        })
+        .catch(error => {
+          if (error.errno === nodegit.Error.CODE.ITEROVER) {
+            // Reached the end
+            resolve(list)
+          } else {
+            reject(error)
+          }
+        })
+
+    revwalk.sorting(nodegit.Revwalk.SORT.TIME)
+    revwalk.push(toHash)
+    // How can we detect that fromHash is in commit history ?
+    if (fromHash !== 'Big Bang') {
+      // Verify that 'fromHash' is valid first
+      repo
+        .getCommit(fromHash)
+        .then(() => {
+          revwalk.hide(fromHash)
+          walk()
+        })
+        .catch(() =>
           reject(
             new Error(
-              `Invalid hash value '${sha}' (not found in commit history).`
+              `Invalid hash value '${fromHash}' (not found in commit history).`
             )
           )
-        }
-      })
-      .start()
+        )
+    } else {
+      walk()
+    }
   })
 }
 
-/** Get commit sha list upto 'sha' but not including it.
+/** Get commit sha list upto 'hash' but not including it.
  * Returns the list as it appears in the commit history (first commit first).
  */
-export function getHashListFromHash(repoPath, sha) {
+export function getHashListFromHash(repoPath, hash) {
   return nodegit.Repository
     .open(repoPath)
-    .then(repo => repo.getHeadCommit())
-    .then(commit => getHashListFromHashToCommit(sha, commit))
+    .then(repo =>
+      repo
+        .getHeadCommit()
+        .then(commit => getHashListFromHashToHash(repo, hash, commit.sha()))
+    )
 }
