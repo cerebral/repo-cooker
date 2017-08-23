@@ -1,4 +1,4 @@
-import { join } from 'path'
+import { join, sep } from 'path'
 
 /*
   By looking at files changed we can match the name of
@@ -7,8 +7,9 @@ import { join } from 'path'
 function matchPackage(filePath, config) {
   for (let packageName in config.packagesPaths) {
     if (
-      join(config.path, filePath).indexOf(config.packagesPaths[packageName]) ===
-      0
+      join(config.path, filePath).indexOf(
+        config.packagesPaths[packageName] + sep
+      ) === 0
     ) {
       return packageName
     }

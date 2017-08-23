@@ -43,7 +43,7 @@ const commits = [
   },
 ]
 
-it('run the grouping function for every commit and group commits', done => {
+it('should run the grouping function for every commit and group commits', done => {
   const commitsByPackage = {
     '@repo-cooker-test/commis': [commits[0], commits[1], commits[2]],
     '@repo-cooker-test/entremetier': [
@@ -55,4 +55,38 @@ it('run the grouping function for every commit and group commits', done => {
   }
 
   testAction(groupCommitsByPackage, { commits }, { commitsByPackage }, done)
+})
+
+it('should not get confused by similar package names', done => {
+  const commits = [
+    {
+      hash: 'foobar',
+      type: 'feat',
+      files: ['packages/foobar/src/something.js'],
+    },
+    {
+      hash: 'foo',
+      type: 'feat',
+      files: ['packages/foo/src/something.js'],
+    },
+  ]
+  const commitsByPackage = {
+    foobar: [commits[0]],
+    foo: [commits[1]],
+  }
+
+  function mockPackages({ config }) {
+    config.packagesPaths = {
+      foo: '/root/packages/foo',
+      foobar: '/root/packages/foobar',
+    }
+    config.path = '/root'
+  }
+
+  testAction(
+    [mockPackages, groupCommitsByPackage],
+    { commits },
+    { commitsByPackage },
+    done
+  )
 })
