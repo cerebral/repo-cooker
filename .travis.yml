@@ -1,0 +1,37 @@
+sudo: false
+language: node_js
+node_js: '6'
+cache:
+  directories:
+  - node_modules
+git:
+  depth: 9999
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - libstdc++-4.9-dev
+notifications:
+  email: false
+env:
+  - TEST_MODE=serial
+script:
+- |
+  if [[ $SKIP_TESTS != 'true' ]]; then
+    npm prune
+    npm run lint
+    npm test
+  fi
+after_success:
+- |
+  if [[ $TRAVIS_BRANCH == 'master' || $TRAVIS_PULL_REQUEST == 'true' ]]; then
+    npm run coverage;
+  fi
+  if [[ $TRAVIS_BRANCH == 'master' ]] && [[ $TRAVIS_PULL_REQUEST == 'false' ]]; then
+    printf "//registry.npmjs.org/:_authToken=$NPM_TOKEN\n" > ~/.npmrc
+    npm run release -- --publish
+  fi
+branches:
+  except:
+  - "/^v\\d+\\.\\d+\\.\\d+$/"
