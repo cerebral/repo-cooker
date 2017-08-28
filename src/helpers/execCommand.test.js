@@ -28,8 +28,8 @@ describe('logCommand', () => {
 
 describe('execCommand', () => {
   it('should execute command', done => {
-    execCommand('date', ['-r', '1234567890'], {}).then(out => {
-      assert.equal(out, 'Sat Feb 14 00:31:30 CET 2009\n', done)
+    execCommand('node', ['-e', 'console.log("Hello Repo Cooker")'], {}).then(out => {
+      assert.equal(out, 'Hello Repo Cooker\n', done)
     })
   })
 })
