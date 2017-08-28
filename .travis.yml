@@ -17,6 +17,7 @@ notifications:
 env:
   - TEST_MODE=serial
 script:
+- date --help
 - |
   if [[ $SKIP_TESTS != 'true' ]]; then
     npm prune
