@@ -1,14 +1,14 @@
 import globby from 'globby'
-import { join, sep } from 'path'
+import { resolve, sep } from 'path'
 import { readFileSync } from 'fs'
 
 export function getPackagesPaths(cwd, glob) {
   if (!glob) {
     // single repo
     const packageName = JSON.parse(
-      readFileSync(join(cwd, 'package.json'), 'utf8')
+      readFileSync(resolve(cwd, 'package.json'), 'utf8')
     ).name
-    return { [packageName]: cwd }
+    return { [packageName]: resolve(cwd) }
   } else {
     return globby
       .sync(typeof glob === 'string' ? [glob] : glob, { cwd })
@@ -20,7 +20,7 @@ export function getPackagesPaths(cwd, glob) {
         // If package starts with scoped dir, use that as part of name
         packagesMap[
           dir[0] === '@' ? dir + sep + packageName : packageName
-        ] = join(cwd, path)
+        ] = resolve(cwd, path)
 
         return packagesMap
       }, {})
