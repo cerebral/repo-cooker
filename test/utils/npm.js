@@ -8,7 +8,7 @@ export const versions = {
   '@repo-cooker-test/entremetier': '1.3.4',
   '@repo-cooker-test/executive-chef': '3.1.7',
   '@repo-cooker-test/pastry-chef': '0.0.1',
-  '@repo-cooker-test/poissonier': '0.0.1',
+  '@repo-cooker-test/poissonier': '1.0.0-123456',
   '@repo-cooker-test/sous-chef': '0.3.9',
 }
 
