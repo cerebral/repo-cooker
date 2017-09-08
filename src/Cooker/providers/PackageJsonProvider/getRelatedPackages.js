@@ -10,27 +10,26 @@ export function getRelatedPackages(config) {
             .readFileSync(join(config.packagesPaths[name], 'package.json'))
             .toString()
         )
-        const dependencies = Object.assign(
-          {},
-          info.peerDependencies || {},
-          info.devDependencies || {},
-          info.dependencies || {}
-        )
         if (info.name !== name) {
           throw new Error(
             `Invalid package.json (name entry '${info.name}' does not match package name '${name}').`
           )
         }
+        const relatedPackages = {
+          dependencies: [],
+          devDependencies: [],
+          peerDependencies: [],
+        }
 
-        resolve(
-          Object.keys(dependencies).reduce((relatedPackages, dependency) => {
+        Object.keys(relatedPackages).forEach(group =>
+          Object.keys(info[group] || {}).forEach(dependency => {
             if (dependency in config.packagesPaths) {
-              return relatedPackages.concat(dependency)
+              relatedPackages[group].push(dependency)
             }
-
-            return relatedPackages
-          }, [])
+          })
         )
+
+        resolve(relatedPackages)
       } catch (error) {
         reject(error)
       }
