@@ -14,5 +14,7 @@ export function publishUnderTemporaryNpmTag({ npm, props }) {
       },
       {}
     ),
-  }))
+  })).then(
+    arg => new Promise(resolve => setTimeout(() => resolve(arg), 3000))
+  )
 }
