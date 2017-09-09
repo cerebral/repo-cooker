@@ -37,7 +37,7 @@ export function evaluateNewVersionByPackage({
         ? packageSemverId[packageName]
         : Math.max(
             RTYPES.indexOf(semverByPackage[packageName]),
-            ...relatedPackagesByPackage[packageName].dependencies.map(resolve)
+            ...relatedPackagesByPackage[packageName].map(resolve)
           ))
   const newVersionByPackage = Object.keys(
     semverByPackage

@@ -2,19 +2,15 @@
 import { testAction, testActionThrows } from 'test-utils'
 import { evaluateNewVersionByPackage } from './'
 
-const noDeps = {
-  dependencies: [],
-}
-
 const relatedPackagesByPackage = {
-  package0: noDeps,
-  package1: noDeps,
-  package2: noDeps,
-  package3: noDeps,
-  package4: noDeps,
-  package5: { dependencies: ['package7'] },
-  package6: noDeps,
-  package7: { dependencies: ['package1'] },
+  package0: [],
+  package1: [],
+  package2: [],
+  package3: [],
+  package4: [],
+  package5: ['package7'],
+  package6: [],
+  package7: ['package1'],
 }
 const tests = [
   { current: '0.3.9', type: 'minor', version: '0.4.0' },
@@ -64,7 +60,7 @@ describe('evaluateNewVersionByPackage', () => {
         {
           currentVersionByPackage: { foo: version },
           semverByPackage: { foo: 'major' },
-          relatedPackagesByPackage: { foo: noDeps },
+          relatedPackagesByPackage: { foo: [] },
         },
         `Invalid version '${version}' for package 'foo' (format should be '[integer].[integer].[integer][anything]').`,
         done
@@ -79,7 +75,7 @@ describe('evaluateNewVersionByPackage', () => {
       {
         currentVersionByPackage: { foo: '0.4.5' },
         semverByPackage: { foo: 'noop' },
-        relatedPackagesByPackage: { foo: noDeps },
+        relatedPackagesByPackage: { foo: [] },
       },
       `Invalid semver type 'noop' for package 'foo'.`,
       done
