@@ -36,7 +36,7 @@ function getRepositoryInfo(path) {
 
 export function createRelease(path, tagName, body) {
   // POST /repos/:owner/:repo/releases
-  const form = JSON.stringify({
+  const requestBody = JSON.stringify({
     tag_name: tagName,
     name: tagName,
     body,
@@ -61,15 +61,18 @@ export function createRelease(path, tagName, body) {
           )
         }
         const url = `https://api.${domain}/repos/${owner}/${repo}/releases`
-        return request.post({ url, headers, form }, (err, response, body) => {
-          if (err) {
-            reject(new Error(err))
-          } else if (response.statusCode === 201) {
-            resolve(JSON.parse(body))
-          } else {
-            reject(new Error(body))
+        return request.post(
+          { url, headers, body: requestBody },
+          (err, response, body) => {
+            if (err) {
+              reject(new Error(err))
+            } else if (response.statusCode === 201) {
+              resolve(JSON.parse(body))
+            } else {
+              reject(new Error(body))
+            }
           }
-        })
+        )
       })
       .catch(reject)
   })
