@@ -14,8 +14,8 @@ describe('createRelease', () => {
   }
 
   before(() => {
-    simple.mock(request, 'post').callFn(({ url, form }, callback) => {
-      const data = JSON.parse(form)
+    simple.mock(request, 'post').callFn(({ url, body }, callback) => {
+      const data = JSON.parse(body)
       callback(
         null,
         { statusCode: 201 },
