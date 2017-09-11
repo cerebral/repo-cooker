@@ -49,23 +49,25 @@ export function evaluateNewVersionByPackage({
   const newVersionByPackage = Object.keys(
     // We evaluate for all packages related to changed packages
     currentVersionByPackage
-  ).reduce((newVersionByPackage, packageName) => {
-    newVersionByPackage[packageName] =
-      currentVersionByPackage[packageName] === null
-        ? '1.0.0'
-        : semverByPackage[packageName]
-          ? evaluateVersion(
-              currentVersionByPackage[packageName],
-              RTYPES[resolve(packageName)],
-              // Error reporting
-              packageName,
-              semverByPackage[packageName]
-            )
-          : // No semver change: same version.
-            currentVersionByPackage[packageName]
+  )
+    .sort()
+    .reduce((newVersionByPackage, packageName) => {
+      newVersionByPackage[packageName] =
+        currentVersionByPackage[packageName] === null
+          ? '1.0.0'
+          : semverByPackage[packageName]
+            ? evaluateVersion(
+                currentVersionByPackage[packageName],
+                RTYPES[resolve(packageName)],
+                // Error reporting
+                packageName,
+                semverByPackage[packageName]
+              )
+            : // No semver change: same version.
+              currentVersionByPackage[packageName]
 
-    return newVersionByPackage
-  }, {})
+      return newVersionByPackage
+    }, {})
 
   return {
     newVersionByPackage,
