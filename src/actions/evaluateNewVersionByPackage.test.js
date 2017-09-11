@@ -18,7 +18,7 @@ const tests = [
   { current: '1.2.3', type: 'patch', version: '1.2.4' },
   { current: '1.2.3', type: 'minor', version: '1.3.0' },
   { current: '0.3.9-beta9', type: 'patch', version: '0.3.10' },
-  { current: '0.3.9-34', type: 'patch', version: '1.0.0' },
+  { current: '0.3.9-34', type: undefined, version: '1.0.0' }, // no own changes
   { current: '0.3.9.cd3f34', type: 'patch', version: '0.3.10' },
   { current: '1.2.3', type: 'major', version: '2.0.0' },
 ].reduce(

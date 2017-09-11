@@ -5,7 +5,13 @@ const RTYPES = ['patch', 'minor', 'major']
 
 const VERSION_RE = /^(\d+)\.(\d+)\.(\d+)/
 function evaluateVersion(version, type, packageName, semver) {
-  if (!semver) {
+  if (!type) {
+    if (semver) {
+      // Semver was provided but is wrong.
+      throw new Error(
+        `Invalid semver type '${semver}' for package '${packageName}'.`
+      )
+    }
     // No changes
     return version
   }
@@ -18,11 +24,6 @@ function evaluateVersion(version, type, packageName, semver) {
 
   const parts = [re[1], re[2], re[3]].map(l => parseInt(l))
   let idx = TYPES.indexOf(type)
-  if (idx < 0) {
-    throw new Error(
-      `Invalid semver type '${semver}' for package '${packageName}'.`
-    )
-  }
   return []
     .concat(
       parts.slice(0, idx),
@@ -55,16 +56,12 @@ export function evaluateNewVersionByPackage({
       newVersionByPackage[packageName] =
         currentVersionByPackage[packageName] === null
           ? '1.0.0'
-          : semverByPackage[packageName]
-            ? evaluateVersion(
-                currentVersionByPackage[packageName],
-                RTYPES[resolve(packageName)],
-                // Error reporting
-                packageName,
-                semverByPackage[packageName]
-              )
-            : // No semver change: same version.
-              currentVersionByPackage[packageName]
+          : evaluateVersion(
+              currentVersionByPackage[packageName],
+              RTYPES[resolve(packageName)],
+              packageName,
+              semverByPackage[packageName]
+            )
 
       return newVersionByPackage
     }, {})
