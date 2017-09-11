@@ -10,8 +10,20 @@ export function replaceTag(config) {
       {
         cwd,
       }
-    ).then(() =>
-      runCommand('npm', ['dist-tag', 'rm', packageName, fromTag], { cwd })
+    ).then(
+      () =>
+        new Promise((resolve, reject) =>
+          // We accept failure for this operation (somehow this happens for no reason
+          // when everything is OK).
+          runCommand('npm', ['dist-tag', 'rm', packageName, fromTag], {
+            cwd,
+          })
+            .then(result => resolve(result))
+            .catch(err => {
+              console.log(err)
+              resolve('')
+            })
+        )
     )
   }
 }
