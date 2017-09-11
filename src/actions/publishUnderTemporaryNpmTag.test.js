@@ -7,10 +7,17 @@ it('should publish under temporary npm tag', function(done) {
   const newVersionByPackage = {
     '@repo-cooker-test/commis': '3.0.0',
     '@repo-cooker-test/poissonier': '1.2.3',
+    '@repo-cooker-test/entremetier': '1.2.3',
+  }
+  const currentVersionByPackage = {
+    '@repo-cooker-test/commis': '2.0.0',
+    '@repo-cooker-test/poissonier': '1.2.0',
+    '@repo-cooker-test/entremetier': '1.2.3',
   }
   const temporaryNpmTagByPackage = {
     '@repo-cooker-test/commis': 'releasing',
     '@repo-cooker-test/poissonier': 'releasing',
+    // entremetier ignored due to unchanged version
   }
 
   const commands = [
@@ -31,7 +38,7 @@ it('should publish under temporary npm tag', function(done) {
   ]
   testAction(
     publishUnderTemporaryNpmTag,
-    { newVersionByPackage },
+    { currentVersionByPackage, newVersionByPackage },
     { temporaryNpmTagByPackage, commands },
     done
   )
