@@ -14,9 +14,9 @@ describe('getCurrentVersionByPackage', () => {
       'repo-cooker-test': 'minor',
     }
     const currentVersionByPackage = {
-      'repo-cooker-test': versions['repo-cooker-test'],
       '@repo-cooker-test/commis': versions['@repo-cooker-test/commis'],
       '@repo-cooker-test/poissonier': null,
+      'repo-cooker-test': versions['repo-cooker-test'],
     }
     const relatedPackagesByPackage = {
       'repo-cooker-test': [],

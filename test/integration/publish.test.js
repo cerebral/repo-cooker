@@ -48,39 +48,45 @@ describe('publish script', () => {
       ],
     })
 
-    const cwd = path.resolve(
-      basePath,
-      'packages',
-      'node_modules',
-      '@repo-cooker-test',
-      'commis'
-    )
+    const versions = {
+      '@repo-cooker-test/commis': '3.0.0-dabd05',
+      '@repo-cooker-test/entremetier': '1.3.4-dabd05',
+      '@repo-cooker-test/poissonier': '1.0.0-dabd05',
+    }
+    const released = [
+      '@repo-cooker-test/commis',
+      '@repo-cooker-test/entremetier',
+      '@repo-cooker-test/poissonier',
+    ].map(name => ({
+      cwd: path.resolve(basePath, 'packages', 'node_modules', name),
+      name,
+      version: versions[name],
+    }))
 
     const commands = [
-      {
+      ...released.map(r => ({
         cmd: 'writeFile',
-        args: [path.join(cwd, 'package.json'), '[data]', { encoding: 'utf8' }],
-      },
-      {
+        args: [
+          path.join(r.cwd, 'package.json'),
+          '[data]',
+          { encoding: 'utf8' },
+        ],
+      })),
+      ...released.map(r => ({
         cmd: 'npm',
         args: ['publish', '--tag', 'releasing', '--access', 'public'],
-        options: { cwd },
-      },
-      {
+        options: { cwd: r.cwd },
+      })),
+      ...released.map(r => ({
         cmd: 'npm',
-        args: [
-          'dist-tag',
-          'add',
-          '@repo-cooker-test/commis@3.0.0-dabd05',
-          'next',
-        ],
-        options: { cwd },
-      },
-      {
+        args: ['dist-tag', 'add', `${r.name}@${r.version}`, 'next'],
+        options: { cwd: r.cwd },
+      })),
+      ...released.map(r => ({
         cmd: 'npm',
-        args: ['dist-tag', 'rm', '@repo-cooker-test/commis', 'releasing'],
-        options: { cwd },
-      },
+        args: ['dist-tag', 'rm', r.name, 'releasing'],
+        options: { cwd: r.cwd },
+      })),
       {
         cmd: 'resetRepository',
         args: [basePath, 'hard', 'HEAD'],
