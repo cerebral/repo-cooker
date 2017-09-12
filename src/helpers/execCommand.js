@@ -69,8 +69,16 @@ export function execCommand(cmd, args = [], options) {
     const child = spawn(cmd, args, options || {})
     let out = []
     let err = []
-    child.stdout.on('data', data => out.push(data))
-    child.stderr.on('data', data => err.push(data))
+    child.stdout.setEncoding('utf-8')
+    child.stderr.setEncoding('utf-8')
+    child.stdout.on('data', data => {
+      console.log(data)
+      out.push(data)
+    })
+    child.stderr.on('data', data => {
+      console.error(data)
+      err.push(data)
+    })
     child.on('close', function(code) {
       if (code === 0) {
         logCommand(cmd, args, options)
