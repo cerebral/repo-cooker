@@ -67,6 +67,19 @@ it('run template on release summary', done => {
         commits: ['bar_feat_breaks', 'bar_fix_breaks'].map(makeCommit),
       },
     ],
+    docs: [],
+    chore: [
+      {
+        name: 'foo',
+        version: 'new.foo.version',
+        commits: ['foo_chore'].map(makeCommit),
+      },
+      {
+        name: 'bar',
+        version: 'new.bar.version',
+        commits: ['bar_chore'].map(makeCommit),
+      },
+    ],
   })
   testAction(
     createReleaseNotes(release =>

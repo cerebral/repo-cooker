@@ -18,6 +18,8 @@ function summarizeRelease({ commitsByPackage, newVersionByPackage, tag }) {
     fix: extract(commitsByPackage, newVersionByPackage, 'fix'),
     feat: extract(commitsByPackage, newVersionByPackage, 'feat'),
     breaks: extract(commitsByPackage, newVersionByPackage, 'breaks'),
+    docs: extract(commitsByPackage, newVersionByPackage, 'docs'),
+    chore: extract(commitsByPackage, newVersionByPackage, 'chore'),
   })
 }
 
