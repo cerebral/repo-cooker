@@ -1,26 +1,40 @@
-const match = (commit, type) =>
-  commit.type === type || (type === 'breaks' && commit.breaks.length)
-
-function extract(commitsByPackage, newVersionByPackage, type) {
-  const packages = Object.keys(commitsByPackage)
-
-  return packages
-    .map(name => ({
-      name,
-      version: newVersionByPackage[name],
-      commits: commitsByPackage[name].filter(commit => match(commit, type)),
-    }))
-    .filter(({ commits }) => commits.length)
-}
-
 function summarizeRelease({ commitsByPackage, newVersionByPackage, tag }) {
-  return Object.assign({}, tag, {
-    fix: extract(commitsByPackage, newVersionByPackage, 'fix'),
-    feat: extract(commitsByPackage, newVersionByPackage, 'feat'),
-    breaks: extract(commitsByPackage, newVersionByPackage, 'breaks'),
-    docs: extract(commitsByPackage, newVersionByPackage, 'docs'),
-    chore: extract(commitsByPackage, newVersionByPackage, 'chore'),
+  const summary = {}
+  Object.keys(commitsByPackage).forEach(name => {
+    const commitsByType = {}
+
+    function insertCommit(type, commit) {
+      if (summary[type] === undefined) {
+        summary[type] = []
+      }
+      if (commitsByType[type] === undefined) {
+        commitsByType[type] = {
+          name,
+          version: newVersionByPackage[name],
+          commits: [],
+        }
+        summary[type].push(commitsByType[type])
+      }
+      commitsByType[type].commits.push(commit)
+    }
+
+    commitsByPackage[name].forEach(commit => {
+      insertCommit(commit.type, commit)
+      if (commit.breaks.length) {
+        insertCommit('breaks', commit)
+      }
+    })
   })
+
+  return {
+    tag,
+    summary: Object.keys(summary)
+      .sort()
+      .reduce((acc, key) => {
+        acc[key] = summary[key]
+        return acc
+      }, {}),
+  }
 }
 
 export function createReleaseNotes(template) {

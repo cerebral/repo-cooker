@@ -17,7 +17,7 @@ function Package(item) {
 }
 
 function writeBreaks(breaks) {
-  if (!breaks.length) {
+  if (!breaks) {
     return ''
   }
 
@@ -29,7 +29,7 @@ ${breaks.map(Package)}
 }
 
 function writeFixes(fix) {
-  if (!fix.length) {
+  if (!fix) {
     return ''
   }
 
@@ -41,7 +41,7 @@ ${fix.map(Package)}
 }
 
 function writeFeat(feat) {
-  if (!feat.length) {
+  if (!feat) {
     return ''
   }
 
@@ -53,9 +53,9 @@ ${feat.map(Package)}
 }
 
 export default release => {
-  return `${writeBreaks(release.breaks)}
-${writeFixes(release.fix)}
-${writeFeat(release.feat)}
+  return `${writeBreaks(release.summary.breaks)}
+${writeFixes(release.summary.fix)}
+${writeFeat(release.summary.feat)}
 
 With :heart: from the Cerebral Team!
 `
