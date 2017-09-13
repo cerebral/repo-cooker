@@ -64,7 +64,8 @@ describe('publish script', () => {
     }))
 
     const commands = [
-      ...released.map(r => ({
+      // No ... because we want to sort them to avoid inconsistent test failures.
+      released.map(r => ({
         cmd: 'writeFile',
         args: [
           path.join(r.cwd, 'package.json'),
@@ -251,7 +252,21 @@ describe('publish script', () => {
         cook.fireworks,
       ])
       .then(() => {
-        assert.deepEqual(dryRun.commands, commands, done)
+        const result = []
+        let writtenFiles
+        dryRun.commands.forEach(cmd => {
+          if (cmd.cmd === 'writeFile') {
+            if (writtenFiles === undefined) {
+              writtenFiles = []
+              result.push(writtenFiles)
+            }
+            writtenFiles.push(cmd)
+          } else {
+            result.push(cmd)
+          }
+        })
+        writtenFiles.sort((a, b) => (a.args[0] < b.args[0] ? -1 : 1))
+        assert.deepEqual(result, commands, done)
       })
       .catch(done)
   })
