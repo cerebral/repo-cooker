@@ -1,4 +1,9 @@
-function summarizeRelease({ commitsByPackage, newVersionByPackage, tag }) {
+function summarizeRelease({
+  commitsByPackage,
+  newVersionByPackage,
+  currentVersionByPackage,
+  tag,
+}) {
   const summary = {}
   Object.keys(commitsByPackage).forEach(name => {
     const commitsByType = {}
@@ -11,6 +16,7 @@ function summarizeRelease({ commitsByPackage, newVersionByPackage, tag }) {
         commitsByType[type] = {
           name,
           version: newVersionByPackage[name],
+          currentVersion: currentVersionByPackage[name],
           commits: [],
         }
         summary[type].push(commitsByType[type])
