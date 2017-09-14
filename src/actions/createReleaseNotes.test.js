@@ -24,61 +24,51 @@ it('run template on release summary', done => {
       'bar_chore',
     ].map(makeCommit),
   }
+  const currentVersionByPackage = {
+    bar: 'current.bar.version',
+    foo: 'current.foo.version',
+  }
   const newVersionByPackage = {
     bar: 'new.bar.version',
     foo: 'new.foo.version',
   }
+  const commitsWithoutPackage = []
   const tag = { name: 'super_awesome_release_tag', date: 'SOME_ISO_DATE' }
 
   const releaseNotes = Object.assign(
     { templateRun: 'OK', tag },
     {
+      newVersionByPackage,
+      currentVersionByPackage,
+      commitsWithoutPackage,
       summary: {
-        breaks: [
-          {
-            name: 'foo',
-            version: 'new.foo.version',
-            commits: ['foo_feat_breaks', 'foo_fix_breaks'].map(makeCommit),
-          },
-          {
-            name: 'bar',
-            version: 'new.bar.version',
-            commits: ['bar_feat_breaks', 'bar_fix_breaks'].map(makeCommit),
-          },
-        ],
         chore: [
           {
             name: 'foo',
-            version: 'new.foo.version',
             commits: ['foo_chore'].map(makeCommit),
           },
           {
             name: 'bar',
-            version: 'new.bar.version',
             commits: ['bar_chore'].map(makeCommit),
           },
         ],
         feat: [
           {
             name: 'foo',
-            version: 'new.foo.version',
             commits: ['foo_feat_breaks', 'foo_feat'].map(makeCommit),
           },
           {
             name: 'bar',
-            version: 'new.bar.version',
             commits: ['bar_feat_breaks', 'bar_feat'].map(makeCommit),
           },
         ],
         fix: [
           {
             name: 'foo',
-            version: 'new.foo.version',
             commits: ['foo_fix_breaks', 'foo_fix'].map(makeCommit),
           },
           {
             name: 'bar',
-            version: 'new.bar.version',
             commits: ['bar_fix_breaks', 'bar_fix'].map(makeCommit),
           },
         ],
@@ -90,7 +80,13 @@ it('run template on release summary', done => {
     createReleaseNotes(release =>
       Object.assign({ templateRun: 'OK' }, release)
     ),
-    { commitsByPackage, newVersionByPackage, tag },
+    {
+      commitsByPackage,
+      currentVersionByPackage,
+      newVersionByPackage,
+      commitsWithoutPackage,
+      tag,
+    },
     { releaseNotes },
     done
   )

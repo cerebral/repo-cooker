@@ -16,8 +16,6 @@ function summarizeRelease({
       if (commitsByType[type] === undefined) {
         commitsByType[type] = {
           name,
-          version: newVersionByPackage[name],
-          currentVersion: currentVersionByPackage[name],
           commits: [],
         }
         summary[type].push(commitsByType[type])
@@ -26,11 +24,7 @@ function summarizeRelease({
     }
 
     commitsByPackage[name].forEach(commit => {
-      if (commit.breaks.length) {
-        insertCommit('breaks', commit)
-      } else {
-        insertCommit(commit.type, commit)
-      }
+      insertCommit(commit.type, commit)
     })
   })
 
