@@ -30,15 +30,12 @@ export function getCommit(repoPath, hash) {
     .open(repoPath)
     .then(repo => repo.getCommit(hash))
     .then(commit =>
-      commit
-        .getDiff()
-        .then(getChangedFiles)
-        .then(files => ({
-          author: getAuthor(commit),
-          date: commit.date().toJSON(),
-          hash: commit.sha(),
-          message: commit.message(),
-          files,
-        }))
+      commit.getDiff().then(getChangedFiles).then(files => ({
+        author: getAuthor(commit),
+        date: commit.date().toJSON(),
+        hash: commit.sha(),
+        message: commit.message(),
+        files,
+      }))
     )
 }
