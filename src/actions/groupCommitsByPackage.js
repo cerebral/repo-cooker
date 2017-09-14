@@ -1,5 +1,7 @@
 import { resolve, sep } from 'path'
 
+let commitsWithoutPackage = []
+
 /*
   By looking at files changed we can match the name of
   the package
@@ -15,7 +17,7 @@ function matchPackage(filePath, config) {
     }
   }
 
-  return null
+  return 'monorepo'
 }
 
 /*
@@ -58,7 +60,18 @@ export function groupCommitsByPackage({ config, props }) {
         commitsByPackage[packageName].push(commit)
       })
 
+      /*
+        Move commits not related to any package to commitsWithoutPackage
+      */
+      if (commitsByPackage.monorepo) {
+        commitsByPackage.monorepo.forEach(commitWithoutPackage => {
+          commitsWithoutPackage.push(commitWithoutPackage)
+        })
+      }
+      delete commitsByPackage['monorepo']
+
       return commitsByPackage
     }, {}),
+    commitsWithoutPackage,
   }
 }
