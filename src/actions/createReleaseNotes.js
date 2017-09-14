@@ -1,12 +1,13 @@
 function summarizeRelease({
   commitsByPackage,
+  commitsWithoutPackage,
   newVersionByPackage,
   currentVersionByPackage,
   tag,
 }) {
-  const summary = {}
+  let summary = {}
   Object.keys(commitsByPackage).forEach(name => {
-    const commitsByType = {}
+    let commitsByType = {}
 
     function insertCommit(type, commit) {
       if (summary[type] === undefined) {
@@ -35,6 +36,9 @@ function summarizeRelease({
 
   return {
     tag,
+    newVersionByPackage,
+    currentVersionByPackage,
+    commitsWithoutPackage,
     summary: Object.keys(summary).sort().reduce((acc, key) => {
       acc[key] = summary[key]
       return acc
