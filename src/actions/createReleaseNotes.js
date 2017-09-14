@@ -19,21 +19,20 @@ function summarizeRelease({ commitsByPackage, newVersionByPackage, tag }) {
     }
 
     commitsByPackage[name].forEach(commit => {
-      insertCommit(commit.type, commit)
       if (commit.breaks.length) {
         insertCommit('breaks', commit)
+      } else {
+        insertCommit(commit.type, commit)
       }
     })
   })
 
   return {
     tag,
-    summary: Object.keys(summary)
-      .sort()
-      .reduce((acc, key) => {
-        acc[key] = summary[key]
-        return acc
-      }, {}),
+    summary: Object.keys(summary).sort().reduce((acc, key) => {
+      acc[key] = summary[key]
+      return acc
+    }, {}),
   }
 }
 
