@@ -33,10 +33,12 @@ function summarizeRelease({
     newVersionByPackage,
     currentVersionByPackage,
     commitsWithoutPackage,
-    summary: Object.keys(summary).sort().reduce((acc, key) => {
-      acc[key] = summary[key]
-      return acc
-    }, {}),
+    summary: Object.keys(summary)
+      .sort()
+      .reduce((acc, key) => {
+        acc[key] = summary[key]
+        return acc
+      }, {}),
   }
 }
 

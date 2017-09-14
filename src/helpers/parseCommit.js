@@ -27,7 +27,10 @@ export function parseCommit(commit) {
     if (breakingRe.test(line)) {
       current = breaks
     } else if (issuesRe.test(line)) {
-      issues = issuesRe.exec(line)[1].split(',').map(s => s.trim())
+      issues = issuesRe
+        .exec(line)[1]
+        .split(',')
+        .map(s => s.trim())
       current = body
     } else {
       current.push(line.trim())
