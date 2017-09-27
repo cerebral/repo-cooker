@@ -40,14 +40,25 @@ export function groupCommitsByPackage({ config, props }) {
         Extract packages affected by matching file path changed with
         defined packages in config
       */
-      const packagesAffected = commit.files.reduce((packagesAffected, file) => {
-        const packageName = matchPackage(file, config)
-        if (packageName && packagesAffected.indexOf(packageName) === -1) {
-          return packagesAffected.concat(packageName)
-        }
+      const packagesAffected = commit.files
+        .reduce((packagesAffected, file) => {
+          const packageName = matchPackage(file, config)
+          if (packageName && packagesAffected.indexOf(packageName) === -1) {
+            return packagesAffected.concat(packageName)
+          }
 
-        return packagesAffected
-      }, [])
+          return packagesAffected
+        }, [])
+        /*
+          Exclude monorepo when commit affects other packages
+        */
+        .filter((packageName, _, array) => {
+          if (packageName === 'monorepo' && array.length > 1) {
+            return false
+          }
+
+          return true
+        })
 
       /*
         Put commit into each package array
