@@ -3,6 +3,7 @@
   "version": "0.0.0-next",
   "description": "",
   "main": "lib/index.js",
+  "bin": "./lib/cli.js",
   "scripts": {
     "start": "babel-watch src/index.js --watch src",
     "build": "cross-env BABEL_ENV=production babel src/ --out-dir=lib/ -s",
