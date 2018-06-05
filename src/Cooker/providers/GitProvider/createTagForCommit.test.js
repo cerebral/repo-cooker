@@ -1,5 +1,6 @@
 /* eslint-env mocha */
-import nodegit from 'nodegit'
+// Import through proxy for better error message.
+import { nodegit } from './nodegit'
 import { config } from 'test-utils'
 import assert from 'test-utils/assert'
 import { createTagForCommit } from './createTagForCommit'

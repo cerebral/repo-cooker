@@ -1,4 +1,5 @@
-const nodegit = require('nodegit')
+// Import through proxy for better error message.
+import { nodegit } from './nodegit'
 
 function getHashListFromHashToHash(repo, fromHash, toHash) {
   if (!fromHash || !toHash) {

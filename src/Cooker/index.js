@@ -1,22 +1,50 @@
 import FunctionTree from 'function-tree'
-import { ConfigProvider } from './providers/ConfigProvider'
-import { GithubProvider } from './providers/GithubProvider'
-import { GitProvider } from './providers/GitProvider'
-import { NpmProvider } from './providers/NpmProvider'
-import { PackageJsonProvider } from './providers/PackageJsonProvider'
 import { createConfig } from '../helpers/createConfig'
+import { parseArgs } from '../helpers/parseArgs'
+import { runSignal } from '../signals/run'
 
-export function Cooker(options) {
+function provide(path, config) {
+  // Lazy loading of providers to avoid requiring `nodegit` or other
+  // big libraries if they are not needed.
+  const provider = require(path).default
+  return provider(config)
+}
+
+const PROVIDER = {
+  git: './providers/GitProvider',
+  github: './providers/GithubProvider',
+  npm: './providers/NpmProvider',
+  packageJson: './providers/PackageJsonProvider',
+}
+const USE_ALL = Object.assign(
+  {},
+  ...Object.keys(PROVIDER).map(k => ({ [k]: true }))
+)
+
+export function Cooker(argv, theOptions) {
+  if (arguments.length !== 2) {
+    theOptions = argv
+    argv = []
+  }
+  const { cmd, args } = parseArgs(argv)
+  const options = Object.assign({}, theOptions)
+  if (args.includes('--dry-run')) {
+    options.dryRyn = true
+    options.devtools = true
+  }
+  if (args.includes('--devtools')) {
+    options.devtools = true
+  }
   const config = createConfig(options)
-
+  const use = args.includes('--run') ? { npm: true } : options.use || USE_ALL
   const ft = new FunctionTree(
-    [
-      ConfigProvider(config),
-      GitProvider(config),
-      GithubProvider(config),
-      NpmProvider(config),
-      PackageJsonProvider(config),
-    ].concat(options.providers || [])
+    Object.assign(
+      { config },
+      ...Object.keys(use)
+        .filter(k => use[k])
+        .map(k => ({ [k]: provide(PROVIDER[k], config) })),
+      options.providers || {}
+    )
   )
 
   if (options.devtools !== null && process.env.NODE_ENV !== 'production') {
@@ -27,8 +55,13 @@ export function Cooker(options) {
 
     tools.add(ft)
   }
-  ft.cook = (name, ...args) =>
-    ft.run(name, ...args).catch(err => {
+  ft.cook = (name, ...args) => {
+    args.forEach(arg => {
+      if (typeof arg === 'object') {
+        arg.config = config
+      }
+    })
+    return ft.run(name, ...args).catch(err => {
       console.log('')
       console.log(err.payload.error.message)
       console.log(err.payload.error.stack)
@@ -40,6 +73,10 @@ export function Cooker(options) {
         process.exit(-1)
       }
     })
+  }
 
+  if (args.includes('--run')) {
+    ft.cook(`run ${cmd}`, runSignal, { argv, npmScript: cmd })
+  }
   return ft
 }

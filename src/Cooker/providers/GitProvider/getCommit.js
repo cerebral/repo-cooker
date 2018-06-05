@@ -1,4 +1,5 @@
-import nodegit from 'nodegit'
+// Import through proxy for better error message.
+import { nodegit } from './nodegit'
 
 function getAuthor(commit) {
   const author = commit.author()

@@ -11,7 +11,7 @@ export const tags = [
   },
 ]
 
-export const master = 'dc0e6dfc41148cde76656204693213bf7c2c0ad0'
+export const master = '115cf1783fd08c1d0f7acac90226ef5019f49a61'
 
 export const commits = [
   {
@@ -224,6 +224,16 @@ export const commits = [
     message:
       'fix(repo-cooker-test): npm does not need more then auth token in .npmrc\n',
     files: ['.travis.yml'],
+  },
+  {
+    author: {
+      name: 'Gaspard Bucher',
+      email: 'gaspard@lucidogen.io',
+    },
+    date: '2018-06-04T16:02:26.000Z',
+    hash: '115cf1783fd08c1d0f7acac90226ef5019f49a61',
+    message: 'chore(testing): add failing test in one of the repos.\n',
+    files: ['packages/node_modules/@repo-cooker-test/pastry-chef/package.json'],
   },
 ]
 
@@ -532,5 +542,21 @@ export const parsedCommits = [
     type: 'fix',
     scope: 'repo-cooker-test',
     summary: 'npm does not need more then auth token in .npmrc',
+  },
+  {
+    author: {
+      name: 'Gaspard Bucher',
+      email: 'gaspard@lucidogen.io',
+    },
+    date: '2018-06-04T16:02:26.000Z',
+    hash: '115cf1783fd08c1d0f7acac90226ef5019f49a61',
+    message: 'chore(testing): add failing test in one of the repos.\n',
+    files: ['packages/node_modules/@repo-cooker-test/pastry-chef/package.json'],
+    body: '',
+    issues: [],
+    breaks: [],
+    type: 'chore',
+    scope: 'testing',
+    summary: 'add failing test in one of the repos.',
   },
 ]

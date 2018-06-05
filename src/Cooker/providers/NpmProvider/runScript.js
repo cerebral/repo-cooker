@@ -25,6 +25,8 @@ export function runScript(config) {
           ? runCommand('npm', ['run', scriptName, ...args], {
               cwd,
             })
+              .then(output => ({ pass: true, output }))
+              .catch(error => ({ pass: false, error }))
           : false
     )
   }

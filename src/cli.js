@@ -8,6 +8,7 @@
 // 2. If [cmd] is not found, uses the builtin
 //    `run` command to run the given [cmd] in all packages
 //    that contain the given script.
+import { spawn } from 'child_process'
 import { readFileSync, statSync } from 'fs'
 import { join, resolve } from 'path'
 
@@ -46,15 +47,18 @@ if (cmdPath) {
   fullCmdPath = resolve(cmdPath)
   console.log(`Running script: ${fullCmdPath}`)
 } else {
+  // Run the npm script
   fullCmdPath = resolve(join(receiptsPath, 'index.js'))
   if (!fileExist(fullCmdPath)) {
     throw new Error(`Missing repo-cooker base file at '${fullCmdPath}'.`)
   }
   args.unshift(cmd)
   args.unshift('--run')
-  // Run the npm script
-  console.log(`No custom script found for '${cmd}' in '${receiptsPath}'`)
-  console.log(`Running npm script '${cmd}'.`)
 }
-// exec babel-node fullCmdPath args
-console.log(`Exec: babel-node ${fullCmdPath} ${args.join(' ')}`)
+console.log(`> babel-node --presets env ${fullCmdPath} ${args.join(' ')}`)
+const child = spawn('babel-node', ['--presets', 'env', fullCmdPath, ...args], {
+  stdio: 'inherit',
+})
+child.on('close', function(code) {
+  exit(code)
+})
