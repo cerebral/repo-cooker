@@ -27,8 +27,7 @@ function getChangedFiles(diffList) {
 }
 
 export function getCommit(repoPath, hash) {
-  return nodegit.Repository
-    .open(repoPath)
+  return nodegit.Repository.open(repoPath)
     .then(repo => repo.getCommit(hash))
     .then(commit =>
       commit

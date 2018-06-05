@@ -7,7 +7,9 @@ export function createConfig(options) {
   const runCommand =
     options.dryRun === true
       ? logCommand
-      : typeof options.dryRun === 'function' ? options.dryRun : execCommand
+      : typeof options.dryRun === 'function'
+        ? options.dryRun
+        : execCommand
 
   return Object.assign({}, options, { packagesPaths, runCommand })
 }

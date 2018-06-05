@@ -5,11 +5,11 @@ const issuesRe = /^\s*ISSUES CLOSED:\s*(.*)$/
 
 /**
  * type(scope): message
- * 
+ *
  * Yada yada yada
- * 
+ *
  * yada yada yada
- * 
+ *
  * ISSUES CLOSED: #xxx, #yyy
  * BREAKING CHANGE:
  * - this

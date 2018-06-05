@@ -1,8 +1,8 @@
 function Commit(item) {
   return `
-  - ${item.summary} ${item.issues.length
-    ? '(' + item.issues.join(', ') + ')'
-    : ''} - *${item.author.name}*
+  - ${item.summary} ${
+    item.issues.length ? '(' + item.issues.join(', ') + ')' : ''
+  } - *${item.author.name}*
     ${item.breaks
       .map(item => {
         return `- ${item}`

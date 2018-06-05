@@ -18,7 +18,9 @@ export function getRelatedPackages(config) {
         )
         if (info.name !== name) {
           throw new Error(
-            `Invalid package.json (name entry '${info.name}' does not match package name '${name}').`
+            `Invalid package.json (name entry '${
+              info.name
+            }' does not match package name '${name}').`
           )
         }
 

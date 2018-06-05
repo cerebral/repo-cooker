@@ -61,11 +61,9 @@ function getHashListFromHashToHash(repo, fromHash, toHash) {
  * Returns the list as it appears in the commit history (first commit first).
  */
 export function getHashListFromHash(repoPath, hash) {
-  return nodegit.Repository
-    .open(repoPath)
-    .then(repo =>
-      repo
-        .getHeadCommit()
-        .then(commit => getHashListFromHashToHash(repo, hash, commit.sha()))
-    )
+  return nodegit.Repository.open(repoPath).then(repo =>
+    repo
+      .getHeadCommit()
+      .then(commit => getHashListFromHashToHash(repo, hash, commit.sha()))
+  )
 }

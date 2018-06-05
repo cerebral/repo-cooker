@@ -1,4 +1,4 @@
-let nodegit = undefined
+let nodegit
 const NODEGIT_VERSION = '0.20.3'
 try {
   nodegit = require('nodegit')

@@ -43,8 +43,16 @@ const cooker = Cooker(process.argv, {
     host: 'localhost:9797'
   },
 
+  // Force using devtools even if dryRun is not true.
+  // Same as command line option '--devtools'.
+  useDevtools: true,
+
+  // Do not execute any command, just show what would be run.
+  // Same as command line option '--dry-run'.
+  dryRun: true,
+
   // If your repo is located at some path other than
-  // project root
+  // project root.
   path: '.',
 
   // Additional providers for the actions

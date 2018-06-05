@@ -20,6 +20,7 @@ script:
 - |
   if [[ $SKIP_TESTS != 'true' ]]; then
     npm prune
+    npm install --no-save nodegit@0.20.3
     npm run lint
     npm test
   fi

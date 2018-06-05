@@ -6,11 +6,13 @@ const validOption = {
 }
 
 export function parseArgs(allArgs) {
-  let cmd = undefined
+  let cmd
   const cmdArgs = []
   const args = allArgs.slice()
-  const nodeExecutable = args.shift()
-  const script = args.shift()
+  // nodeExecutable
+  args.shift()
+  // script
+  args.shift()
 
   for (let arg of args) {
     const isOpt = optionRe.exec(arg)
