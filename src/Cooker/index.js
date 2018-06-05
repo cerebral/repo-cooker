@@ -1,7 +1,6 @@
 import FunctionTree from 'function-tree'
 import { createConfig } from '../helpers/createConfig'
 import { parseArgs } from '../helpers/parseArgs'
-import { runSignal } from '../signals/run'
 
 function provide(path, config) {
   // Lazy loading of providers to avoid requiring `nodegit` or other
