@@ -68,7 +68,6 @@ export function execCommand(cmd, args = [], options) {
   return new Promise((resolve, reject) => {
     const child = spawn(cmd, args, options || {})
     let out = []
-    let err = []
     child.stdout.setEncoding('utf-8')
     child.stderr.setEncoding('utf-8')
     child.stdout.on('data', data => {
@@ -76,18 +75,20 @@ export function execCommand(cmd, args = [], options) {
       out.push(data)
     })
     child.stderr.on('data', data => {
-      console.error(data)
-      err.push(data)
+      console.log(data)
+      out.push(data)
     })
     child.on('close', function(code) {
+      console.log(`CLOSING '${cmd} ${args.join(' ')}'`)
+      console.log(`code: ${code}`)
       if (code === 0) {
         logCommand(cmd, args, options)
         console.log(PASS)
-        resolve(out.join(''))
+        resolve(out.join('\n'))
       } else {
         logCommand(cmd, args, options)
         console.log(FAIL)
-        reject(new Error(err.join('')))
+        reject(out.join('\n'))
       }
     })
   })

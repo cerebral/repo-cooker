@@ -1,16 +1,19 @@
 {
-  "presets": ["es2015"],
+  "presets": ["env"],
   "env": {
     "production": {
-      "ignore": [
-        "**/*.test.js"
-      ]
+      "ignore": ["**/*.test.js"]
     }
   },
   "plugins": [
-    ["module-alias", [
-      { "src": "./test/utils", "expose": "test-utils" },
-      { "src": "./src", "expose": "repo-cooker" }
-    ]]
+    [
+      "module-resolver",
+      {
+        "alias": {
+          "test-utils": "./test/utils",
+          "repo-cooker": "./src"
+        }
+      }
+    ]
   ]
 }

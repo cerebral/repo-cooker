@@ -1,3 +1,4 @@
+import { Provider } from 'function-tree'
 import { createRelease } from './createRelease'
 import { execCommand, logCommand } from '../../../helpers/execCommand'
 
@@ -11,13 +12,11 @@ export function GithubProvider({ path, runCommand }) {
     }
   }
 
-  return context => {
-    context.github = {
-      createRelease(tagName, body, target = 'master') {
-        // Has side effects so we wrap with runCommand
-        return runCommand(createRelease, [path, tagName, body, target])
-      },
-    }
-    return context
-  }
+  return new Provider({
+    createRelease(tagName, body, target = 'master') {
+      // Has side effects so we wrap with runCommand
+      return runCommand(createRelease, [path, tagName, body, target])
+    },
+  })
 }
+export default GithubProvider

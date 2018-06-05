@@ -1,4 +1,5 @@
-import nodegit from 'nodegit'
+// Import through proxy for better error message.
+import { nodegit } from './nodegit'
 
 const BRANCH_RE = /^refs\/heads\/(.+)$/
 

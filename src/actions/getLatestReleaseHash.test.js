@@ -1,5 +1,6 @@
 /* eslint-env mocha */
-import nodegit from 'nodegit'
+// Import through proxy for better error message.
+import { nodegit } from '../Cooker/providers/GitProvider/nodegit'
 import simple from 'simple-mock'
 import { testAction } from 'test-utils'
 import { getLatestReleaseHash } from './'

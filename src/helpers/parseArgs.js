@@ -2,6 +2,7 @@ const optionRe = /^--.+$/
 const validOption = {
   '--dry-run': true,
   '--devtools': true,
+  '--run': true,
 }
 
 export function parseArgs(allArgs) {

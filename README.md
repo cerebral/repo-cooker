@@ -18,17 +18,26 @@ Things to check before gettings started:
 ```json
 {
   "scripts": {
-    "publish": "node publish-script.js"
+    // This will run the custom script in ./repo-cooker/publish.js
+    "publish": "repo-cooker publish",
+    // As there is no custom script for `test`, this will run the npm script 'test' in
+    // all packages.
+    "test": "repo-cooker test"
   }
 }
 ```
 
-*publish-script.js*
+*repo-cooker/index.js*
+
+This is the settings file.
+
 ```js
 import {Cooker} from 'repo-cooker'
-import * as cook from 'repo-cooker/actions'
 
-const cooker = Cooker({
+// We need to pass process.argv as first argument so that we can set
+// --dry-run or other options. For example:
+// > npm run publish -- --dry-run
+const cooker = Cooker(process.argv, {
   // Devtools settings
   devtools: {
     host: 'localhost:9797'
@@ -46,6 +55,11 @@ const cooker = Cooker({
   // then be in [path]/[packagesPath]/[packageName]
   packagesPath: 'packages/node_modules'
 })
+```
+
+*repo-cooker/publish.js*
+```js
+import {cooker} from './'
 
 cooker.cook('publish', [
   cook.getLatestReleaseHash,

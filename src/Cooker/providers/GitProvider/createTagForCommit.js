@@ -1,4 +1,5 @@
-import nodegit from 'nodegit'
+// Import through proxy for better error message.
+import { nodegit } from './nodegit'
 
 export function createTagForCommit(path, tag, message = '', ref = 'HEAD') {
   return nodegit.Repository.open(path).then(repo =>

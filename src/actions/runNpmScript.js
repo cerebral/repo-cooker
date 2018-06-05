@@ -1,5 +1,6 @@
-export function runNpmScript(scriptName, args = [], providedPackageNames) {
-  return function runNpmScript({ npm, config }) {
+export function runNpmScript(scriptNameTag, args = [], providedPackageNames) {
+  return function runNpmScript({ config, props, npm, resolve }) {
+    const scriptName = resolve.value(scriptNameTag)
     const packages = providedPackageNames || Object.keys(config.packagesPaths)
 
     return Promise.all(
