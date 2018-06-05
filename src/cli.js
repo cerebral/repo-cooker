@@ -52,7 +52,7 @@ if (cmdPath) {
     throw new Error(`Missing repo-cooker base file at '${fullCmdPath}'.`)
   }
   args.unshift(cmd)
-  args.unshift('--run')
+  args.unshift('--builtin=run')
 }
 console.log(`> babel-node --presets env ${fullCmdPath} ${args.join(' ')}`)
 const child = spawn('babel-node', ['--presets', 'env', fullCmdPath, ...args], {

@@ -58,7 +58,10 @@ describe('writeVersionsToPackages', () => {
         peerDependencies: {
           '@repo-cooker-test/sous-chef': '^0.3.9',
         },
-        scripts: { test: 'exit -1' },
+        scripts: {
+          test: 'exit -1',
+          'other-script': "echo 'Other Script OK'",
+        },
         license: 'MIT',
       },
       {
