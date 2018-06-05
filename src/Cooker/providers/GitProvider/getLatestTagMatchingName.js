@@ -6,8 +6,7 @@ export function getLatestTagMatchingName(repoPath, regex) {
     regex = RegExp(regex)
   }
   return nodegit.Repository.open(repoPath).then(repo =>
-    nodegit.Tag
-      .list(repo)
+    nodegit.Tag.list(repo)
       .then(list =>
         list
           .sort((a, b) => (a > b ? -1 : 1))
@@ -16,8 +15,7 @@ export function getLatestTagMatchingName(repoPath, regex) {
       .then(
         tagName =>
           tagName
-            ? nodegit.Reference
-                .lookup(repo, `refs/tags/${tagName}`)
+            ? nodegit.Reference.lookup(repo, `refs/tags/${tagName}`)
                 .then(ref => ref.peel(nodegit.Object.TYPE.COMMIT))
                 .then(ref => nodegit.Commit.lookup(repo, ref.id()))
                 .then(commit => ({

@@ -10,5 +10,6 @@
         "trailingComma": "none"
       }
     }
-  ]
+  ],
+  "parser": "babylon"
 }

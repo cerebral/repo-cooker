@@ -29,11 +29,11 @@ export function Cooker(argv, theOptions) {
   const { cmd, args } = parseArgs(argv)
   const options = Object.assign({}, theOptions)
   if (args.includes('--dry-run')) {
-    options.dryRyn = true
-    options.devtools = true
+    options.dryRun = true
+    options.useDevtools = true
   }
   if (args.includes('--devtools')) {
-    options.devtools = true
+    options.useDevtools = true
   }
   const config = createConfig(options)
   const use = args.includes('--run') ? { npm: true } : options.use || USE_ALL
@@ -47,7 +47,7 @@ export function Cooker(argv, theOptions) {
     )
   )
 
-  if (options.devtools !== null && process.env.NODE_ENV !== 'production') {
+  if (options.useDevtools) {
     const Devtools = require('function-tree/devtools').default
     const tools = new Devtools({
       host: options.devtools ? options.devtools.host : 'localhost:9090',

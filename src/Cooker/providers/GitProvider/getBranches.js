@@ -12,8 +12,7 @@ export function getBranches(repoPath) {
       .then(list =>
         Promise.all(
           list.map(refName =>
-            nodegit.Reference
-              .lookup(repo, refName)
+            nodegit.Reference.lookup(repo, refName)
               .then(ref => ref.peel(nodegit.Object.TYPE.COMMIT))
               .then(ref => nodegit.Commit.lookup(repo, ref.id()))
               .then(commit => ({

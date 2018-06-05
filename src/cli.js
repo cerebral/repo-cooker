@@ -23,7 +23,6 @@ function fileExist(path) {
   } catch (err) {
     return false
   }
-  return false
 }
 
 const packagePath = join(rootPath, 'package.json')
@@ -41,7 +40,7 @@ const cmdPath = [
   join(receiptsPath, `${cmd}/index.js`),
 ].find(fileExist)
 
-let fullCmdPath = undefined
+let fullCmdPath
 if (cmdPath) {
   // Found a custom script for this command.
   fullCmdPath = resolve(cmdPath)
@@ -60,5 +59,5 @@ const child = spawn('babel-node', ['--presets', 'env', fullCmdPath, ...args], {
   stdio: 'inherit',
 })
 child.on('close', function(code) {
-  exit(code)
+  process.exit(code)
 })
