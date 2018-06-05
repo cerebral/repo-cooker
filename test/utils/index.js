@@ -1,6 +1,7 @@
 import { resolve, join } from 'path'
 import { createConfig } from '../../src/helpers/createConfig'
 
+export { execCli } from './execCli'
 export { testAction } from './testAction'
 export { testActionThrows } from './testActionThrows'
 export { runCommandMock } from './runCommandMock'

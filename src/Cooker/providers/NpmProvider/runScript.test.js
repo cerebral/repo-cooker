@@ -3,7 +3,7 @@ import assert from 'test-utils/assert'
 import { config, runCommandMock } from 'test-utils'
 import { runScript as runScriptFactory } from './runScript'
 
-it('should execute script in package', function(done) {
+it('should execute script in package', done => {
   const runCommand = runCommandMock()
   const runScript = runScriptFactory({
     runCommand,

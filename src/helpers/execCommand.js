@@ -79,8 +79,6 @@ export function execCommand(cmd, args = [], options) {
       out.push(data)
     })
     child.on('close', function(code) {
-      console.log(`CLOSING '${cmd} ${args.join(' ')}'`)
-      console.log(`code: ${code}`)
       if (code === 0) {
         logCommand(cmd, args, options)
         console.log(PASS)

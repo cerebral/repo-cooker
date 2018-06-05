@@ -11,7 +11,7 @@ export const tags = [
   },
 ]
 
-export const master = '115cf1783fd08c1d0f7acac90226ef5019f49a61'
+export const master = 'd1c371bc15e0757e696333f0ad26cf1a7cd5bfe6'
 
 export const commits = [
   {
@@ -234,6 +234,27 @@ export const commits = [
     hash: '115cf1783fd08c1d0f7acac90226ef5019f49a61',
     message: 'chore(testing): add failing test in one of the repos.\n',
     files: ['packages/node_modules/@repo-cooker-test/pastry-chef/package.json'],
+  },
+
+  {
+    author: {
+      name: 'Gaspard Bucher',
+      email: 'gaspard@lucidogen.io',
+    },
+    date: '2018-06-05T15:11:48.000Z',
+    hash: 'd1c371bc15e0757e696333f0ad26cf1a7cd5bfe6',
+    message: 'chore(repo-cooker): update scripts for latest repo-cooker.\n',
+    files: [
+      '.babelrc',
+      '.prettierrc.json',
+      'package.json',
+      'packages/node_modules/@repo-cooker-test/pastry-chef/package.json',
+      'scripts/cooker.js',
+      'scripts/dummy.js',
+      'scripts/index.js',
+      'scripts/publish.js',
+      'scripts/releaseNotesTemplate.js',
+    ],
   },
 ]
 
@@ -558,5 +579,32 @@ export const parsedCommits = [
     type: 'chore',
     scope: 'testing',
     summary: 'add failing test in one of the repos.',
+  },
+
+  {
+    author: {
+      name: 'Gaspard Bucher',
+      email: 'gaspard@lucidogen.io',
+    },
+    date: '2018-06-05T15:11:48.000Z',
+    hash: 'd1c371bc15e0757e696333f0ad26cf1a7cd5bfe6',
+    message: 'chore(repo-cooker): update scripts for latest repo-cooker.\n',
+    files: [
+      '.babelrc',
+      '.prettierrc.json',
+      'package.json',
+      'packages/node_modules/@repo-cooker-test/pastry-chef/package.json',
+      'scripts/cooker.js',
+      'scripts/dummy.js',
+      'scripts/index.js',
+      'scripts/publish.js',
+      'scripts/releaseNotesTemplate.js',
+    ],
+    body: '',
+    issues: [],
+    breaks: [],
+    type: 'chore',
+    scope: 'repo-cooker',
+    summary: 'update scripts for latest repo-cooker.',
   },
 ]

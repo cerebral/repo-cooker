@@ -3,7 +3,7 @@ import assert from 'test-utils/assert'
 import { config, runCommandMock } from 'test-utils'
 import { replaceTag as replaceTagFactory } from './replaceTag'
 
-it('should execute npm dist-tag add and remove', function(done) {
+it('should execute npm dist-tag add and remove', done => {
   const runCommand = runCommandMock()
   const replaceTag = replaceTagFactory({
     runCommand,

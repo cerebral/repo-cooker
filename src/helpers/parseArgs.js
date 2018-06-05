@@ -1,12 +1,20 @@
+import { runSignalSetup } from '../signals/run'
+
+const builtinRe = /^--builtin=(.+)$/
 const optionRe = /^--.+$/
 const validOption = {
   '--dry-run': true,
   '--devtools': true,
-  '--run': true,
+  '--builtin=[cmd_name]': true,
+}
+
+const BUILTIN_SIGNALS = {
+  run: runSignalSetup,
 }
 
 export function parseArgs(allArgs) {
   let cmd
+  let builtin
   const cmdArgs = []
   const args = allArgs.slice()
   // nodeExecutable
@@ -15,8 +23,17 @@ export function parseArgs(allArgs) {
   args.shift()
 
   for (let arg of args) {
+    const isBuiltin = builtinRe.exec(arg)
     const isOpt = optionRe.exec(arg)
-    if (isOpt) {
+    if (isBuiltin) {
+      const signal = isBuiltin[1]
+      builtin = BUILTIN_SIGNALS[signal]
+      if (!builtin) {
+        throw new Error(
+          `Invalid option '${arg}' (unknown builtin signal '${signal}').`
+        )
+      }
+    } else if (isOpt) {
       // option
       if (!validOption[arg]) {
         throw new Error(
@@ -32,5 +49,5 @@ export function parseArgs(allArgs) {
       cmdArgs.push(arg)
     }
   }
-  return { cmd, args: cmdArgs }
+  return { cmd, args: cmdArgs, builtin }
 }

@@ -17,4 +17,16 @@ export function deepEqual(actual, expected, done) {
   )
 }
 
-export default { equal, deepEqual }
+export function match(actual, regex, done) {
+  let test = regex
+  if (typeof test === 'string') {
+    test = RegExp(test)
+  }
+  if (test.exec(actual)) {
+    done()
+  } else {
+    equal(actual, `match /${regex}/`, done)
+  }
+}
+
+export default { equal, deepEqual, match }

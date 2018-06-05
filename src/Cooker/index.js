@@ -26,7 +26,7 @@ export function Cooker(argv, theOptions) {
     theOptions = argv
     argv = []
   }
-  const { cmd, args } = parseArgs(argv)
+  const { cmd, args, builtin } = parseArgs(argv)
   const options = Object.assign({}, theOptions)
   if (args.includes('--dry-run')) {
     options.dryRun = true
@@ -36,7 +36,7 @@ export function Cooker(argv, theOptions) {
     options.useDevtools = true
   }
   const config = createConfig(options)
-  const use = args.includes('--run') ? { npm: true } : options.use || USE_ALL
+  const use = builtin ? builtin.use : options.use || USE_ALL
   const ft = new FunctionTree(
     Object.assign(
       { config },
@@ -75,8 +75,8 @@ export function Cooker(argv, theOptions) {
     })
   }
 
-  if (args.includes('--run')) {
-    ft.cook(`run ${cmd}`, runSignal, { argv, npmScript: cmd })
+  if (builtin) {
+    ft.cook(`run ${cmd}`, builtin.signal, { argv, cmd })
   }
   return ft
 }
