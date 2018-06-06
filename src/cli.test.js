@@ -24,22 +24,22 @@ it('should run npm command', function(done) {
     })
 })
 
-it('should run builtin simple release', function(done) {
+it('should run builtin named release', function(done) {
   this.timeout(15000)
-  execCli('babel-node', ['../../src/cli.js', '--release=simple', '--dry-run'])
+  execCli('babel-node', ['../../src/cli.js', '--release=default', '--dry-run'])
     .then(result => {
-      assert.match(result.output, 'simple release: DRY RUN OK', done)
+      assert.match(result.output, 'default release: DRY RUN OK', done)
     })
     .catch(err => {
       assert.equal(err, 'should run without throwing', done)
     })
 })
 
-it('should run builtin monorepo release', function(done) {
+it('should run builtin default release', function(done) {
   this.timeout(15000)
-  execCli('babel-node', ['../../src/cli.js', '--release=monorepo', '--dry-run'])
+  execCli('babel-node', ['../../src/cli.js', '--release', '--dry-run'])
     .then(result => {
-      assert.match(result.output, 'monorepo release: DRY RUN OK', done)
+      assert.match(result.output, 'default release: DRY RUN OK', done)
     })
     .catch(err => {
       assert.equal(err, 'should run without throwing', done)
@@ -50,7 +50,7 @@ it('should print release notes', function(done) {
   this.timeout(10000)
   execCli('babel-node', [
     '../../src/cli.js',
-    '--release=monorepo',
+    '--release',
     '--dry-run',
     '--print-release',
   ])

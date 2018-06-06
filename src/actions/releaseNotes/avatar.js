@@ -160,7 +160,7 @@ ${release.commitsWithoutPackage
 `
 }
 
-export function releaseMonorepoNotes(release, options) {
+export function avatarNotes(release, options) {
   const typeHeaders = options.typeHeaders || defaultTypeHeaders
   const breaking = Object.keys(release.summary).map(type =>
     createBreakingTable(release)

@@ -1,6 +1,6 @@
 import * as cook from '../actions'
 
-export const monorepoReleaseSignal = [
+export const defaultReleaseSignal = [
   // Make sure the release target is valid before running anything.
   cook.byReleaseTarget,
   {
@@ -38,7 +38,7 @@ export const monorepoReleaseSignal = [
     otherwise: [],
   },
   cook.resetRepository,
-  cook.createReleaseNotes('monorepo'),
+  cook.createReleaseNotes('avatar'),
   cook.byBranch,
   {
     master: [
@@ -51,9 +51,9 @@ export const monorepoReleaseSignal = [
     ],
     otherwise: [],
   },
-  cook.fireworksWithTitle('monorepo release'),
+  cook.fireworksWithTitle('default release'),
 ]
 
-export const monorepoReleaseSetup = {
-  signal: monorepoReleaseSignal,
+export const defaultReleaseSetup = {
+  signal: defaultReleaseSignal,
 }

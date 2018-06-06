@@ -1,7 +1,7 @@
 import { builtinSignals } from '../signals'
 
 const builtinRe = /^--builtin=(.+)$/
-const releaseRe = /^--release=(.+)$/
+const releaseRe = /^--release(=(.+)|)$/
 const optionRe = /^--.+$/
 const validOption = {
   '--dry-run': true,
@@ -26,8 +26,8 @@ export function parseArgs(allArgs) {
     const isRelease = releaseRe.exec(arg)
     const isOpt = optionRe.exec(arg)
     if (isRelease) {
-      const type = isRelease[1]
-      const signal = `${type}Release`
+      const type = isRelease[2]
+      const signal = `${type || 'default'}Release`
       builtin = builtinSignals[signal]
       if (!builtin) {
         throw new Error(
