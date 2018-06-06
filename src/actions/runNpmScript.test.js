@@ -21,7 +21,6 @@ const commands = [
 ]
 
 const testNpmScript = {
-  'repo-cooker-test': false,
   '@repo-cooker-test/commis': { pass: true, output: 'mock command' },
   '@repo-cooker-test/entremetier': false,
   '@repo-cooker-test/executive-chef': false,
@@ -31,6 +30,7 @@ const testNpmScript = {
   },
   '@repo-cooker-test/poissonier': false,
   '@repo-cooker-test/sous-chef': false,
+  'repo-cooker-test': false,
 }
 
 it('should run npm script if exists', done => {
