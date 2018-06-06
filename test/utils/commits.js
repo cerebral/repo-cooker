@@ -11,7 +11,7 @@ export const tags = [
   },
 ]
 
-export const master = 'd1c371bc15e0757e696333f0ad26cf1a7cd5bfe6'
+export const master = '1c9eec44e16b88a04809c115d4713b142901e049'
 
 export const commits = [
   {
@@ -252,6 +252,21 @@ export const commits = [
       'scripts/cooker.js',
       'scripts/dummy.js',
       'scripts/index.js',
+      'scripts/publish.js',
+      'scripts/releaseNotesTemplate.js',
+    ],
+  },
+  {
+    author: {
+      name: 'Gaspard Bucher',
+      email: 'gaspard@lucidogen.io',
+    },
+    date: '2018-06-06T15:58:30.000Z',
+    hash: '1c9eec44e16b88a04809c115d4713b142901e049',
+    message: 'fix(repo-cooker-test): using default release in repo-cooker\n',
+    files: [
+      'package.json',
+      'scripts/link.js',
       'scripts/publish.js',
       'scripts/releaseNotesTemplate.js',
     ],
@@ -606,5 +621,26 @@ export const parsedCommits = [
     type: 'chore',
     scope: 'repo-cooker',
     summary: 'update scripts for latest repo-cooker.',
+  },
+  {
+    author: {
+      name: 'Gaspard Bucher',
+      email: 'gaspard@lucidogen.io',
+    },
+    date: '2018-06-06T15:58:30.000Z',
+    hash: '1c9eec44e16b88a04809c115d4713b142901e049',
+    message: 'fix(repo-cooker-test): using default release in repo-cooker\n',
+    files: [
+      'package.json',
+      'scripts/link.js',
+      'scripts/publish.js',
+      'scripts/releaseNotesTemplate.js',
+    ],
+    body: '',
+    issues: [],
+    breaks: [],
+    type: 'fix',
+    scope: 'repo-cooker-test',
+    summary: 'using default release in repo-cooker',
   },
 ]

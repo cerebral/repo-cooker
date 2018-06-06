@@ -54,7 +54,7 @@ ${feat.map(Package).join('\n')}
 `
 }
 
-export function releaseSimpleNotes(release, options) {
+export function simpleNotes(release, options) {
   return `${writeBreaks(release.summary.breaks)}
 ${writeFixes(release.summary.fix)}
 ${writeFeat(release.summary.feat)}

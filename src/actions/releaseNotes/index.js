@@ -1,3 +1,3 @@
-import { releaseMonorepoNotes as monorepo } from './monorepo'
-import { releaseSimpleNotes as simple } from './simple'
-export { monorepo, simple }
+import { avatarNotes as avatar } from './avatar'
+import { simpleNotes as simple } from './simple'
+export { avatar, simple }
