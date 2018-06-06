@@ -5,7 +5,7 @@ import { Cooker } from 'repo-cooker'
 import * as cook from 'repo-cooker/actions'
 
 before(done => {
-  const cooker = Cooker(Object.assign({}, config, { dryRun: true }))
+  const cooker = Cooker([], Object.assign({}, config, { dryRun: true }))
   cooker
     .run([
       () => ({ hash: 'Big Bang' }),

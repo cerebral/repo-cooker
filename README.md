@@ -19,8 +19,11 @@ _package.json_
 ```json
 {
   "scripts": {
-    // This will run the custom script in ./repo-cooker/publish.js
-    "publish": "repo-cooker publish",
+    // This will run the custom script in ./repo-cooker/doThis.js
+    "doThis": "repo-cooker doThis",
+    "release": "repo-cooker --release=simple",
+    "release:preview": "repo-cooker --dry-run --release=simple --print-release",
+    "release:debug": "repo-cooker --dry-run --release=simple --devtools",
     // As there is no custom script for `test`, this will run the npm script 'test' in
     // all packages.
     "test": "repo-cooker test"

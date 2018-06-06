@@ -1,4 +1,4 @@
-import FunctionTree from 'function-tree'
+import FunctionTree, { Primitive } from 'function-tree'
 import { createConfig } from '../helpers/createConfig'
 import { parseArgs } from '../helpers/parseArgs'
 
@@ -29,13 +29,12 @@ export function Cooker(argv, theOptions) {
   const options = Object.assign({}, theOptions)
   if (args.includes('--dry-run')) {
     options.dryRun = true
-    options.useDevtools = true
   }
   if (args.includes('--devtools')) {
     options.useDevtools = true
   }
   const config = createConfig(options)
-  const use = builtin ? builtin.use : options.use || USE_ALL
+  const use = (builtin ? builtin.use : options.use) || USE_ALL
   const ft = new FunctionTree(
     Object.assign(
       { config },
@@ -54,12 +53,29 @@ export function Cooker(argv, theOptions) {
 
     tools.add(ft)
   }
-  ft.cook = (name, ...args) => {
-    args.forEach(arg => {
-      if (typeof arg === 'object') {
-        arg.config = config
+
+  const originalRun = ft.run
+  ft.run = (...theArgs) => {
+    let hasProps = false
+    const args = []
+    const defaultProps = { config, argv, cmd }
+    theArgs.forEach((arg, idx) => {
+      if (Array.isArray(arg) || arg instanceof Primitive) {
+        args[idx] = arg
+      } else if (typeof arg === 'object') {
+        hasProps = true
+        args[idx] = Object.assign({}, defaultProps, arg)
+      } else {
+        args[idx] = arg
       }
     })
+    if (!hasProps) {
+      args.push(defaultProps)
+    }
+    return originalRun.apply(ft, args)
+  }
+
+  ft.cook = (name, ...args) => {
     return ft.run(name, ...args).catch(err => {
       console.log('')
       console.log(err.payload.error.message)
@@ -75,7 +91,7 @@ export function Cooker(argv, theOptions) {
   }
 
   if (builtin) {
-    ft.cook(`run ${cmd}`, builtin.signal, { argv, cmd })
+    ft.cook(`run ${cmd}`, builtin.signal)
   }
   return ft
 }

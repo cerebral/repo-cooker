@@ -1,3 +1,5 @@
+import * as builtinTemplates from './releaseNotes'
+
 function summarizeRelease({
   commitsByPackage,
   commitsWithoutPackage,
@@ -42,8 +44,25 @@ function summarizeRelease({
   }
 }
 
-export function createReleaseNotes(template) {
+export function createReleaseNotes(templateArg, options = {}) {
+  let template
+  if (typeof templateArg === 'string') {
+    template = builtinTemplates[templateArg]
+    if (!template) {
+      throw new Error(
+        `Unknown builtin template '${templateArg}' (not one of ${Object.keys(
+          builtinTemplates
+        ).join(', ')}`
+      )
+    }
+  } else {
+    template = templateArg
+  }
   return function createReleaseNotes({ props }) {
-    return { releaseNotes: template(summarizeRelease(props)) }
+    const releaseNotes = template(summarizeRelease(props), options)
+    if (props.argv.includes('--print-release')) {
+      console.log(releaseNotes)
+    }
+    return { releaseNotes }
   }
 }

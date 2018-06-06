@@ -1,9 +1,11 @@
-// tree to run with `repo-cooker publish`. extra arguments could be parsed and putted in props
-import { cooker } from './cooker'
-import * as cook from 'repo-cooker/actions'
-import releaseNotesTemplate from './releaseNotesTemplate'
+import * as cook from '../actions'
 
-cooker.cook('publish', [
+export const simpleReleaseSignal = [
+  // Make sure the release target is valid before running anything.
+  cook.byReleaseTarget,
+  {
+    github: [],
+  },
   cook.getLatestReleaseHash,
   cook.getHistoryFromHash,
   cook.getRawCommitsFromHistory,
@@ -22,15 +24,22 @@ cooker.cook('publish', [
     otherwise: [],
   },
   cook.resetRepository,
+  cook.createReleaseNotes('simple'),
   cook.byBranch,
   {
     master: [
       cook.tagCurrentCommit,
       cook.pushTagToRemote,
-      cook.createReleaseNotes(releaseNotesTemplate),
-      cook.createGithubRelease,
+      cook.byReleaseTarget,
+      {
+        github: cook.createGithubRelease,
+      },
     ],
     otherwise: [],
   },
-  cook.fireworks,
-])
+  cook.fireworksWithTitle('simple release'),
+]
+
+export const simpleReleaseSetup = {
+  signal: simpleReleaseSignal,
+}

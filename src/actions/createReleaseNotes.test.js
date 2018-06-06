@@ -7,7 +7,7 @@ const makeCommit = name => {
   return { hash: name, type, breaks: breaks ? ['this that'] : [] }
 }
 
-it('run template on release summary', done => {
+it('should run template on release summary', done => {
   const commitsByPackage = {
     foo: [
       'foo_feat_breaks',
