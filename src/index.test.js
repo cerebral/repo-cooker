@@ -5,7 +5,7 @@ import assert from 'test-utils/assert'
 import * as cook from './actions'
 import { Cooker } from './'
 
-it('cooks', done => {
+it('should cook', done => {
   const dryRun = runCommandMock()
   const cooker = Cooker(Object.assign({}, config, { dryRun }))
   cooker.run([

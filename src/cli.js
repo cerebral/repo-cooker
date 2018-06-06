@@ -29,16 +29,14 @@ const packagePath = join(rootPath, 'package.json')
 const packageInfo = JSON.parse(readFileSync(packagePath, { encoding: 'utf8' }))
 const receiptsPath = packageInfo['repo-cooker-path'] || 'repo-cooker'
 
-const { cmd, args } = parseArgs(process.argv)
-
-if (!cmd) {
-  throw new Error(`Invalid call to repo-cooker binary: missing command to run.`)
+const { cmd, args, builtin } = parseArgs(process.argv)
+let cmdPath
+if (cmd) {
+  cmdPath = [
+    join(receiptsPath, `${cmd}.js`),
+    join(receiptsPath, `${cmd}/index.js`),
+  ].find(fileExist)
 }
-
-const cmdPath = [
-  join(receiptsPath, `${cmd}.js`),
-  join(receiptsPath, `${cmd}/index.js`),
-].find(fileExist)
 
 let fullCmdPath
 if (cmdPath) {
@@ -51,9 +49,14 @@ if (cmdPath) {
   if (!fileExist(fullCmdPath)) {
     throw new Error(`Missing repo-cooker base file at '${fullCmdPath}'.`)
   }
-  args.unshift(cmd)
-  args.unshift('--builtin=run')
+  if (cmd) {
+    args.unshift(cmd)
+  }
+  if (!builtin) {
+    args.unshift('--builtin=run')
+  }
 }
+
 console.log(`> babel-node --presets env ${fullCmdPath} ${args.join(' ')}`)
 const child = spawn('babel-node', ['--presets', 'env', fullCmdPath, ...args], {
   stdio: 'inherit',

@@ -54,11 +54,9 @@ ${feat.map(Package).join('\n')}
 `
 }
 
-export default release => {
+export function releaseSimpleNotes(release, options) {
   return `${writeBreaks(release.summary.breaks)}
 ${writeFixes(release.summary.fix)}
 ${writeFeat(release.summary.feat)}
-
-With :heart: from the Cerebral Team!
 `
 }
