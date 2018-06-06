@@ -12,6 +12,7 @@ export function getPackagesPaths(cwd, glob) {
   } else {
     return globby
       .sync(typeof glob === 'string' ? [glob] : glob, { cwd })
+      .sort()
       .reduce((packagesMap, path) => {
         const pathArray = path.split(sep)
         const packageName = pathArray.pop()
