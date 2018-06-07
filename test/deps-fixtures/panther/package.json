@@ -1,0 +1,14 @@
+{
+  "name": "panther",
+  "license": "MIT",
+  "description": "",
+  "dependencies": {
+    "foo": "^1.0.0"
+  },
+  "devDependencies": {
+    "bing": "^2.3.4"
+  },
+  "peerDependencies": {
+    "baz": "^3.0.0"
+  }
+}

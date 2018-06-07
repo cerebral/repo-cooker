@@ -1,0 +1,15 @@
+{
+  "name": "tiger",
+  "license": "MIT",
+  "description": "",
+  "dependencies": {
+    "foo": "^1.0.0"
+  },
+  "devDependencies": {
+    "bar": "^2.5.0",
+    "bong": "^1.2.3"
+  },
+  "peerDependencies": {
+    "baz": "^3.0.0"
+  }
+}

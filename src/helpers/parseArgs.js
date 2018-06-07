@@ -9,6 +9,10 @@ const validOption = {
   '--print-release': true,
   '--builtin=[cmd_name]': true,
   '--release=[release_type]': true,
+  '--release': true,
+  // Only for monorepo
+  '--check-dependencies': true,
+  '--fix-dependencies': true,
 }
 
 export function parseArgs(allArgs) {
@@ -25,7 +29,10 @@ export function parseArgs(allArgs) {
     const isBuiltin = builtinRe.exec(arg)
     const isRelease = releaseRe.exec(arg)
     const isOpt = optionRe.exec(arg)
-    if (isRelease) {
+    if (arg === '--check-dependencies' || arg === '--fix-dependencies') {
+      builtin = builtinSignals['checkDependencies']
+      cmdArgs.push(arg)
+    } else if (isRelease) {
       const type = isRelease[2]
       const signal = `${type || 'default'}Release`
       builtin = builtinSignals[signal]

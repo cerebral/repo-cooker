@@ -1,11 +1,19 @@
 /* eslint-env mocha */
-import { config, runCommandMock } from 'test-utils'
+import { options, runCommandMock } from 'test-utils'
 import assert from 'test-utils/assert'
 import { Cooker } from 'repo-cooker'
 
-export function testAction(action, input, output, done, extraConfig = {}) {
+export function testAction(
+  action,
+  input,
+  output,
+  done,
+  extraOptions = {},
+  catcher = undefined
+) {
   const dryRun = runCommandMock()
-  const cooker = Cooker(Object.assign({}, config, { dryRun }, extraConfig))
+  const fullOptions = Object.assign({}, options, { dryRun }, extraOptions)
+  const cooker = Cooker(fullOptions)
 
   cooker
     .run([
@@ -23,6 +31,10 @@ export function testAction(action, input, output, done, extraConfig = {}) {
       },
     ])
     .catch(error => {
-      console.log('TEST ERROR', error)
+      if (catcher) {
+        catcher(error)
+      } else {
+        console.log('TEST ERROR: throwing in signal.', error)
+      }
     })
 }

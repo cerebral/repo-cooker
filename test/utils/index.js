@@ -8,7 +8,7 @@ export { runCommandMock } from './runCommandMock'
 
 const path = resolve(join(__dirname, '..', 'repo'))
 
-export const config = createConfig({
+export const options = {
   path,
   devtools: null,
   packagesGlobs: [
@@ -16,4 +16,6 @@ export const config = createConfig({
     'packages/node_modules/@repo-cooker-test/*',
     '!packages/node_modules/@repo-cooker-test',
   ],
-})
+}
+
+export const config = createConfig(options)
