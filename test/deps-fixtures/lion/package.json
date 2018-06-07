@@ -1,0 +1,14 @@
+{
+  "name": "lion",
+  "license": "MIT",
+  "description": "",
+  "dependencies": {
+    "foo": "^1.0.0"
+  },
+  "devDependencies": {
+    "bar": "^2.0.0"
+  },
+  "peerDependencies": {
+    "baz": "^3.0.0"
+  }
+}

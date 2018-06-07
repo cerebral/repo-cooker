@@ -61,3 +61,25 @@ it('should print release notes', function(done) {
       assert.equal(err, 'should run without throwing', done)
     })
 })
+
+it.only('should check dependencies', function(done) {
+  this.timeout(10000)
+  execCli('babel-node', ['../../src/cli.js', '--check-dependencies'])
+    .then(result => {
+      assert.match(result.output, 'check dependencies: SUCCESS !!', done)
+    })
+    .catch(err => {
+      assert.equal(err, 'should run without throwing', done)
+    })
+})
+
+it.only('should fix dependencies', function(done) {
+  this.timeout(10000)
+  execCli('babel-node', ['../../src/cli.js', '--fix-dependencies'])
+    .then(result => {
+      assert.match(result.output, 'check dependencies: SUCCESS !!', done)
+    })
+    .catch(err => {
+      assert.equal(err, 'should run without throwing', done)
+    })
+})

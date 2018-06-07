@@ -1,11 +1,15 @@
 import assert from 'assert'
 
 export function equal(actual, expected, done) {
-  try {
+  if (done) {
+    try {
+      assert.equal(actual, expected)
+      done()
+    } catch (err) {
+      done(err)
+    }
+  } else {
     assert.equal(actual, expected)
-    done()
-  } catch (err) {
-    done(err)
   }
 }
 
