@@ -14,7 +14,7 @@
     "prepublish": "npm run build",
     "pretest": "babel-node test/utils/pretest.js",
     "release": "repo-cooker --release",
-    "test": "mocha --compilers js:babel-register \"src/**/*.test.js\" \"test/integration/*.test.js\"",
+    "test": "mocha --require babel-register \"src/**/*.test.js\" \"test/integration/*.test.js\"",
     "test:watch": "npm run test -- --watch"
   },
   "repository": {
@@ -49,12 +49,12 @@
     "eslint-plugin-prettier": "^2.2.0",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1",
+    "foo": "1.0.0",
     "husky": "^0.14.1",
-    "mocha": "^3.4.2",
+    "mocha": "^5.2.0",
     "nyc": "^11.0.3",
     "prettier": "^1.7.0",
-    "simple-mock": "^0.8.0",
-    "foo": "1.0.0"
+    "simple-mock": "^0.8.0"
   },
   "dependencies": {
     "babel-cli": "^6.26.0",
