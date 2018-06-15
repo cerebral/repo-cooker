@@ -11,6 +11,9 @@ export const defaultReleaseSignal = [
   cook.getRawCommitsFromHistory,
   cook.parseCommits,
   cook.groupCommitsByPackage,
+  cook.filter('commitsByPackage', (key, _, { packageJson }) =>
+    packageJson.get(key).then(info => !info.private)
+  ),
   cook.evaluateSemverByPackage,
   cook.relatedPackagesByPackage,
   cook.getCurrentVersionByPackage,
