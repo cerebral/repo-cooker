@@ -44,10 +44,14 @@ if (cmdPath) {
   fullCmdPath = resolve(cmdPath)
   console.log(`Running script: ${fullCmdPath}`)
 } else {
-  // Run the npm script
-  fullCmdPath = resolve(join(receiptsPath, 'index.js'))
-  if (!fileExist(fullCmdPath)) {
-    throw new Error(`Missing repo-cooker base file at '${fullCmdPath}'.`)
+  // Run a native signal. Just load the configuration.
+  fullCmdPath = (receiptsPath.slice(-3) === '.js'
+    ? [resolve(receiptsPath)]
+    : [resolve(`${receiptsPath}.js`), resolve(join(receiptsPath, 'index.js'))]
+  ).find(fileExist)
+
+  if (!fullCmdPath) {
+    throw new Error(`Missing repo-cooker setup file at '${receiptsPath}'.`)
   }
   if (cmd) {
     args.unshift(cmd)
