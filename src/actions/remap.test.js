@@ -18,7 +18,7 @@ describe('remap', () => {
     testAction(
       remap(
         'someObject',
-        (value, props, key) => `${key} ${value} (${props.hash})`
+        (key, value, { props }) => `${key} ${value} (${props.hash})`
       ),
       { hash, someObject },
       { someObject: remapedObject },
