@@ -17,6 +17,7 @@ function matchPackage(filePath, config) {
     }
   }
 
+  // Not in any package
   return 'monorepo'
 }
 
