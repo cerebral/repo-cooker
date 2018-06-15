@@ -1,9 +1,16 @@
 import { readFile } from 'fs'
 import { join } from 'path'
 
+const packageInfoCache = {}
+
 export function getPackageInfo(name, path) {
+  const packagePath = join(path, 'package.json')
+  const cache = packageInfoCache[packagePath]
+  if (cache) {
+    return Promise.resolve(JSON.parse(cache))
+  }
   return new Promise((resolve, reject) =>
-    readFile(join(path, 'package.json'), 'utf8', (err, data) => {
+    readFile(packagePath, 'utf8', (err, data) => {
       if (err) {
         reject(err)
       }
@@ -18,6 +25,7 @@ export function getPackageInfo(name, path) {
             )
           )
         } else {
+          packageInfoCache[packagePath] = data
           resolve(info)
         }
       } catch (err) {
