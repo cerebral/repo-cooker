@@ -19,11 +19,11 @@ export const defaultReleaseSignal = [
   {
     next: cook.remap(
       'newVersionByPackage',
-      version => `${version}-${Date.now()}`
+      (_, version) => `${version}-${Date.now()}`
     ),
     canary: cook.remap(
       'newVersionByPackage',
-      version => `${version}-${Date.now()}`
+      (_, version) => `${version}-${Date.now()}`
     ),
     otherwise: [],
   },

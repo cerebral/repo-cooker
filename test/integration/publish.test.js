@@ -168,7 +168,7 @@ describe('publish script', () => {
 
         cook.remap(
           'newVersionByPackage',
-          (version, props) => `${version}-${props.hash.slice(0, 6)}`
+          (_, version, { props }) => `${version}-${props.hash.slice(0, 6)}`
         ),
 
         cook.writeVersionsToPackages,
