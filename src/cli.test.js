@@ -47,7 +47,7 @@ it('should run builtin default release', function(done) {
 })
 
 it('should print release notes', function(done) {
-  this.timeout(10000)
+  this.timeout(20000)
   execCli('babel-node', [
     '../../src/cli.js',
     '--release',
