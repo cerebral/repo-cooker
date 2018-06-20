@@ -2,18 +2,18 @@
   "name": "repo-cooker",
   "version": "0.0.0-next",
   "description": "",
-  "main": "lib/index.js",
-  "bin": "./lib/cli.js",
+  "main": "dist/index.js",
+  "bin": "./dist/cli.js",
   "scripts": {
     "start": "babel-watch src/index.js --watch src",
-    "build": "cross-env BABEL_ENV=production babel src/ --out-dir=lib/ -s",
+    "build": "cross-env BABEL_ENV=production babel src/ --out-dir=dist/ -s",
     "commit": "git-cz",
     "coverage": "nyc --reporter=lcov --reporter=json npm run test",
     "format": "npm run lint -- --fix",
     "lint": "eslint \"**/*.js\"",
     "prepare": "npm run build",
     "pretest": "babel-node test/utils/pretest.js",
-    "release": "npm run build && node ./lib/cli.js --release",
+    "release": "npm run build && node ./dist/cli.js --release",
     "test":
       "mocha --require babel-register \"src/**/*.test.js\" \"test/integration/*.test.js\"",
     "test:watch": "npm run test -- --watch"
@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.com/cerebral/repo-cooker#readme",
   "nyc": {
-    "exclude": ["node_modules", "lib", "test", "**/*.test.js"]
+    "exclude": ["node_modules", "dist", "test", "**/*.test.js"]
   },
   "devDependencies": {
     "babel-plugin-module-resolver": "^3.1.1",

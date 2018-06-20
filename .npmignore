@@ -1,3 +1,16 @@
 /node_modules
 /src
 /test
+/coverage
+/.nyc_output
+/repo-cooker
+.babelrc
+.cz-config.js
+.eslintignore
+.eslintrc.json
+.gitignore
+.npmignore
+.prettierrc.json
+.travis.yml
+package-lock.json
+yarn.lock
