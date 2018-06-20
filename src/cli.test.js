@@ -95,3 +95,14 @@ it('should link bin directory', function(done) {
       assert.equal(err, 'should run without throwing', done)
     })
 })
+
+it('should run build scripts respecting dependencies', function(done) {
+  this.timeout(TIMEOUT)
+  execCli('babel-node', ['../../src/cli.js', '--build'])
+    .then(result => {
+      assert.match(result.output, 'build: SUCCESS !!', done)
+    })
+    .catch(err => {
+      assert.equal(err, 'should run without throwing', done)
+    })
+})

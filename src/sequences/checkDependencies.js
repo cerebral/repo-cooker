@@ -1,6 +1,6 @@
 import * as cook from '../actions'
 
-export const checkDependenciesSignal = [
+export const checkDependenciesSequence = [
   cook.getDependencies,
   cook.checkDependencies,
   cook.fixDependencies,
@@ -10,5 +10,5 @@ export const checkDependenciesSignal = [
 export const checkDependenciesSetup = {
   // Providers that we use for this signal
   use: { packageJson: true },
-  signal: checkDependenciesSignal,
+  sequence: checkDependenciesSequence,
 }

@@ -1,6 +1,6 @@
 import * as cook from '../actions'
 
-export const defaultReleaseSignal = [
+export const defaultReleaseSequence = [
   // Make sure the release target is valid before running anything.
   cook.byReleaseTarget,
   {
@@ -58,5 +58,5 @@ export const defaultReleaseSignal = [
 ]
 
 export const defaultReleaseSetup = {
-  signal: defaultReleaseSignal,
+  sequence: defaultReleaseSequence,
 }
