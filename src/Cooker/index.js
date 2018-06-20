@@ -1,4 +1,5 @@
 import FunctionTree, { Primitive } from 'function-tree'
+
 import { createConfig } from '../helpers/createConfig'
 import { parseArgs } from '../helpers/parseArgs'
 
@@ -91,7 +92,7 @@ export function Cooker(argv, theOptions) {
   }
 
   if (builtin) {
-    ft.cook(`run ${cmd}`, builtin.signal)
+    ft.cook(`run ${cmd}`, builtin.sequence)
   }
   return ft
 }
