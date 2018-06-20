@@ -11,7 +11,7 @@ export const tags = [
   },
 ]
 
-export const master = '1c9eec44e16b88a04809c115d4713b142901e049'
+export const master = '60e29c9dd656504be9c515c553637cf532c6def3'
 
 export const commits = [
   {
@@ -270,6 +270,17 @@ export const commits = [
       'scripts/publish.js',
       'scripts/releaseNotesTemplate.js',
     ],
+  },
+  {
+    author: {
+      name: 'Gaspard Bucher',
+      email: 'gaspard@lucidogen.io',
+    },
+    date: '2018-06-20T10:16:14.000Z',
+    hash: '60e29c9dd656504be9c515c553637cf532c6def3',
+    message:
+      "chore(package.json): rename 'prepublish' script to 'prepare' in package.json\n",
+    files: ['package.json'],
   },
 ]
 
@@ -642,5 +653,22 @@ export const parsedCommits = [
     type: 'fix',
     scope: 'repo-cooker-test',
     summary: 'using default release in repo-cooker',
+  },
+  {
+    author: {
+      name: 'Gaspard Bucher',
+      email: 'gaspard@lucidogen.io',
+    },
+    date: '2018-06-20T10:16:14.000Z',
+    hash: '60e29c9dd656504be9c515c553637cf532c6def3',
+    message:
+      "chore(package.json): rename 'prepublish' script to 'prepare' in package.json\n",
+    files: ['package.json'],
+    body: '',
+    issues: [],
+    breaks: [],
+    type: 'chore',
+    scope: 'package.json',
+    summary: "rename 'prepublish' script to 'prepare' in package.json",
   },
 ]

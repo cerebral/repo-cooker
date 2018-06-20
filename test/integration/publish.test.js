@@ -1,13 +1,15 @@
+import * as cook from 'repo-cooker/actions'
+
+import { buildWebsite, publishWebsite } from './actions'
+
+import { Cooker } from 'repo-cooker'
+import assert from 'test-utils/assert'
+import { mockNpmRegistry } from 'test-utils/npm'
 /* eslint-env mocha */
 import path from 'path'
 import request from 'request'
-import { Cooker } from 'repo-cooker'
-import * as cook from 'repo-cooker/actions'
 import { runCommandMock } from 'test-utils'
 import simple from 'simple-mock'
-import assert from 'test-utils/assert'
-import { mockNpmRegistry } from 'test-utils/npm'
-import { buildWebsite, publishWebsite } from './actions'
 
 const isoString = '2017-07-09T19:06:31.620Z'
 
@@ -175,8 +177,10 @@ describe('publish script', () => {
         // Just write the new version to package.json of packages
         // this is temporary for release and does not need to be pushed to repo
 
-        cook.runNpmScript('prepublish'),
-        // Run the `prepublish` script in all packages if it exists
+        cook.runNpmScript('prepare'),
+        // Run the `prepare` script in all packages if it exists. The `npm publish`
+        // script also runs them but we want to make sure none fail before moving
+        // forward.
 
         cook.publishUnderTemporaryNpmTag,
         // Needs npm to be logged in:
