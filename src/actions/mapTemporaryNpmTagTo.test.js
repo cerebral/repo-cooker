@@ -1,5 +1,6 @@
 /* eslint-env mocha */
 import { config, testAction } from 'test-utils'
+
 import { mapTemporaryNpmTagTo } from './'
 
 it('should replace temporary tag with given name', done => {
@@ -22,6 +23,7 @@ it('should replace temporary tag with given name', done => {
       args: ['dist-tag', 'add', '@repo-cooker-test/commis@1.2.3', 'foobar'],
       options: {
         cwd: config.packagesPaths['@repo-cooker-test/commis'],
+        pause: true,
       },
     },
     {
@@ -29,6 +31,7 @@ it('should replace temporary tag with given name', done => {
       args: ['dist-tag', 'add', '@repo-cooker-test/poissonier@4.5.6', 'foobar'],
       options: {
         cwd: config.packagesPaths['@repo-cooker-test/poissonier'],
+        pause: true,
       },
     },
     {

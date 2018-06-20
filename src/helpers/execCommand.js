@@ -1,5 +1,6 @@
 import { spawn } from 'child_process'
 import { writeFile } from 'fs'
+const PAUSE_MS = 2000
 
 function findName(cmd) {
   if (typeof cmd === 'string') {
@@ -65,8 +66,11 @@ export function execCommand(cmd, args = [], options) {
         })
     })
   }
+  const opts = Object.assign({}, options || {})
+  const pause = options.pause
+  delete opts.pause
   return new Promise((resolve, reject) => {
-    const child = spawn(cmd, args, options || {})
+    const child = spawn(cmd, args, opts)
     let out = []
     child.stdout.setEncoding('utf-8')
     child.stderr.setEncoding('utf-8')
@@ -82,7 +86,13 @@ export function execCommand(cmd, args = [], options) {
       if (code === 0) {
         logCommand(cmd, args, options)
         console.log(PASS)
-        resolve(out.join('\n'))
+        if (pause) {
+          setTimeout(() => {
+            resolve(out.join('\n'))
+          }, PAUSE_MS)
+        } else {
+          resolve(out.join('\n'))
+        }
       } else {
         logCommand(cmd, args, options)
         console.log(FAIL)

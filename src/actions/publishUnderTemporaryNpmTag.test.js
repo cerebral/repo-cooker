@@ -1,5 +1,6 @@
 /* eslint-env mocha */
 import { config, testAction } from 'test-utils'
+
 import { publishUnderTemporaryNpmTag } from './'
 
 it('should publish under temporary npm tag', function(done) {
@@ -26,6 +27,7 @@ it('should publish under temporary npm tag', function(done) {
       args: ['publish', '--tag', 'releasing', '--access', 'public'],
       options: {
         cwd: config.packagesPaths['@repo-cooker-test/commis'],
+        pause: true,
       },
     },
     {
@@ -33,6 +35,7 @@ it('should publish under temporary npm tag', function(done) {
       args: ['publish', '--tag', 'releasing', '--access', 'public'],
       options: {
         cwd: config.packagesPaths['@repo-cooker-test/poissonier'],
+        pause: true,
       },
     },
   ]

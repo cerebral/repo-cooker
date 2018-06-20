@@ -1,6 +1,7 @@
+import { config, runCommandMock } from 'test-utils'
+
 /* eslint-env mocha */
 import assert from 'test-utils/assert'
-import { config, runCommandMock } from 'test-utils'
 import { replaceTag as replaceTagFactory } from './replaceTag'
 
 it('should execute npm dist-tag add and remove', done => {
@@ -16,7 +17,10 @@ it('should execute npm dist-tag add and remove', done => {
         {
           cmd: 'npm',
           args: ['dist-tag', 'add', 'repo-cooker-test@1.2.3', 'TAGB'],
-          options: { cwd: config.packagesPaths['repo-cooker-test'] },
+          options: {
+            cwd: config.packagesPaths['repo-cooker-test'],
+            pause: true,
+          },
         },
         {
           cmd: 'npm',
