@@ -13,7 +13,7 @@
     "lint": "eslint \"**/*.js\"",
     "prepare": "npm run build",
     "pretest": "babel-node test/utils/pretest.js",
-    "release": "node ./lib/cli.js --release",
+    "release": "npm run build && node ./lib/cli.js --release",
     "test":
       "mocha --require babel-register \"src/**/*.test.js\" \"test/integration/*.test.js\"",
     "test:watch": "npm run test -- --watch"
