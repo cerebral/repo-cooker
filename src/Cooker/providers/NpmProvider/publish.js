@@ -5,6 +5,7 @@ export function publish(config) {
     const cwd = packagesPaths[packageName]
     return runCommand('npm', ['publish', '--tag', tag, '--access', 'public'], {
       cwd,
+      pause: true,
     })
   }
 }

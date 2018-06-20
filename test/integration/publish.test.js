@@ -78,12 +78,12 @@ describe('publish script', () => {
       ...released.map(r => ({
         cmd: 'npm',
         args: ['publish', '--tag', 'releasing', '--access', 'public'],
-        options: { cwd: r.cwd },
+        options: { cwd: r.cwd, pause: true },
       })),
       ...released.map(r => ({
         cmd: 'npm',
         args: ['dist-tag', 'add', `${r.name}@${r.version}`, 'next'],
-        options: { cwd: r.cwd },
+        options: { cwd: r.cwd, pause: true },
       })),
       ...released.map(r => ({
         cmd: 'npm',

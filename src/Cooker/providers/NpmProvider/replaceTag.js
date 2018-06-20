@@ -9,6 +9,7 @@ export function replaceTag(config) {
       ['dist-tag', 'add', `${packageName}@${version}`, toTag],
       {
         cwd,
+        pause: true,
       }
     ).then(
       () =>

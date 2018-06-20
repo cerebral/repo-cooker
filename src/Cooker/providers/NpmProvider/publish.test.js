@@ -1,6 +1,7 @@
+import { config, runCommandMock } from 'test-utils'
+
 /* eslint-env mocha */
 import assert from 'test-utils/assert'
-import { config, runCommandMock } from 'test-utils'
 import { publish as publishFactory } from './publish'
 
 it('should execute npm publish command', done => {
@@ -16,7 +17,10 @@ it('should execute npm publish command', done => {
         {
           cmd: 'npm',
           args: ['publish', '--tag', 'TAG', '--access', 'public'],
-          options: { cwd: config.packagesPaths['repo-cooker-test'] },
+          options: {
+            cwd: config.packagesPaths['repo-cooker-test'],
+            pause: true,
+          },
         },
       ],
       done
