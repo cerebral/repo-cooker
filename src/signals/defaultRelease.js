@@ -31,7 +31,7 @@ export const defaultReleaseSignal = [
     otherwise: [],
   },
   cook.writeVersionsToPackages,
-  cook.runNpmScript('prepublish'),
+  cook.runNpmScript('prepare'),
   cook.publishUnderTemporaryNpmTag,
   cook.byBranch,
   {

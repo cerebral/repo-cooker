@@ -11,10 +11,11 @@
     "coverage": "nyc --reporter=lcov --reporter=json npm run test",
     "format": "npm run lint -- --fix",
     "lint": "eslint \"**/*.js\"",
-    "prepublish": "npm run build",
+    "prepare": "npm run build",
     "pretest": "babel-node test/utils/pretest.js",
     "release": "node ./lib/cli.js --release",
-    "test": "mocha --require babel-register \"src/**/*.test.js\" \"test/integration/*.test.js\"",
+    "test":
+      "mocha --require babel-register \"src/**/*.test.js\" \"test/integration/*.test.js\"",
     "test:watch": "npm run test -- --watch"
   },
   "repository": {
@@ -28,12 +29,7 @@
   },
   "homepage": "https://github.com/cerebral/repo-cooker#readme",
   "nyc": {
-    "exclude": [
-      "node_modules",
-      "lib",
-      "test",
-      "**/*.test.js"
-    ]
+    "exclude": ["node_modules", "lib", "test", "**/*.test.js"]
   },
   "devDependencies": {
     "babel-plugin-module-resolver": "^3.1.1",
