@@ -2,12 +2,16 @@ import { builtinSignals } from '../signals'
 
 const builtinRe = /^--builtin=(.+)$/
 const releaseRe = /^--release(=(.+)|)$/
+const ALIAS = {
+  '--link': '--builtin=link',
+}
 const optionRe = /^--.+$/
 const validOption = {
   '--dry-run': true,
   '--devtools': true,
   '--print-release': true,
   '--builtin=[cmd_name]': true,
+  '--link': true,
   '--release=[release_type]': true,
   '--release': true,
   // Only for monorepo
@@ -26,7 +30,7 @@ export function parseArgs(allArgs) {
   args.shift()
 
   for (let arg of args) {
-    const isBuiltin = builtinRe.exec(arg)
+    const isBuiltin = builtinRe.exec(ALIAS[arg] || arg)
     const isRelease = releaseRe.exec(arg)
     const isOpt = optionRe.exec(arg)
     if (arg === '--check-dependencies' || arg === '--fix-dependencies') {

@@ -1,6 +1,6 @@
+import assert from 'test-utils/assert'
 /* eslint-env mocha */
 import { execCli } from 'test-utils'
-import assert from 'test-utils/assert'
 
 it('should run script in custom repo-cooker-path', function(done) {
   this.timeout(15000)
@@ -78,6 +78,17 @@ it('should fix dependencies', function(done) {
   execCli('babel-node', ['../../src/cli.js', '--fix-dependencies'])
     .then(result => {
       assert.match(result.output, 'check dependencies: SUCCESS !!', done)
+    })
+    .catch(err => {
+      assert.equal(err, 'should run without throwing', done)
+    })
+})
+
+it('should link bin directory', function(done) {
+  this.timeout(10000)
+  execCli('babel-node', ['../../src/cli.js', '--link'])
+    .then(result => {
+      assert.match(result.output, 'link: SUCCESS !!', done)
     })
     .catch(err => {
       assert.equal(err, 'should run without throwing', done)
