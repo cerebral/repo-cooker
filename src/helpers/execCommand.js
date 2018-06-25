@@ -1,6 +1,6 @@
 import { spawn } from 'child_process'
 import { writeFile } from 'fs'
-const PAUSE_MS = 2000
+const PAUSE_MS = 8000
 
 function findName(cmd) {
   if (typeof cmd === 'string') {
@@ -67,7 +67,7 @@ export function execCommand(cmd, args = [], options) {
     })
   }
   const opts = Object.assign({}, options || {})
-  const pause = options.pause
+  const pause = opts.pause
   delete opts.pause
   return new Promise((resolve, reject) => {
     const child = spawn(cmd, args, opts)
