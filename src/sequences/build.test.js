@@ -1,3 +1,4 @@
+/* eslint-env mocha */
 import { config, runCommandMock } from 'test-utils'
 
 import { Cooker } from '..'

@@ -79,14 +79,15 @@ export function Cooker(argv, theOptions) {
   ft.cook = (name, ...args) => {
     return ft.run(name, ...args).catch(err => {
       console.log('')
-      console.log(err.payload.error.message)
       console.log(err.payload.error.stack)
-      if (options.devtools) {
+      if (options.useDevtools) {
         // Keep it running
       } else {
         const displayName = typeof name === 'string' ? `${name}: ` : ''
         console.log(`\n\x1b[31m** ${displayName}execution FAILED **\x1b[0m`)
-        process.exit(-1)
+        setTimeout(() => {
+          process.exit(-1)
+        }, 0)
       }
     })
   }

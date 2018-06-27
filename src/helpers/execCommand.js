@@ -75,17 +75,16 @@ export function execCommand(cmd, args = [], options) {
     child.stdout.setEncoding('utf-8')
     child.stderr.setEncoding('utf-8')
     child.stdout.on('data', data => {
-      console.log(data)
       out.push(data)
     })
     child.stderr.on('data', data => {
-      console.log(data)
       out.push(data)
     })
     child.on('close', function(code) {
       if (code === 0) {
         logCommand(cmd, args, options)
         console.log(PASS)
+        console.log(out.join('\n'))
         if (pause) {
           setTimeout(() => {
             resolve(out.join('\n'))
@@ -96,6 +95,7 @@ export function execCommand(cmd, args = [], options) {
       } else {
         logCommand(cmd, args, options)
         console.log(FAIL)
+        console.log(out.join('\n'))
         reject(out.join('\n'))
       }
     })
