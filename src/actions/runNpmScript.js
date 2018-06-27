@@ -5,12 +5,18 @@ export function runNpmScript(scriptNameTag, args = [], providedPackageNames) {
 
     return Promise.all(
       packages.map(name => npm.runScript(name, scriptName, args))
-    ).then(results => ({
-      [`${scriptName}NpmScript`]: Object.assign(
-        ...results.map((result, idx) => ({
-          [packages[idx]]: result,
-        }))
-      ),
-    }))
+    ).then(results => {
+      const failures = results.filter(result => result && !result.pass)
+      if (failures.length) {
+        throw new Error(`running npm scripts '${scriptName}' failed.`)
+      }
+      return {
+        [`${scriptName}NpmScript`]: Object.assign(
+          ...results.map((result, idx) => ({
+            [packages[idx]]: result,
+          }))
+        ),
+      }
+    })
   }
 }
