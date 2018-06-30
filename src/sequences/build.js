@@ -2,12 +2,17 @@ import * as cook from '../actions'
 
 function buildPackages(npm, names) {
   return Promise.all(names.map(name => npm.runScript(name, 'build'))).then(
-    results =>
-      Object.assign(
+    results => {
+      const failures = results.filter(result => result && !result.pass)
+      if (failures.length) {
+        throw new Error(`running npm scripts 'build' failed.`)
+      }
+      return Object.assign(
         ...results.map((result, idx) => ({
           [names[idx]]: result || false, // make sure we do not have undefined here
         }))
       )
+    }
   )
 }
 
@@ -48,6 +53,7 @@ export const buildSequence = [
 ]
 
 export const buildSetup = {
+  name: 'build',
   use: { packageJson: true, npm: true },
   sequence: buildSequence,
 }
