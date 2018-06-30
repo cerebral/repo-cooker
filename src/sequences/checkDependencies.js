@@ -8,6 +8,7 @@ export const checkDependenciesSequence = [
 ]
 
 export const checkDependenciesSetup = {
+  name: 'checkDependencies',
   // Providers that we use for this signal
   use: { packageJson: true },
   sequence: checkDependenciesSequence,

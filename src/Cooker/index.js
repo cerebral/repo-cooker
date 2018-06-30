@@ -93,7 +93,7 @@ export function Cooker(argv, theOptions) {
   }
 
   if (builtin) {
-    ft.cook(`run ${cmd}`, builtin.sequence)
+    ft.cook(`run ${builtin.name}`, builtin.sequence)
   }
   return ft
 }
