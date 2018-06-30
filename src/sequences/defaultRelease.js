@@ -58,5 +58,6 @@ export const defaultReleaseSequence = [
 ]
 
 export const defaultReleaseSetup = {
+  name: 'defaultRelease',
   sequence: defaultReleaseSequence,
 }
