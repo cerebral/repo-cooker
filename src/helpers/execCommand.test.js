@@ -1,7 +1,8 @@
+import { execCommand, logCommand } from './execCommand'
+
 /* eslint-env mocha */
 import assert from 'test-utils/assert'
 import simple from 'simple-mock'
-import { execCommand, logCommand } from './execCommand'
 
 describe('logCommand', () => {
   const logs = []

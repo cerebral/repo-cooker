@@ -1,4 +1,9 @@
 #!/usr/bin/env node
+
+import { join, resolve } from 'path'
+import { readFileSync, statSync } from 'fs'
+
+import { parseArgs } from './helpers/parseArgs'
 // repo-cooker [cmd] [props] --dry-run --devtools
 // 1. Looks for [cmd] in
 //    './[repo-cooker path]/cmd.js'
@@ -8,11 +13,7 @@
 // 2. If [cmd] is not found, uses the builtin
 //    `run` command to run the given [cmd] in all packages
 //    that contain the given script.
-import { spawn } from 'child_process'
-import { readFileSync, statSync } from 'fs'
-import { join, resolve } from 'path'
-
-import { parseArgs } from './helpers/parseArgs'
+import { spawn } from 'cross-spawn'
 
 const rootPath = '.'
 

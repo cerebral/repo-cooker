@@ -1,5 +1,6 @@
-import { spawn } from 'child_process'
+import { spawn } from 'cross-spawn'
 import { writeFile } from 'fs'
+
 const PAUSE_MS = 8000
 
 function findName(cmd) {

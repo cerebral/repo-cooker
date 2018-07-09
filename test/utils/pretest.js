@@ -1,6 +1,8 @@
-import { spawn } from 'child_process'
-import { mkdirSync, statSync, symlinkSync } from 'fs'
+import { mkdirSync, statSync } from 'fs'
+
 import { join } from 'path'
+import { spawn } from 'cross-spawn'
+import symlinkDir from 'symlink-dir'
 
 const REPO_PATH = './test/repo'
 const REPO_URL = 'https://github.com/cerebral/repo-cooker-test.git'
@@ -14,10 +16,7 @@ try {
   clone.on('close', code => {
     if (code === 0) {
       mkdirSync(join(REPO_PATH, 'node_modules'))
-      symlinkSync(
-        '../../../src',
-        join(REPO_PATH, 'node_modules', 'repo-cooker')
-      )
+      symlinkDir('../../../src', join(REPO_PATH, 'node_modules', 'repo-cooker'))
     }
   })
 }
