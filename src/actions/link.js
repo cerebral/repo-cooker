@@ -1,4 +1,4 @@
-import { resolve } from 'path'
+import { resolve } from '../helpers/path'
 import symlinkDir from 'symlink-dir'
 
 // Alias function so that function name is `link`, not `linkOne`.

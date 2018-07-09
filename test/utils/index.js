@@ -1,12 +1,12 @@
-import { resolve, join } from 'path'
 import { createConfig } from '../../src/helpers/createConfig'
+import { resolve } from '../../src/helpers/path'
 
 export { execCli } from './execCli'
 export { testAction } from './testAction'
 export { testActionThrows } from './testActionThrows'
 export { runCommandMock } from './runCommandMock'
 
-const path = resolve(join(__dirname, '..', 'repo'))
+const path = resolve(__dirname, '..', 'repo')
 
 export const options = {
   path,
