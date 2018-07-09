@@ -2,7 +2,7 @@
 import { config, testAction } from 'test-utils'
 
 import { link } from './'
-import { resolve } from 'path'
+import { resolve } from '../helpers/path'
 
 it('should link bin directories', function(done) {
   this.timeout(4000)

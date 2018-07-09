@@ -1,4 +1,4 @@
-import { resolve, sep } from 'path'
+import { resolve } from '../helpers/path'
 
 let commitsWithoutPackage = []
 
@@ -10,7 +10,7 @@ function matchPackage(filePath, config) {
   for (let packageName in config.packagesPaths) {
     if (
       resolve(config.path, filePath).indexOf(
-        config.packagesPaths[packageName] + sep
+        config.packagesPaths[packageName] + '/'
       ) === 0
     ) {
       return packageName

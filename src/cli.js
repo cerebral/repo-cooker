@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { join, resolve } from 'path'
+import { join, resolve } from './helpers/path'
 import { readFileSync, statSync } from 'fs'
 
 import { parseArgs } from './helpers/parseArgs'

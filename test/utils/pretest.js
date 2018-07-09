@@ -16,7 +16,7 @@ try {
   clone.on('close', code => {
     if (code === 0) {
       mkdirSync(join(REPO_PATH, 'node_modules'))
-      symlinkDir('../../../src', join(REPO_PATH, 'node_modules', 'repo-cooker'))
+      symlinkDir('src', join(REPO_PATH, 'node_modules', 'repo-cooker'))
     }
   })
 }
