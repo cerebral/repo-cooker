@@ -1,5 +1,5 @@
-import { spawn } from 'child_process'
 import { config } from './'
+import { spawn } from 'cross-spawn'
 
 export function execCli(cmd, args = []) {
   const cwd = config.path
