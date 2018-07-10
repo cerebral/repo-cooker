@@ -1,5 +1,6 @@
-import { join } from 'path'
-import { readFile, writeFile as fsWriteFile } from 'fs'
+import { writeFile as fsWriteFile, readFile } from 'fs'
+
+import { join } from '../../../helpers/path'
 
 const options = { encoding: 'utf8' }
 

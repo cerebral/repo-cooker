@@ -1,9 +1,19 @@
 import { join as nativeJoin, resolve as nativeResolve, sep } from 'path'
 
 export function resolve(...args) {
-  return nativeResolve(...args).replace(sep, '/')
+  if (sep === '/') {
+    return nativeResolve(...args)
+  }
+  return nativeResolve(...args)
+    .split(sep)
+    .join('/')
 }
 
 export function join(...args) {
-  return nativeJoin(...args).replace(sep, '/')
+  if (sep === '/') {
+    return nativeJoin(...args)
+  }
+  return nativeJoin(...args)
+    .split(sep)
+    .join('/')
 }

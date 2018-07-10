@@ -1,7 +1,7 @@
-import { join } from 'path'
+import { join } from '../../../helpers/path'
+import { readFile } from 'fs'
 import request from 'request'
 
-import { readFile } from 'fs'
 const REPO_URL_RE = /^.*:\/\/([^/]+)\/([^/]+)\/([^.]+)/
 
 function getRepositoryInfo(path) {

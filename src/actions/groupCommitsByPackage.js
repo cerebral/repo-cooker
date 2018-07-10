@@ -7,12 +7,9 @@ let commitsWithoutPackage = []
   the package
 */
 function matchPackage(filePath, config) {
+  const fullpath = resolve(config.path, filePath)
   for (let packageName in config.packagesPaths) {
-    if (
-      resolve(config.path, filePath).indexOf(
-        config.packagesPaths[packageName] + '/'
-      ) === 0
-    ) {
+    if (fullpath.indexOf(config.packagesPaths[packageName] + '/') === 0) {
       return packageName
     }
   }

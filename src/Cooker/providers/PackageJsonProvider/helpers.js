@@ -1,5 +1,5 @@
+import { join } from '../../../helpers/path'
 import { readFile } from 'fs'
-import { join } from 'path'
 
 const packageInfoCache = {}
 

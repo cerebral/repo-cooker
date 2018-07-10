@@ -1,12 +1,12 @@
 import * as cook from 'repo-cooker/actions'
 
 import { buildWebsite, publishWebsite } from './actions'
+/* eslint-env mocha */
+import { join, resolve } from '../../src/helpers/path'
 
 import { Cooker } from 'repo-cooker'
 import assert from 'test-utils/assert'
 import { mockNpmRegistry } from 'test-utils/npm'
-/* eslint-env mocha */
-import path from 'path'
 import request from 'request'
 import { runCommandMock } from 'test-utils'
 import simple from 'simple-mock'
@@ -38,7 +38,7 @@ describe('publish script', () => {
     this.timeout(6000)
 
     const dryRun = runCommandMock()
-    const basePath = path.resolve('test', 'repo')
+    const basePath = resolve('test', 'repo')
     const cooker = Cooker({
       devtools: null,
       dryRun,
@@ -60,7 +60,7 @@ describe('publish script', () => {
       '@repo-cooker-test/entremetier',
       '@repo-cooker-test/poissonier',
     ].map(name => ({
-      cwd: path.resolve(basePath, 'packages', 'node_modules', name),
+      cwd: resolve(basePath, 'packages', 'node_modules', name),
       name,
       version: versions[name],
     }))
@@ -69,11 +69,7 @@ describe('publish script', () => {
       // No ... because we want to sort them to avoid inconsistent test failures.
       released.map(r => ({
         cmd: 'writeFile',
-        args: [
-          path.join(r.cwd, 'package.json'),
-          '[data]',
-          { encoding: 'utf8' },
-        ],
+        args: [join(r.cwd, 'package.json'), '[data]', { encoding: 'utf8' }],
       })),
       ...released.map(r => ({
         cmd: 'npm',

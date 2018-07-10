@@ -1,5 +1,5 @@
+import { join } from '../helpers/path'
 import { readFileSync } from 'fs'
-import { join } from 'path'
 
 const dependencyTypes = ['dependencies', 'devDependencies']
 
