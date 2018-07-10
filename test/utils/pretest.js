@@ -1,6 +1,6 @@
 import { mkdirSync, statSync } from 'fs'
 
-import { join } from 'path'
+import { join } from '../../src/helpers/path'
 import { spawn } from 'cross-spawn'
 import symlinkDir from 'symlink-dir'
 

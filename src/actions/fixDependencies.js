@@ -1,5 +1,5 @@
 import { fs } from './helpers'
-import { join } from 'path'
+import { join } from '../helpers/path'
 
 const dependencyTypes = ['dependencies', 'devDependencies']
 const logRed = msg => console.log(`\x1b[31m${msg}\x1b[0m`)

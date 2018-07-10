@@ -1,8 +1,8 @@
+import assert from 'test-utils/assert'
+import { config } from 'test-utils'
 /* eslint-env mocha */
 import fs from 'fs'
-import { join } from 'path'
-import { config } from 'test-utils'
-import assert from 'test-utils/assert'
+import { join } from '../../../helpers/path'
 import { resetRepository } from './resetRepository'
 
 it('should reset all changed files in repo', done => {

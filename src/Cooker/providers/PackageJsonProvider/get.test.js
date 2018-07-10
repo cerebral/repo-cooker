@@ -1,9 +1,9 @@
 /* eslint-env mocha */
 import assert from 'test-utils/assert'
-import { get } from './get'
-import { readFileSync } from 'fs'
-import { join } from 'path'
 import { config } from 'test-utils'
+import { get } from './get'
+import { join } from '../../../helpers/path'
+import { readFileSync } from 'fs'
 
 it('should get package info', function(done) {
   const getInfo = get(config)
