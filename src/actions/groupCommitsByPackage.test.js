@@ -1,6 +1,7 @@
+import { groupCommitsByPackage } from './'
+import { resolve } from '../helpers/path'
 /* eslint-env mocha */
 import { testAction } from 'test-utils'
-import { groupCommitsByPackage } from './'
 
 const commits = [
   {
@@ -77,8 +78,8 @@ it('should not get confused by similar package names', done => {
 
   function mockPackages({ config }) {
     config.packagesPaths = {
-      foo: '/root/packages/foo',
-      foobar: '/root/packages/foobar',
+      foo: resolve('/root/packages/foo'),
+      foobar: resolve('/root/packages/foobar'),
     }
     config.path = '/root'
   }
