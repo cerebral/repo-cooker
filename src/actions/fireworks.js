@@ -12,8 +12,9 @@ export function fireworks({ config }) {
   console.log(`${color}****************\x1b[0m`)
 }
 
-export function fireworksWithTitle(title) {
-  return function fireWorksWithtitle({ config }) {
+export function fireworksWithTitle(titleOrTag) {
+  return function fireWorksWithtitle({ config, resolve }) {
+    const title = resolve.value(titleOrTag)
     const isReal = config.runCommand === execCommand
     const msg = isReal ? 'SUCCESS !!' : 'DRY RUN OK'
     const color = isReal ? '\x1b[32m' : '\x1b[36m'
