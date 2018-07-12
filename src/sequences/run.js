@@ -1,10 +1,10 @@
 import * as cook from '../actions'
 
-import { props } from 'function-tree/tags'
+import { props, string } from 'function-tree/tags'
 
 export const runSequence = [
   cook.runNpmScript(props`cmd`),
-  cook.fireworksWithTitle('run'),
+  cook.fireworksWithTitle(string`run ${props`cmd`}`),
 ]
 
 export const runSetup = {
