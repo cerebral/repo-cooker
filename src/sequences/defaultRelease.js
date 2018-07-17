@@ -31,7 +31,7 @@ export const defaultReleaseSequence = [
     otherwise: [],
   },
   cook.writeVersionsToPackages,
-  cook.runNpmScript('prepare'),
+  cook.build,
   cook.publishUnderTemporaryNpmTag,
   cook.byBranch,
   {
