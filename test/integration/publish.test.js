@@ -54,11 +54,25 @@ describe('publish script', () => {
       '@repo-cooker-test/commis': '3.0.0-dabd05',
       '@repo-cooker-test/entremetier': '1.3.4-dabd05',
       '@repo-cooker-test/poissonier': '1.0.0-dabd05',
+      '@repo-cooker-test/executive-chef': '3.2.0-dabd05',
     }
+
     const released = [
       '@repo-cooker-test/commis',
       '@repo-cooker-test/entremetier',
+      '@repo-cooker-test/executive-chef',
       '@repo-cooker-test/poissonier',
+    ].map(name => ({
+      cwd: resolve(basePath, 'packages', 'node_modules', name),
+      name,
+      version: versions[name],
+    }))
+
+    const releasedByRelatedPackages = [
+      '@repo-cooker-test/entremetier',
+      '@repo-cooker-test/executive-chef',
+      '@repo-cooker-test/poissonier',
+      '@repo-cooker-test/commis',
     ].map(name => ({
       cwd: resolve(basePath, 'packages', 'node_modules', name),
       name,
@@ -71,7 +85,7 @@ describe('publish script', () => {
         cmd: 'writeFile',
         args: [join(r.cwd, 'package.json'), '[data]', { encoding: 'utf8' }],
       })),
-      ...released.map(r => ({
+      ...releasedByRelatedPackages.map(r => ({
         cmd: 'npm',
         args: ['publish', '--tag', 'releasing', '--access', 'public'],
         options: { cwd: r.cwd, pause: true },
@@ -173,7 +187,7 @@ describe('publish script', () => {
         // Just write the new version to package.json of packages
         // this is temporary for release and does not need to be pushed to repo
 
-        cook.runNpmScript('prepare'),
+        cook.runNpmScriptByRelatedPackage('prepare'),
         // Run the `prepare` script in all packages if it exists. The `npm publish`
         // script also runs them but we want to make sure none fail before moving
         // forward.
