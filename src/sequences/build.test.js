@@ -12,7 +12,7 @@ it('should run build scripts respecting dependencies', function(done) {
     ...buildSequence,
     ({ props }) => {
       assert.deepEqual(
-        props.build,
+        props.buildNpmScript,
         {
           '@repo-cooker-test/entremetier': false,
           '@repo-cooker-test/executive-chef': false,

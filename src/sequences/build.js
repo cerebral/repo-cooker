@@ -2,7 +2,7 @@ import * as cook from '../actions'
 
 export const buildSequence = [
   cook.relatedPackagesByPackage,
-  cook.build,
+  cook.runNpmScriptByRelatedPackage('build'),
   cook.fireworksWithTitle('build'),
 ]
 

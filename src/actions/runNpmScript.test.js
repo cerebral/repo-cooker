@@ -15,6 +15,13 @@ const commands = [
     cmd: 'npm',
     args: ['run', 'test', 'foo'],
     options: {
+      cwd: config.packagesPaths['@repo-cooker-test/executive-chef'],
+    },
+  },
+  {
+    cmd: 'npm',
+    args: ['run', 'test', 'foo'],
+    options: {
       cwd: config.packagesPaths['@repo-cooker-test/pastry-chef'],
     },
   },
@@ -23,7 +30,7 @@ const commands = [
 const testNpmScript = {
   '@repo-cooker-test/commis': { pass: true, output: 'mock command' },
   '@repo-cooker-test/entremetier': false,
-  '@repo-cooker-test/executive-chef': false,
+  '@repo-cooker-test/executive-chef': { pass: true, output: 'mock command' },
   '@repo-cooker-test/pastry-chef': {
     pass: true,
     output: 'mock command',

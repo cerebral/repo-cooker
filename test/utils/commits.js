@@ -11,7 +11,7 @@ export const tags = [
   },
 ]
 
-export const master = '60e29c9dd656504be9c515c553637cf532c6def3'
+export const master = 'a234b6ef518dc099ddc5860907a79c658fe73d04'
 
 export const commits = [
   {
@@ -281,6 +281,19 @@ export const commits = [
     message:
       "chore(package.json): rename 'prepublish' script to 'prepare' in package.json\n",
     files: ['package.json'],
+  },
+  {
+    author: {
+      name: 'Andrew Balmos',
+      email: 'andrew@balmos.org',
+    },
+    date: '2018-07-17T21:13:45.000Z',
+    hash: 'a234b6ef518dc099ddc5860907a79c658fe73d04',
+    message:
+      'feat(executive-chef): Add script for runNpmScriptByRelatedPackage test\n',
+    files: [
+      'packages/node_modules/@repo-cooker-test/executive-chef/package.json',
+    ],
   },
 ]
 
@@ -670,5 +683,24 @@ export const parsedCommits = [
     type: 'chore',
     scope: 'package.json',
     summary: "rename 'prepublish' script to 'prepare' in package.json",
+  },
+  {
+    author: {
+      name: 'Andrew Balmos',
+      email: 'andrew@balmos.org',
+    },
+    date: '2018-07-17T21:13:45.000Z',
+    hash: 'a234b6ef518dc099ddc5860907a79c658fe73d04',
+    message:
+      'feat(executive-chef): Add script for runNpmScriptByRelatedPackage test\n',
+    files: [
+      'packages/node_modules/@repo-cooker-test/executive-chef/package.json',
+    ],
+    body: '',
+    issues: [],
+    breaks: [],
+    type: 'feat',
+    scope: 'executive-chef',
+    summary: 'Add script for runNpmScriptByRelatedPackage test',
   },
 ]
