@@ -1,3 +1,4 @@
+export { build } from './build'
 export { byBranch } from './byBranch'
 export { byReleaseTarget } from './byReleaseTarget'
 export { checkDependencies } from './checkDependencies'
