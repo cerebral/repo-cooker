@@ -12,9 +12,9 @@ function updateField(
     [name]: Object.keys(content[name]).reduce((dependencies, dependency) => {
       dependencies[dependency] =
         dependency in newVersionByPackage
-          ? `^${newVersionByPackage[dependency]}`
+          ? `${newVersionByPackage[dependency]}`
           : dependency in currentVersionByPackage
-            ? `^${currentVersionByPackage[dependency]}`
+            ? `${currentVersionByPackage[dependency]}`
             : currentDeps[dependency]
 
       return dependencies
