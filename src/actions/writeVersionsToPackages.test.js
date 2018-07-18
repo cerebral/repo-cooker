@@ -30,7 +30,7 @@ describe('writeVersionsToPackages', () => {
         license: 'MIT',
         description: '',
         dependencies: {
-          '@repo-cooker-test/poissonier': '^1.2.3',
+          '@repo-cooker-test/poissonier': '1.2.3',
         },
         scripts: {
           test: "echo 'test script OK'",
@@ -57,7 +57,7 @@ describe('writeVersionsToPackages', () => {
         version: '5.3.4',
         description: '',
         peerDependencies: {
-          '@repo-cooker-test/sous-chef': '^0.3.9',
+          '@repo-cooker-test/sous-chef': '0.3.9',
         },
         scripts: {
           test: 'exit -1',
@@ -74,7 +74,7 @@ describe('writeVersionsToPackages', () => {
         version: '1.2.3',
         description: '',
         devDependencies: {
-          '@repo-cooker-test/entremetier': '^2.3.4',
+          '@repo-cooker-test/entremetier': '2.3.4',
         },
         scripts: {},
         license: 'MIT',
