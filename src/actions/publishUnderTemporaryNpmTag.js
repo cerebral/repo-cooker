@@ -19,8 +19,8 @@ export function publishUnderTemporaryNpmTag({
     .then(names => names.filter(name => name !== null))
     .then(names =>
       Promise.all(names.map(name => npm.publish(name, 'releasing')))
-        .then(temporaryNpmTagByPackage => ({
-          temporaryNpmTagByPackage: packages.reduce(
+        .then(() => ({
+          temporaryNpmTagByPackage: names.reduce(
             (temporaryNpmTagByPackage, name) => {
               temporaryNpmTagByPackage[name] = 'releasing'
 
