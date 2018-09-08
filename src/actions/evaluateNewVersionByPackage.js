@@ -4,7 +4,13 @@ const TYPES = ['major', 'minor', 'patch']
 const RTYPES = ['patch', 'minor', 'major']
 
 const VERSION_RE = /^(\d+)\.(\d+)\.(\d+)/
-function evaluateVersion(version, type, packageName, semver) {
+function evaluateVersion(
+  version,
+  type,
+  packageName,
+  semver,
+  initialVersion = ''
+) {
   if (!type) {
     if (semver) {
       // Semver was provided but is wrong.
@@ -24,17 +30,23 @@ function evaluateVersion(version, type, packageName, semver) {
 
   const parts = [re[1], re[2], re[3]].map(l => parseInt(l))
   let idx = TYPES.indexOf(type)
-  return []
+  const newVersion = []
     .concat(
       parts.slice(0, idx),
       [[parts[idx] + 1]],
       parts.slice(idx + 1).map(n => 0)
     )
     .join('.')
+  return newVersion > initialVersion ? newVersion : initialVersion
 }
 
 export function evaluateNewVersionByPackage({
-  props: { currentVersionByPackage, semverByPackage, relatedPackagesByPackage },
+  props: {
+    currentVersionByPackage,
+    semverByPackage,
+    relatedPackagesByPackage,
+    config,
+  },
 }) {
   function resolve(packageName) {
     // Bump version according to package dependencies
@@ -55,12 +67,13 @@ export function evaluateNewVersionByPackage({
     .reduce((newVersionByPackage, packageName) => {
       newVersionByPackage[packageName] =
         currentVersionByPackage[packageName] === null
-          ? '1.0.0'
+          ? config.initialVersion || '1.0.0'
           : evaluateVersion(
               currentVersionByPackage[packageName],
               RTYPES[resolve(packageName)],
               packageName,
-              semverByPackage[packageName]
+              semverByPackage[packageName],
+              config.initialVersion
             )
 
       return newVersionByPackage
