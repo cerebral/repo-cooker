@@ -4,8 +4,9 @@ function createNewVersionsTable(release) {
   const entries = Object.keys(release.newVersionByPackage)
     .filter(packageName => {
       return (
+        release.currentVersionByPackage[packageName] &&
         release.currentVersionByPackage[packageName] !==
-        release.newVersionByPackage[packageName]
+          release.newVersionByPackage[packageName]
       )
     })
     .map(packageName => {
