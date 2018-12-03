@@ -1,4 +1,5 @@
 import { backwardGraph, forwardGraph } from './helpers'
+import { runAll } from '../helpers/runAll'
 
 export function getCurrentVersionByPackage({ config, npm, props }) {
   const { semverByPackage, relatedPackagesByPackage } = props
@@ -9,7 +10,7 @@ export function getCurrentVersionByPackage({ config, npm, props }) {
       backwardGraph(relatedPackagesByPackage, changedPackages)
     )
   )
-  return Promise.all(
+  return runAll(
     touchedPackages.map(name =>
       npm.getCurrentPackageVersion(name).then(version => ({ name, version }))
     )

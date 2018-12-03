@@ -1,5 +1,6 @@
 // Import through proxy for better error message.
 import { nodegit } from './nodegit'
+import { runAll } from '../../../helpers/runAll'
 
 const BRANCH_RE = /^refs\/heads\/(.+)$/
 
@@ -10,7 +11,7 @@ export function getBranches(repoPath) {
     repo
       .getReferenceNames(nodegit.Reference.TYPE.LISTALL)
       .then(list =>
-        Promise.all(
+        runAll(
           list.map(refName =>
             nodegit.Reference.lookup(repo, refName)
               .then(ref => ref.peel(nodegit.Object.TYPE.COMMIT))

@@ -1,7 +1,9 @@
+import { runAll } from '../helpers/runAll'
+
 export function remap(propKey, callback) {
   return function remap(ctx) {
     const base = ctx.props[propKey]
-    return Promise.all(
+    return runAll(
       Object.keys(base).map(key => {
         const value = callback(key, base[key], ctx)
         if (value instanceof Promise) {

@@ -106,3 +106,15 @@ it('should run build scripts respecting dependencies', function(done) {
       assert.equal(err, 'should run without throwing', done)
     })
 })
+
+it('should run build scripts without parallel', function(done) {
+  this.timeout(TIMEOUT)
+  execCli('babel-node', ['../../src/cli.js', '--build', '--no-parallel'])
+    .then(result => {
+      assert.match(result.output, 'PARALLEL: OFF', () => {})
+      assert.match(result.output, 'build: SUCCESS !!', done)
+    })
+    .catch(err => {
+      assert.equal(err, 'should run without throwing', done)
+    })
+})

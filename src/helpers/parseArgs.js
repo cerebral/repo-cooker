@@ -16,6 +16,7 @@ const validOption = {
   '--print-release': true,
   '--release=[release_type]': true,
   '--release': true,
+  '--no-parallel': true,
   // Only for monorepo
   '--check-dependencies': true,
   '--fix-dependencies': true,

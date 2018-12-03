@@ -1,5 +1,6 @@
 // Import through proxy for better error message.
 import { nodegit } from './nodegit'
+import { runAll } from '../../../helpers/runAll'
 
 function getAuthor(commit) {
   const author = commit.author()
@@ -12,7 +13,7 @@ function getAuthor(commit) {
 function getChangedFiles(diffList) {
   const files = []
   return new Promise((resolve, reject) => {
-    Promise.all(
+    runAll(
       diffList.map(diff =>
         diff.patches().then(patches => {
           files.push(...patches.map(patch => patch.newFile().path()))

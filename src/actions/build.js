@@ -1,5 +1,7 @@
+import { runAll } from '../helpers/runAll'
+
 function buildPackages(npm, names) {
-  return Promise.all(names.map(name => npm.runScript(name, 'build'))).then(
+  return runAll(names.map(name => npm.runScript(name, 'build'))).then(
     results => {
       const failures = results.filter(result => result && !result.pass)
       if (failures.length) {
@@ -16,6 +18,7 @@ function buildPackages(npm, names) {
 
 export function build({ props, npm }) {
   const related = props.relatedPackagesByPackage
+  console.log('related', related)
   const built = {}
   function buildReady(todo) {
     if (!todo.length) {

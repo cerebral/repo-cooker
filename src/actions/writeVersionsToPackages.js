@@ -1,3 +1,5 @@
+import { runAll } from '../helpers/runAll'
+
 function updateField(
   content,
   currentVersionByPackage,
@@ -66,7 +68,7 @@ export function writeVersionsToPackages({
 }) {
   const packages = Object.keys(newVersionByPackage)
 
-  return Promise.all(
+  return runAll(
     packages.map(name =>
       packageJson.write(
         name,

@@ -1,9 +1,11 @@
+import { runAll } from '../helpers/runAll'
+
 export function runNpmScript(scriptNameTag, args = [], providedPackageNames) {
   return function runNpmScript({ config, props, npm, resolve }) {
     const scriptName = resolve.value(scriptNameTag)
     const packages = providedPackageNames || Object.keys(config.packagesPaths)
 
-    return Promise.all(
+    return runAll(
       packages.map(name => npm.runScript(name, scriptName, args))
     ).then(results => {
       const failures = results.filter(result => result && !result.pass)
