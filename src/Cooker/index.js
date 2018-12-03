@@ -1,7 +1,7 @@
 import FunctionTree, { Primitive } from 'function-tree'
-
 import { createConfig } from '../helpers/createConfig'
 import { parseArgs } from '../helpers/parseArgs'
+import { setParallelAllowed } from '../helpers/runAll'
 
 function provide(path, config) {
   // Lazy loading of providers to avoid requiring `nodegit` or other
@@ -33,6 +33,9 @@ export function Cooker(argv, theOptions) {
   }
   if (args.includes('--devtools')) {
     options.useDevtools = true
+  }
+  if (args.includes('--no-parallel')) {
+    setParallelAllowed(false)
   }
   const config = createConfig(options)
   const use = (builtin ? builtin.use : options.use) || USE_ALL

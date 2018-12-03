@@ -1,3 +1,5 @@
+import { runAll } from '../helpers/runAll'
+
 export function mapTemporaryNpmTagTo(tagName) {
   return function mapTemporaryNpmTagTo({
     npm,
@@ -5,7 +7,7 @@ export function mapTemporaryNpmTagTo(tagName) {
   }) {
     const packages = Object.keys(temporaryNpmTagByPackage)
 
-    return Promise.all(
+    return runAll(
       packages.map(name =>
         npm.replaceTag(
           name,

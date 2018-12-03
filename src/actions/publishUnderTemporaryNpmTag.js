@@ -1,3 +1,5 @@
+import { runAll } from '../helpers/runAll'
+
 export function publishUnderTemporaryNpmTag({
   config,
   npm,
@@ -11,14 +13,14 @@ export function publishUnderTemporaryNpmTag({
 
   // Need to ensure successful release of all packages, so
   // we publish under a temporary tag first
-  return Promise.all(
+  return runAll(
     packages.map(name =>
       packageJson.get(name).then(info => (info.private ? null : name))
     )
   )
     .then(names => names.filter(name => name !== null))
     .then(names =>
-      Promise.all(names.map(name => npm.publish(name, 'releasing')))
+      runAll(names.map(name => npm.publish(name, 'releasing')))
         .then(() => ({
           temporaryNpmTagByPackage: names.reduce(
             (temporaryNpmTagByPackage, name) => {

@@ -1,7 +1,9 @@
+import { runAll } from '../helpers/runAll'
+
 export function filter(propKey, callback) {
   return function filter(ctx) {
     const base = ctx.props[propKey]
-    return Promise.all(
+    return runAll(
       Object.keys(base).map(key => {
         const keepIt = callback(key, base[key], ctx)
         if (keepIt instanceof Promise) {

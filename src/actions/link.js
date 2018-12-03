@@ -1,5 +1,6 @@
 import { resolve } from '../helpers/path'
 import symlinkDir from 'symlink-dir'
+import { runAll } from '../helpers/runAll'
 
 // Alias function so that function name is `link`, not `linkOne`.
 const linkOne = function link(rootBin, packageBin) {
@@ -23,7 +24,7 @@ export function link({ config }) {
   const packages = Object.keys(config.packagesPaths)
   const rootBin = resolve(config.path, 'node_modules', '.bin')
 
-  return Promise.all(
+  return runAll(
     packages.map(name => {
       const packageBin = resolve(
         config.packagesPaths[name],
