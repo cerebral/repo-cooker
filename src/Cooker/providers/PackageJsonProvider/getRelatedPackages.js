@@ -6,7 +6,6 @@ export function getRelatedPackages(config) {
       const dependencies = Object.assign(
         {},
         info.peerDependencies || {},
-        info.devDependencies || {},
         info.dependencies || {}
       )
 

@@ -52,12 +52,12 @@ describe('publish script', () => {
 
     const versions = {
       '@repo-cooker-test/commis': '3.0.0-dabd05',
-      '@repo-cooker-test/entremetier': '1.3.4-dabd05',
+      // '@repo-cooker-test/entremetier': '1.3.4-dabd05', ==> not released
       '@repo-cooker-test/poissonier': '1.0.0-dabd05',
     }
     const released = [
       '@repo-cooker-test/commis',
-      '@repo-cooker-test/entremetier',
+      // '@repo-cooker-test/entremetier', ==> not release because it is only listed as dev dependency
       '@repo-cooker-test/poissonier',
     ].map(name => ({
       cwd: resolve(basePath, 'packages', 'node_modules', name),
