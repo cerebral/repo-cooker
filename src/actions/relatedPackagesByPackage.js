@@ -1,3 +1,5 @@
+import { runAll } from '../helpers/runAll'
+
 /*
   For each package, return a list of related packages on which this
   package depends.
@@ -5,7 +7,7 @@
 export function relatedPackagesByPackage({ config, packageJson, props }) {
   const allPackageNames = Object.keys(config.packagesPaths)
 
-  return Promise.all(
+  return runAll(
     allPackageNames.map(name => packageJson.getRelatedPackages(name))
   )
     .then(allRelatedPackages =>

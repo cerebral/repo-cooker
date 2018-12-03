@@ -16,11 +16,11 @@ it('should run build scripts respecting dependencies', function(done) {
         {
           '@repo-cooker-test/entremetier': false,
           '@repo-cooker-test/executive-chef': false,
+          '@repo-cooker-test/poissonier': false,
           '@repo-cooker-test/sous-chef': false,
           'repo-cooker-test': false,
-          '@repo-cooker-test/pastry-chef': false,
-          '@repo-cooker-test/poissonier': false,
           '@repo-cooker-test/commis': false,
+          '@repo-cooker-test/pastry-chef': false,
         },
         done
       )

@@ -1,6 +1,7 @@
+import { config } from 'test-utils'
 /* eslint-env mocha */
 import assert from 'test-utils/assert'
-import { config } from 'test-utils'
+
 import { getRelatedPackages as getRelatedPackagesFactory } from './getRelatedPackages'
 
 it('should get related packages by package', function(done) {
@@ -11,11 +12,11 @@ it('should get related packages by package', function(done) {
   })
 })
 
-it('should get read devDependencies', function(done) {
+it('should not use devDependencies', function(done) {
   const getRelatedPackages = getRelatedPackagesFactory(config)
 
   getRelatedPackages('@repo-cooker-test/poissonier').then(relatedPackages => {
-    assert.deepEqual(relatedPackages, ['@repo-cooker-test/entremetier'], done)
+    assert.deepEqual(relatedPackages, [], done)
   })
 })
 
