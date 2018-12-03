@@ -18,7 +18,6 @@ function buildPackages(npm, names) {
 
 export function build({ props, npm }) {
   const related = props.relatedPackagesByPackage
-  console.log('related', related)
   const built = {}
   function buildReady(todo) {
     if (!todo.length) {
