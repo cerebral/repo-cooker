@@ -1,15 +1,14 @@
-import * as cook from 'repo-cooker/actions'
-
-import { buildWebsite, publishWebsite } from './actions'
-/* eslint-env mocha */
-import { join, resolve } from '../../src/helpers/path'
-
 import { Cooker } from 'repo-cooker'
+import * as cook from 'repo-cooker/actions'
+import request from 'request'
+import simple from 'simple-mock'
+import { runCommandMock } from 'test-utils'
 import assert from 'test-utils/assert'
 import { mockNpmRegistry } from 'test-utils/npm'
-import request from 'request'
-import { runCommandMock } from 'test-utils'
-import simple from 'simple-mock'
+
+/* eslint-env mocha */
+import { join, resolve } from '../../src/helpers/path'
+import { buildWebsite, publishWebsite } from './actions'
 
 const isoString = '2017-07-09T19:06:31.620Z'
 
@@ -92,22 +91,17 @@ describe('publish script', () => {
       },
       {
         cmd: 'createTagForCommit',
-        args: [basePath, 'release_2017-07-09_1906', '', 'HEAD'],
+        args: [basePath, 'v2017-07-09_1906', '', 'HEAD'],
       },
       {
         // Due to issues with credentials, it is simpler to just run a
         // git command for this operation.
         cmd: 'git',
-        args: ['push', 'origin', 'release_2017-07-09_1906'],
+        args: ['push', 'origin', 'v2017-07-09_1906'],
       },
       {
         cmd: 'createRelease',
-        args: [
-          basePath,
-          'release_2017-07-09_1906',
-          'some release notes',
-          'master',
-        ],
+        args: [basePath, 'v2017-07-09_1906', 'some release notes', 'master'],
       },
     ]
 
