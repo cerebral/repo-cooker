@@ -18,11 +18,8 @@ function getContent(path) {
 
 function writeFile(path, data, options) {
   return new Promise((resolve, reject) => {
-    fsWriteFile(
-      path,
-      data,
-      options || {},
-      err => (err ? reject(err) : resolve())
+    fsWriteFile(path, data, options || {}, err =>
+      err ? reject(err) : resolve()
     )
   })
 }

@@ -39,11 +39,12 @@ export function evaluateNewVersionByPackage({
   function resolve(packageName) {
     // Bump version according to package dependencies
     return Math.max(
-      ...Object.keys(forwardGraph(relatedPackagesByPackage, [packageName])).map(
-        packageName =>
-          packageName in semverByPackage
-            ? RTYPES.indexOf(semverByPackage[packageName])
-            : -1
+      ...Object.keys(
+        forwardGraph(relatedPackagesByPackage, [packageName])
+      ).map(packageName =>
+        packageName in semverByPackage
+          ? RTYPES.indexOf(semverByPackage[packageName])
+          : -1
       )
     )
   }

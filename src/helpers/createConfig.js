@@ -8,8 +8,8 @@ export function createConfig(options) {
     options.dryRun === true
       ? logCommand
       : typeof options.dryRun === 'function'
-        ? options.dryRun
-        : execCommand
+      ? options.dryRun
+      : execCommand
 
   return Object.assign({}, options, { packagesPaths, runCommand })
 }
