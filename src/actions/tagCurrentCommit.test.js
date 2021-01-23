@@ -13,7 +13,7 @@ describe('tagCurrentCommit', () => {
     simple.restore()
   })
 
-  const name = 'release_2017-07-09_1906'
+  const name = 'v2017-07-09_1906'
   const tag = { name, date }
   it('should tag current commit', done => {
     const commands = [
