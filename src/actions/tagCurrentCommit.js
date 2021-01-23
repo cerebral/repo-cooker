@@ -4,6 +4,7 @@ export function tagCurrentCommit({ git }) {
     .slice(0, 16)
     .replace('T', '_')
     .replace(':', '')
+  // We have to prefix with "v" due to GitHub constraint
   const name = `v${releaseDate}`
   return git.createTagForCommit(name).then(() => ({ tag: { name, date } }))
 }
