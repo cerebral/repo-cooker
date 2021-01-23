@@ -4,6 +4,6 @@ export function tagCurrentCommit({ git }) {
     .slice(0, 16)
     .replace('T', '_')
     .replace(':', '')
-  const name = `release_${releaseDate}`
+  const name = `v${releaseDate}`
   return git.createTagForCommit(name).then(() => ({ tag: { name, date } }))
 }
