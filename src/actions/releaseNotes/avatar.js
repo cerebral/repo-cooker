@@ -10,9 +10,7 @@ function createNewVersionsTable(release) {
       )
     })
     .map(packageName => {
-      return `| ${packageName} | ${
-        release.currentVersionByPackage[packageName]
-      } | ${release.newVersionByPackage[packageName]} |`
+      return `| ${packageName} | ${release.currentVersionByPackage[packageName]} | ${release.newVersionByPackage[packageName]} |`
     })
 
   if (!entries.length) {
@@ -67,14 +65,14 @@ function createChangeTable(type, release, typeHeaders) {
 | package | summary | commit | issues | author | gravatar |
 |:---|:---|:---|:---|:---|---|
 ${entries
-    .map(entry => {
-      return `| ${entry.packageName} | ${entry.summary} | ${
-        entry.hash
-      } | ${entry.issues.join(', ')} | ${entry.authorName} | ![${
-        entry.authorName
-      }](https://www.gravatar.com/avatar/${md5(entry.authorEmail)}?s=40) |`
-    })
-    .join('\n')}
+  .map(entry => {
+    return `| ${entry.packageName} | ${entry.summary} | ${
+      entry.hash
+    } | ${entry.issues.join(', ')} | ${entry.authorName} | ![${
+      entry.authorName
+    }](https://www.gravatar.com/avatar/${md5(entry.authorEmail)}?s=40) |`
+  })
+  .join('\n')}
 `
 }
 
@@ -118,16 +116,16 @@ function createBreakingTable(release) {
 | package | summary | commit | issues | author | gravatar |
 |:---|:---|:---|:---|:---|---|
 ${entries
-    .map(entry => {
-      return `| ${entry.packageName} | ${entry.summary} <ul>${entry.breaks
-        .map(text => `<li>*${text}*</li>`)
-        .join('')}</ul> | ${entry.hash} | ${entry.issues.join(', ')} | ${
-        entry.authorName
-      } | ![${entry.authorName}](https://www.gravatar.com/avatar/${md5(
-        entry.authorEmail
-      )}?s=40) |`
-    })
-    .join('\n')}
+  .map(entry => {
+    return `| ${entry.packageName} | ${entry.summary} <ul>${entry.breaks
+      .map(text => `<li>*${text}*</li>`)
+      .join('')}</ul> | ${entry.hash} | ${entry.issues.join(', ')} | ${
+      entry.authorName
+    } | ![${entry.authorName}](https://www.gravatar.com/avatar/${md5(
+      entry.authorEmail
+    )}?s=40) |`
+  })
+  .join('\n')}
 `
 }
 
@@ -140,24 +138,22 @@ function createOtherTable(release) {
 | type | summary | commit | issues | author | gravatar |
 |---|:---|:---|:---|:---|---|
 ${release.commitsWithoutPackage
-    .sort((commitA, commitB) => {
-      const typeA = (commitA.type || '').toUpperCase()
-      const typeB = (commitB.type || '').toUpperCase()
+  .sort((commitA, commitB) => {
+    const typeA = (commitA.type || '').toUpperCase()
+    const typeB = (commitB.type || '').toUpperCase()
 
-      if (typeA < typeB) return -1
-      if (typeA > typeB) return 1
-      return 0
-    })
-    .map(entry => {
-      return `| ${entry.type} (${entry.scope || 'monorepo'}) | ${
-        entry.summary
-      } | ${entry.hash} | ${entry.issues.join(', ')} | ${
-        entry.author.name
-      } | ![${entry.author.email}](https://www.gravatar.com/avatar/${md5(
-        entry.author.email
-      )}?s=40) |`
-    })
-    .join('\n')}
+    if (typeA < typeB) return -1
+    if (typeA > typeB) return 1
+    return 0
+  })
+  .map(entry => {
+    return `| ${entry.type} (${entry.scope || 'monorepo'}) | ${
+      entry.summary
+    } | ${entry.hash} | ${entry.issues.join(', ')} | ${entry.author.name} | ![${
+      entry.author.email
+    }](https://www.gravatar.com/avatar/${md5(entry.author.email)}?s=40) |`
+  })
+  .join('\n')}
 `
 }
 
@@ -166,9 +162,8 @@ export function avatarNotes(release, options) {
   const breaking = Object.keys(release.summary).map(type =>
     createBreakingTable(release)
   )
-  const changes = Object.keys(typeHeaders).map(
-    type =>
-      release.summary[type] ? createChangeTable(type, release, typeHeaders) : ''
+  const changes = Object.keys(typeHeaders).map(type =>
+    release.summary[type] ? createChangeTable(type, release, typeHeaders) : ''
   )
 
   const other = createOtherTable(release)

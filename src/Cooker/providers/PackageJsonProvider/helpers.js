@@ -19,9 +19,7 @@ export function getPackageInfo(name, path) {
         if (info.name !== name) {
           reject(
             new Error(
-              `Invalid package.json (name entry '${
-                info.name
-              }' does not match package name '${name}').`
+              `Invalid package.json (name entry '${info.name}' does not match package name '${name}').`
             )
           )
         } else {

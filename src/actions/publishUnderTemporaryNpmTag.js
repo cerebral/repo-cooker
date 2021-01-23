@@ -31,11 +31,10 @@ export function publishUnderTemporaryNpmTag({
             {}
           ),
         }))
-        .then(
-          arg =>
-            config.dryRun
-              ? arg
-              : new Promise(resolve => setTimeout(() => resolve(arg), 3000))
+        .then(arg =>
+          config.dryRun
+            ? arg
+            : new Promise(resolve => setTimeout(() => resolve(arg), 3000))
         )
     )
 }

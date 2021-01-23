@@ -3,8 +3,8 @@ const TYPE_TO_SEMVER = { feat: 'minor', fix: 'patch' }
 
 function getType(commits) {
   const types = commits
-    .map(
-      commit => (commit.breaks.length ? 'major' : TYPE_TO_SEMVER[commit.type])
+    .map(commit =>
+      commit.breaks.length ? 'major' : TYPE_TO_SEMVER[commit.type]
     )
     .map(type => SEMVER_TYPES.indexOf(type))
   const type = Math.max(...types, 0)

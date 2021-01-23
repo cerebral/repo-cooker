@@ -7,13 +7,21 @@ import { getHashListFromHash } from './getHashListFromHash'
 it('should return hash list up to master', done => {
   const hash = commits[0].hash
   getHashListFromHash(config.path, hash).then(list => {
-    assert.deepEqual(list, commits.slice(1).map(commit => commit.hash), done)
+    assert.deepEqual(
+      list,
+      commits.slice(1).map(commit => commit.hash),
+      done
+    )
   })
 })
 
 it('should return full history for Big Bang pseudo-hash', done => {
   getHashListFromHash(config.path, 'Big Bang').then(list => {
-    assert.deepEqual(list, commits.map(c => c.hash), done)
+    assert.deepEqual(
+      list,
+      commits.map(c => c.hash),
+      done
+    )
   })
 })
 
