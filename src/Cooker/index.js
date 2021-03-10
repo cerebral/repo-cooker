@@ -39,13 +39,16 @@ export function Cooker(argv, theOptions) {
   }
   const config = createConfig(options)
   const use = (builtin ? builtin.use : options.use) || USE_ALL
+  const customProviders = options.providers || {}
   const ft = new FunctionTree(
     Object.assign(
       { config },
       ...Object.keys(use)
         .filter(k => use[k])
         .map(k => ({ [k]: provide(PROVIDER[k], config) })),
-      options.providers || {}
+      ...Object.keys(customProviders).map(k => ({
+        [k]: customProviders[k](config),
+      }))
     )
   )
 
