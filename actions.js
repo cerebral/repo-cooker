@@ -1,1 +1,1 @@
-module.exports = require('./lib/actions')
+module.exports = require('./dist/actions')
