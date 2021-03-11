@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 import simple from 'simple-mock'
-import { config, testAction } from 'test-utils'
+import { testAction } from 'test-utils'
 import { tagCurrentCommit } from './'
 
 const date = '2017-07-09T19:06:31.620Z'
@@ -18,8 +18,8 @@ describe('tagCurrentCommit', () => {
   it('should tag current commit', done => {
     const commands = [
       {
-        cmd: 'createTagForCommit',
-        args: [config.path, name, '', 'HEAD'],
+        cmd: 'git',
+        args: ['tag', '-a', name, '-m', '""'],
       },
     ]
     testAction(tagCurrentCommit, {}, { commands, tag }, done)

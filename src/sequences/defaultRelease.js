@@ -1,4 +1,5 @@
 import * as cook from '../actions'
+import { logCommand } from '../helpers/execCommand'
 
 export const defaultReleaseSequence = [
   // Make sure the release target is valid before running anything.
@@ -52,7 +53,13 @@ export const defaultReleaseSequence = [
         github: cook.createGithubRelease,
       },
     ],
-    otherwise: [],
+    otherwise: [
+      ({ git }) => {
+        return git.getCurrentBranch().then(branch => {
+          logCommand('skip github release', [], { branch: branch.name })
+        })
+      },
+    ],
   },
   cook.fireworksWithTitle('default release'),
 ]

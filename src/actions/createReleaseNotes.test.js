@@ -77,9 +77,13 @@ it('should run template on release summary', done => {
   )
 
   testAction(
-    createReleaseNotes(release =>
-      Object.assign({ templateRun: 'OK' }, release)
-    ),
+    (...args) => ({
+      releaseNotes: JSON.parse(
+        createReleaseNotes(release =>
+          JSON.stringify(Object.assign({ templateRun: 'OK' }, release))
+        )(...args).releaseNotes
+      ),
+    }),
     {
       commitsByPackage,
       currentVersionByPackage,
