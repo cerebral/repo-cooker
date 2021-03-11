@@ -1,5 +1,5 @@
 let nodegit
-const NODEGIT_VERSION = '0.20.3'
+const NODEGIT_VERSION = '0.27.0'
 try {
   nodegit = require('nodegit')
 } catch (err) {

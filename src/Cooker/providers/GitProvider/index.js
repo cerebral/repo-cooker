@@ -1,5 +1,4 @@
 import { Provider } from 'function-tree'
-import { createTagForCommit } from './createTagForCommit'
 import { getBranches } from './getBranches'
 import { getCommit } from './getCommit'
 import { getCurrentBranch } from './getCurrentBranch'
@@ -9,9 +8,14 @@ import { resetRepository } from './resetRepository'
 
 export function GitProvider({ path, runCommand }) {
   return new Provider({
-    createTagForCommit(tag, message = '', ref = 'HEAD') {
-      // Has side effects so we wrap with runCommand
-      return runCommand(createTagForCommit, [path, tag, message, ref])
+    createTagForCommit(tag, message = '') {
+      return runCommand('git', [
+        'tag',
+        '-a',
+        tag,
+        '-m',
+        JSON.stringify(message),
+      ])
     },
     getBranches() {
       return getBranches(path)

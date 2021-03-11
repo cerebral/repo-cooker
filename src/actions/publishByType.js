@@ -24,7 +24,9 @@ export function publishByType(ctx) {
           } else if (ctx[type].validateVersion) {
             const newVersion = props.newVersionByPackage[name]
             if (!ctx[type].validateVersion(newVersion)) {
-              logCommand('SKIP', [type, name], { version: newVersion })
+              logCommand('skip publish', [type, name], {
+                version: newVersion,
+              })
               return null
             }
           }

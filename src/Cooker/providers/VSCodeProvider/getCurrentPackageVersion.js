@@ -1,6 +1,6 @@
 import request from 'request'
 
-const RE = /<title>.*v([0-9\.]+)<\/title>/
+const RE = /<title>.*v([0-9.]+)<\/title>/
 const BADGES_URL = 'https://vsmarketplacebadge.apphb.com/version-short'
 
 const cache = {}
@@ -25,7 +25,7 @@ export function getCurrentPackageVersion(name, packageJson) {
       if (!re) {
         return reject(
           new Error(
-            `Could not scrap url '${url}' for vscode extension version.`
+            `Could not scrape url '${url}' for vscode extension version.`
           )
         )
       }
@@ -34,13 +34,4 @@ export function getCurrentPackageVersion(name, packageJson) {
       resolve(cache[name])
     })
   })
-}
-
-export async function getFromVSCodeBadge(name) {
-  const response = await got(`${BADGES_URL}/${name}.svg`)
-
-  if (response && response.statusCode === 404) {
-    cache[packageName] = null
-    return resolve(cache[packageName])
-  }
 }

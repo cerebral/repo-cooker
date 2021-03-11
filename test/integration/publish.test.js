@@ -90,8 +90,8 @@ describe('publish script', () => {
         args: [basePath, 'hard', 'HEAD'],
       },
       {
-        cmd: 'createTagForCommit',
-        args: [basePath, 'v2017-07-09_1906', '', 'HEAD'],
+        cmd: 'git',
+        args: ['tag', '-a', 'v2017-07-09_1906', '-m', '""'],
       },
       {
         // Due to issues with credentials, it is simpler to just run a

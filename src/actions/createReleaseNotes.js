@@ -59,7 +59,10 @@ export function createReleaseNotes(templateArg, options = {}) {
     template = templateArg
   }
   return function createReleaseNotes({ props }) {
-    const releaseNotes = template(summarizeRelease(props), options)
+    const releaseNotes = template(summarizeRelease(props), options).replace(
+      /\n\n[\n]+/g,
+      '\n\n'
+    )
     if (props.argv.includes('--print-release')) {
       console.log(releaseNotes)
     }
