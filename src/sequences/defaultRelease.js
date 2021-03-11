@@ -11,13 +11,13 @@ export const defaultReleaseSequence = [
   cook.getRawCommitsFromHistory,
   cook.parseCommits,
   cook.groupCommitsByPackage,
-  cook.filter('commitsByPackage', (key, _, { packageJson }) =>
-    packageJson.get(key).then(info => !info.private)
-  ),
   cook.evaluateSemverByPackage,
   cook.relatedPackagesByPackage,
   cook.getCurrentVersionByPackage,
   cook.evaluateNewVersionByPackage,
+  cook.filter('newVersionByPackage', (key, _, { packageJson }) =>
+    packageJson.get(key).then(info => !info.private)
+  ),
   cook.byBranch,
   {
     next: cook.remap(
@@ -32,7 +32,7 @@ export const defaultReleaseSequence = [
   },
   cook.writeVersionsToPackages,
   cook.build,
-  cook.publishUnderTemporaryNpmTag,
+  cook.publishByType,
   cook.byBranch,
   {
     master: cook.mapTemporaryNpmTagTo('latest'),

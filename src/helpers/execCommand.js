@@ -31,11 +31,16 @@ export function readableCommand(cmd, args, options) {
   }
 }
 
+function limit(text) {
+  const str = text.split('\n').join('\\n')
+  return str.length > 50 ? str.slice(0, 47) + '...' : str
+}
+
 export function logCommand(cmd, args, options) {
   const command = readableCommand(cmd, args, options)
   console.log(
     `\n\x1b[33m${command.cmd}\x1b[0m\n    ${command.args
-      .map(arg => (typeof arg === 'string' ? arg : JSON.stringify(arg)))
+      .map(arg => (typeof arg === 'string' ? limit(arg) : JSON.stringify(arg)))
       .join('\n    ')}${options ? '\n    ' + JSON.stringify(options) : ''}`
   )
   return Promise.resolve([])

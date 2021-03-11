@@ -15,6 +15,7 @@ const PROVIDER = {
   github: './providers/GithubProvider',
   npm: './providers/NpmProvider',
   packageJson: './providers/PackageJsonProvider',
+  vscode: './providers/VSCodeProvider',
 }
 const USE_ALL = Object.assign(
   {},

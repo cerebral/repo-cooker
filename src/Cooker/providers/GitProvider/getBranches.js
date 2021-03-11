@@ -9,7 +9,7 @@ const BRANCH_RE = /^refs\/heads\/(.+)$/
 export function getBranches(repoPath) {
   return nodegit.Repository.open(repoPath).then(repo =>
     repo
-      .getReferenceNames(nodegit.Reference.TYPE.LISTALL)
+      .getReferenceNames(nodegit.Reference.TYPE.ALL)
       .then(list =>
         runAll(
           list.map(refName =>

@@ -1,7 +1,8 @@
 import { backwardGraph, forwardGraph } from './helpers'
 import { runAll } from '../helpers/runAll'
 
-export function getCurrentVersionByPackage({ config, npm, props }) {
+export function getCurrentVersionByPackage(ctx) {
+  const { props, packageJson } = ctx
   const { semverByPackage, relatedPackagesByPackage } = props
   const changedPackages = Object.keys(semverByPackage)
   const touchedPackages = Object.keys(
@@ -10,17 +11,31 @@ export function getCurrentVersionByPackage({ config, npm, props }) {
       backwardGraph(relatedPackagesByPackage, changedPackages)
     )
   )
-  return runAll(
-    touchedPackages.map(name =>
-      npm.getCurrentPackageVersion(name).then(version => ({ name, version }))
+
+  return (
+    runAll(
+      touchedPackages.map(name =>
+        packageJson.get(name).then(info => {
+          const type = info.publishTo || 'npm'
+          const getter = ctx[type]
+          if (!getter) {
+            throw new Error(
+              `Unknown publishType '${type}' for package '${name}'.`
+            )
+          }
+          return getter
+            .getCurrentPackageVersion(name, info)
+            .then(version => ({ name, version }))
+        })
+      )
     )
-    // Sort packages by name for consistent output
+      // Sort packages by name for consistent output
+      .then(results => results.sort((a, b) => (a.name < b.name ? -1 : 1)))
+      .then(results => ({
+        currentVersionByPackage: results.reduce((acc, r) => {
+          acc[r.name] = r.version
+          return acc
+        }, {}),
+      }))
   )
-    .then(results => results.sort((a, b) => (a.name < b.name ? -1 : 1)))
-    .then(results => ({
-      currentVersionByPackage: results.reduce((acc, r) => {
-        acc[r.name] = r.version
-        return acc
-      }, {}),
-    }))
 }
