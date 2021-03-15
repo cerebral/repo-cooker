@@ -4,20 +4,20 @@ import symlinkDir from 'symlink-dir'
 import { resolve } from '../helpers/path'
 import { runAll } from '../helpers/runAll'
 
-// Alias function so that function name is `link`, not `linkOne`.
-const linkOne = function link(packageBin, rootBin) {
+// Alias to show 'linkAsModule'
+const linkOne = function linkAsModule(pkgAsModule, sourcePackage) {
   return new Promise((resolve, reject) => {
-    const dir = dirname(packageBin)
+    const dir = dirname(pkgAsModule)
     if (!existsSync(dir)) {
       mkdirSync(dir)
     }
-    symlinkDir(rootBin, packageBin).then(
+    symlinkDir(sourcePackage, pkgAsModule).then(
       () => {
         resolve(true)
       },
       err => {
         console.warn(
-          `Cannot create symlink '${packageBin}' (there is a directory there probably).`
+          `Cannot create symlink '${pkgAsModule}' (there is a directory there probably).`
         )
         reject(err)
       }
@@ -25,20 +25,20 @@ const linkOne = function link(packageBin, rootBin) {
   })
 }
 
-export function link({ config }) {
+export function linkAsModule({ config }) {
   const { runCommand } = config
   const packages = Object.keys(config.packagesPaths)
-  const rootBin = resolve(config.path, 'node_modules', '.bin')
+  const nodeModules = resolve(config.path, 'node_modules')
 
   return runAll(
     packages.map(name =>
       runCommand(linkOne, [
-        resolve(config.packagesPaths[name], 'node_modules', '.bin'),
-        rootBin,
+        resolve(nodeModules, name),
+        config.packagesPaths[name],
       ])
     )
   ).then(results => ({
-    [`link`]: Object.assign(
+    [`linkAsModule`]: Object.assign(
       {},
       ...results.map((result, idx) => ({
         [packages[idx]]: result,

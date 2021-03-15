@@ -4,6 +4,7 @@ const builtinRe = /^--builtin=(.+)$/
 const releaseRe = /^--release(=(.+)|)$/
 const ALIAS = {
   '--link': '--builtin=link',
+  '--link-bin': '--builtin=linkBin',
   '--build': '--builtin=build',
 }
 const optionRe = /^--.+$/
@@ -13,6 +14,7 @@ const validOption = {
   '--builtin=[cmd_name]': true,
   '--build': true,
   '--link': true,
+  '--link-bin': true,
   '--print-release': true,
   '--release=[release_type]': true,
   '--release': true,

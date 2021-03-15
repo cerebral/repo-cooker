@@ -31,9 +31,8 @@ _package.json_
 ```js
 {
   "scripts": {
-    // Create a symlink in every package to the '.bin' folder
-    // in root node_modules (to run commands from inside the
-    // packages).
+    // Creates a symlink from /[package path]/node-modules/.bin --> /node_modules/.bin
+    // Creates a symlink from /node_modules/[package-name] --> [package path]
     "link": "repo-cooker --link",
     // Link on npm install.
     "install": "npm run link",
