@@ -33,7 +33,7 @@ export function readableCommand(cmd, args, options) {
 
 function limit(text) {
   const str = text.split('\n').join('\\n')
-  return str.length > 50 ? str.slice(0, 47) + '...' : str
+  return str.length > 50 ? '...' + str.slice(-47) : str
 }
 
 export function logCommand(cmd, args, options) {
