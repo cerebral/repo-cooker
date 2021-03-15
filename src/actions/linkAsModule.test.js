@@ -1,10 +1,10 @@
 /* eslint-env mocha */
 import { config, testAction } from 'test-utils'
 
-import { link } from './'
+import { linkAsModule } from './'
 import { resolve } from '../helpers/path'
 
-it('should link bin directories', function(done) {
+it('should link as modules', function(done) {
   this.timeout(4000)
   const linkResults = {
     '@repo-cooker-test/commis': 'mock command',
@@ -18,10 +18,10 @@ it('should link bin directories', function(done) {
 
   const rootBin = resolve(config.path, 'node_modules', '.bin')
   const commands = Object.keys(config.packagesPaths)
-    .map(name => config.packagesPaths[name])
-    .map(path => ({
-      cmd: 'link',
-      args: [resolve(path, 'node_modules', '.bin'), rootBin],
+    .map(name => ({ name, path: config.packagesPaths[name] }))
+    .map(({ name, path }) => ({
+      cmd: 'linkAsModule',
+      args: [resolve(config.path, 'node_modules', name), path],
     }))
-  testAction(link, {}, { link: linkResults, commands }, done)
+  testAction(linkAsModule, {}, { linkAsModule: linkResults, commands }, done)
 })

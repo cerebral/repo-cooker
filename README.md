@@ -1,4 +1,16 @@
+# repo-cooker
+
+[![NPM version][npm-image]][npm-url]
 [![Build status][travis-image]][travis-url]
+
+This is a tool for monorepo management and publishing, now with vscode
+extension support !
+
+Repo-cooker helps running commands in all projects, linking binaries to run
+commands in directories and supports auto-semver versionning based on commits
+since last release (commitizen type).
+
+There is no pre-required monorepo style or folder structure.
 
 ## GETTING READY
 
@@ -12,21 +24,29 @@ Things to check before gettings started:
 6.  'latest' npm tag for packages already released use a semver version matching /^\d+.\d+\.
     (any version with appe)
 
-## Suggested public API
+## Usage examples
 
 _package.json_
 
-```json
+```js
 {
   "scripts": {
-    // This will run the custom script in ./repo-cooker/doThis.js
-    "doThis": "repo-cooker doThis",
+    // Creates a symlink from /[package path]/node-modules/.bin --> /node_modules/.bin
+    // Creates a symlink from /node_modules/[package-name] --> [package path]
+    "link": "repo-cooker --link",
+    // Link on npm install.
+    "install": "npm run link",
+    // Build all modules, respecting cross-dependencies.
+    "build": "repo-cooker --build",
+    // Run the default release (semver, npm, github release)
     "release": "repo-cooker --release",
     "release:preview": "repo-cooker --dry-run --release --print-release",
-    "release:debug": "repo-cooker --dry-run --release --devtools",
-    // As there is no custom script for `test`, this will run the npm script 'test' in
-    // all packages.
+    // Run the "test" script in all packages (if available).
     "test": "repo-cooker test"
+    // If there is a ./repo-cooker/doThis.js file, run this
+    // custom script otherwise, run the "doThis" script from
+    // all packages.
+    "doThis": "repo-cooker doThis",
   }
 }
 ```
@@ -85,5 +105,7 @@ cooker.cook('publish', [
 For now look at [publish.test.js](https://github.com/cerebral/repo-cooker/blob/master/test/integration/publish.test.js)
 for a full example with comments.
 
+[npm-image]: https://img.shields.io/npm/v/repo-cooker.svg?style=flat
+[npm-url]: https://npmjs.org/package/repo-cooker
 [travis-image]: https://img.shields.io/travis/cerebral/repo-cooker.svg?style=flat
 [travis-url]: https://travis-ci.org/cerebral/repo-cooker
