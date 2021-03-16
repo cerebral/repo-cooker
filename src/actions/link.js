@@ -5,7 +5,7 @@ import { resolve } from '../helpers/path'
 import { runAll } from '../helpers/runAll'
 
 // Alias function so that function name is `link`, not `linkOne`.
-const linkOne = function link(packageBin, rootBin) {
+const linkOne = function link(rootBin, packageBin) {
   return new Promise((resolve, reject) => {
     const dir = dirname(packageBin)
     if (!existsSync(dir)) {
@@ -33,8 +33,8 @@ export function link({ config }) {
   return runAll(
     packages.map(name =>
       runCommand(linkOne, [
-        resolve(config.packagesPaths[name], 'node_modules', '.bin'),
         rootBin,
+        resolve(config.packagesPaths[name], 'node_modules', '.bin'),
       ])
     )
   ).then(results => ({

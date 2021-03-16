@@ -5,7 +5,7 @@ import { resolve } from '../helpers/path'
 import { runAll } from '../helpers/runAll'
 
 // Alias to show 'linkAsModule'
-const linkOne = function linkAsModule(pkgAsModule, sourcePackage) {
+const linkOne = function linkAsModule(sourcePackage, pkgAsModule) {
   return new Promise((resolve, reject) => {
     const dir = dirname(pkgAsModule)
     if (!existsSync(dir)) {
@@ -33,8 +33,8 @@ export function linkAsModule({ config }) {
   return runAll(
     packages.map(name =>
       runCommand(linkOne, [
-        resolve(nodeModules, name),
         config.packagesPaths[name],
+        resolve(nodeModules, name),
       ])
     )
   ).then(results => ({

@@ -21,7 +21,7 @@ it('should link bin directories', function(done) {
     .map(name => config.packagesPaths[name])
     .map(path => ({
       cmd: 'link',
-      args: [resolve(path, 'node_modules', '.bin'), rootBin],
+      args: [rootBin, resolve(path, 'node_modules', '.bin')],
     }))
   testAction(link, {}, { link: linkResults, commands }, done)
 })

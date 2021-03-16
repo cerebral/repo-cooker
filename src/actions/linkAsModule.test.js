@@ -21,7 +21,7 @@ it('should link as modules', function(done) {
     .map(name => ({ name, path: config.packagesPaths[name] }))
     .map(({ name, path }) => ({
       cmd: 'linkAsModule',
-      args: [resolve(config.path, 'node_modules', name), path],
+      args: [path, resolve(config.path, 'node_modules', name)],
     }))
   testAction(linkAsModule, {}, { linkAsModule: linkResults, commands }, done)
 })
