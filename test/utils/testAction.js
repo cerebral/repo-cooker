@@ -17,7 +17,12 @@ export function testAction(
 
   cooker
     .run([
-      () => Object.assign({}, input, { commands: dryRun.commands }),
+      ({ config }) => {
+        if (input.config) {
+          Object.assign(config, input.config)
+        }
+        return Object.assign({}, input, { commands: dryRun.commands })
+      },
       action,
       ({ props }) => {
         assert.deepEqual(

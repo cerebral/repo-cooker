@@ -28,7 +28,21 @@ const linkOne = function linkAsModule(sourcePackage, pkgAsModule) {
 export function linkAsModule({ config }) {
   const { runCommand } = config
   const packages = Object.keys(config.packagesPaths)
-  const nodeModules = resolve(config.path, 'node_modules')
+  const packagesPaths = packages.map(k =>
+    resolve(config.packagesPaths[k]).slice(0, -k.length - 1)
+  )
+  let commonPath = packagesPaths[0]
+  while (packagesPaths.find(p => !p.startsWith(commonPath))) {
+    commonPath = dirname(commonPath)
+  }
+  if (commonPath.includes('node_modules')) {
+    // packages are stored in a folder called node_modules: no link needed
+    return { ['linkAsModule']: {} }
+  }
+  const nodeModules = resolve(commonPath, 'node_modules')
+  if (!existsSync(nodeModules)) {
+    runCommand(mkdirSync, [nodeModules])
+  }
 
   return runAll(
     packages.map(name =>
