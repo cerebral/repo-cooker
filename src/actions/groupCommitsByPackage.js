@@ -1,7 +1,5 @@
 import { resolve } from '../helpers/path'
 
-let commitsWithoutPackage = []
-
 /*
   By looking at files changed we can match the name of
   the package
@@ -28,7 +26,11 @@ function matchPackage(filePath, config) {
   }
 */
 export function groupCommitsByPackage({ config, props }) {
+  const commits = []
+  const commitsWithoutPackage = []
   return {
+    // we add 'packagesAffected' in commits
+    commits,
     /*
       By looking at file paths change we can identify what packages
       are affected by this change
@@ -38,7 +40,7 @@ export function groupCommitsByPackage({ config, props }) {
         Extract packages affected by matching file path changed with
         defined packages in config
       */
-      const packagesAffected = commit.files
+      const affectedPackages = commit.files
         .reduce((packagesAffected, file) => {
           const packageName = matchPackage(file, config)
           if (packageName && packagesAffected.indexOf(packageName) === -1) {
@@ -57,11 +59,11 @@ export function groupCommitsByPackage({ config, props }) {
 
           return true
         })
-
+      commits.push(Object.assign({}, commit, { affectedPackages }))
       /*
         Put commit into each package array
       */
-      packagesAffected.forEach(packageName => {
+      affectedPackages.forEach(packageName => {
         if (!commitsByPackage[packageName]) {
           commitsByPackage[packageName] = []
         }

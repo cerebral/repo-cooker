@@ -1,5 +1,17 @@
 import md5 from 'md5'
 
+const DEFAULT_TYPE_HEADERS = {
+  feat: ':fire: Feature change',
+  fix: ':bug: Bug fixes',
+  docs: ':paperclip: Documentation',
+  chore: ':wrench: Chores',
+  style: ':pencil2: Styling',
+  refactor: ':mag: Refactors',
+  perf: ':runner: Performance',
+  test: ':vertical_traffic_light: Tests',
+  ts: ':pencil: Typescript',
+}
+
 function createNewVersionsTable(release) {
   const entries = Object.keys(release.newVersionByPackage)
     .filter(packageName => {
@@ -10,7 +22,9 @@ function createNewVersionsTable(release) {
       )
     })
     .map(packageName => {
-      return `| ${packageName} | ${release.currentVersionByPackage[packageName]} | ${release.newVersionByPackage[packageName]} |`
+      return `| ${packageName} | ${release.currentVersionByPackage[
+        packageName
+      ] || ''} | ${release.newVersionByPackage[packageName]} |`
     })
 
   if (!entries.length) {
@@ -25,153 +39,76 @@ ${entries.join('\n')}
 `
 }
 
-function byPackageName(a, b) {
-  if (a.packageName > b.packageName) return 1
-  else if (a.packageName < b.packageName) return -1
-  else return 0
+function affected(commit, pkgCount) {
+  if (commit.affectedPackages.length === pkgCount) {
+    return 'all'
+  } else {
+    return commit.affectedPackages.join(', ')
+  }
 }
 
-const defaultTypeHeaders = {
-  feat: ':fire: Feature change',
-  fix: ':bug: Bug fixes',
-  docs: ':paperclip: Documentation',
-  chore: ':wrench: Chores',
-  style: ':pencil2: Styling',
-  refactor: ':mag: Refactors',
-  perf: ':runner: Performance',
-  test: ':vertical_traffic_light: Tests',
-  ts: ':pencil: Typescript',
-}
-
-function createChangeTable(type, release, typeHeaders) {
-  const entries = release.summary[type]
-    .reduce((allEntries, summary) => {
-      return allEntries.concat(
-        summary.commits.map(commit => {
-          return {
-            packageName: summary.name,
-            summary: commit.summary,
-            issues: commit.issues,
-            hash: commit.hash,
-            authorName: commit.author.name,
-            authorEmail: commit.author.email,
-          }
-        })
-      )
-    }, [])
-    .sort(byPackageName)
-
-  return `## ${typeHeaders[type]}
+function createChangeTable(header, pkgCount, commits) {
+  if (!commits || commits.length === 0) {
+    return ''
+  }
+  return `## ${header}
 | package | summary | commit | issues | author | gravatar |
 |:---|:---|:---|:---|:---|---|
-${entries
-  .map(entry => {
-    return `| ${entry.packageName} | ${entry.summary} | ${
-      entry.hash
-    } | ${entry.issues.join(', ')} | ${entry.authorName} | ![${
-      entry.authorName
-    }](https://www.gravatar.com/avatar/${md5(entry.authorEmail)}?s=40) |`
+${commits
+  .map(commit => {
+    return `| ${affected(commit, pkgCount)} | ${commit.summary} | ${
+      commit.hash
+    } | ${commit.issues.join(', ')} | ${commit.author.name} | ![${
+      commit.author.name
+    }](https://www.gravatar.com/avatar/${md5(commit.author.email)}?s=40) |`
   })
   .join('\n')}
 `
 }
 
 function createBreakingTable(release) {
-  const entries = Object.keys(release.summary)
-    .reduce((allTypes, type) => {
-      return allTypes.concat(
-        release.summary[type].reduce((allEntries, summary) => {
-          const onlyBreaking = summary.commits.filter(
-            commit => commit.breaks.length
-          )
+  const breaking = release.commits.filter(commit => commit.breaks.length > 0)
+  const pkgCount = Object.keys(release.currentVersionByPackage).length
 
-          // Mutate in place (easier :))
-          summary.commits = summary.commits.filter(
-            commit => !commit.breaks.length
-          )
-
-          return allEntries.concat(
-            onlyBreaking.map(commit => {
-              return {
-                packageName: summary.name,
-                summary: commit.summary,
-                breaks: commit.breaks,
-                issues: commit.issues,
-                hash: commit.hash,
-                authorName: commit.author.name,
-                authorEmail: commit.author.email,
-              }
-            })
-          )
-        }, [])
-      )
-    }, [])
-    .sort(byPackageName)
-
-  if (!entries.length) {
+  if (breaking.length === 0) {
     return ''
   }
 
   return `## :rotating_light: Breaking
 | package | summary | commit | issues | author | gravatar |
 |:---|:---|:---|:---|:---|---|
-${entries
-  .map(entry => {
-    return `| ${entry.packageName} | ${entry.summary} <ul>${entry.breaks
-      .map(text => `<li>*${text}*</li>`)
-      .join('')}</ul> | ${entry.hash} | ${entry.issues.join(', ')} | ${
-      entry.authorName
-    } | ![${entry.authorName}](https://www.gravatar.com/avatar/${md5(
-      entry.authorEmail
-    )}?s=40) |`
+${breaking
+  .map(commit => {
+    return `| ${affected(commit, pkgCount)} | ${
+      commit.summary
+    } <ul>${commit.breaks.map(text => `<li>*${text}*</li>`).join('')}</ul> | ${
+      commit.hash
+    } | ${commit.issues.join(', ')} | ${commit.author.name} | ![${
+      commit.author.name
+    }](https://www.gravatar.com/avatar/${md5(commit.author.email)}?s=40) |`
   })
   .join('\n')}
 `
 }
 
-function createOtherTable(release) {
-  if (!release.commitsWithoutPackage.length) {
-    return ''
-  }
-
-  return `## :relieved: Other
-| type | summary | commit | issues | author | gravatar |
-|---|:---|:---|:---|:---|---|
-${release.commitsWithoutPackage
-  .sort((commitA, commitB) => {
-    const typeA = (commitA.type || '').toUpperCase()
-    const typeB = (commitB.type || '').toUpperCase()
-
-    if (typeA < typeB) return -1
-    if (typeA > typeB) return 1
-    return 0
-  })
-  .map(entry => {
-    return `| ${entry.type} (${entry.scope || 'monorepo'}) | ${
-      entry.summary
-    } | ${entry.hash} | ${entry.issues.join(', ')} | ${entry.author.name} | ![${
-      entry.author.email
-    }](https://www.gravatar.com/avatar/${md5(entry.author.email)}?s=40) |`
-  })
-  .join('\n')}
-`
+function createChangesTables(release, typeHeaders) {
+  const pkgCount = Object.keys(release.currentVersionByPackage).length
+  return Object.keys(typeHeaders)
+    .map(type =>
+      createChangeTable(
+        typeHeaders[type],
+        pkgCount,
+        release.commitsByType[type]
+      )
+    )
+    .join('\n')
 }
 
 export function avatarNotes(release, options) {
-  const typeHeaders = options.typeHeaders || defaultTypeHeaders
-  const breaking = Object.keys(release.summary).map(type =>
-    createBreakingTable(release)
-  )
-  const changes = Object.keys(typeHeaders).map(type =>
-    release.summary[type] ? createChangeTable(type, release, typeHeaders) : ''
-  )
-
-  const other = createOtherTable(release)
-
+  const typeHeaders = options.typeHeaders || DEFAULT_TYPE_HEADERS
   return `
 ${createNewVersionsTable(release)}
-${breaking.join('\n')}
-${changes.join('\n')}
-${other}
+${createBreakingTable(release)}
+${createChangesTables(release, typeHeaders)}
 `
 }
