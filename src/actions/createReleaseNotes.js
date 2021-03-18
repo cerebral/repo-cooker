@@ -1,13 +1,33 @@
 import * as builtinTemplates from './releaseNotes'
 
+function groupCommitsByType(commits) {
+  if (!commits) {
+    return {}
+  }
+  const groups = {}
+  for (const commit of commits) {
+    if (!groups[commit.type]) {
+      groups[commit.type] = []
+    }
+    groups[commit.type].push(commit)
+  }
+  return Object.assign(
+    {},
+    ...Object.keys(groups)
+      .sort()
+      .map(k => ({ [k]: groups[k] }))
+  )
+}
+
 function summarizeRelease({
+  commits,
   commitsByPackage,
   commitsWithoutPackage,
   newVersionByPackage,
   currentVersionByPackage,
   tag,
 }) {
-  let summary = {}
+  const summary = {}
   Object.keys(commitsByPackage).forEach(name => {
     let commitsByType = {}
 
@@ -18,6 +38,7 @@ function summarizeRelease({
       if (commitsByType[type] === undefined) {
         commitsByType[type] = {
           name,
+          version: newVersionByPackage[name],
           commits: [],
         }
         summary[type].push(commitsByType[type])
@@ -35,6 +56,8 @@ function summarizeRelease({
     newVersionByPackage,
     currentVersionByPackage,
     commitsWithoutPackage,
+    commits,
+    commitsByType: groupCommitsByType(commits),
     summary: Object.keys(summary)
       .sort()
       .reduce((acc, key) => {
@@ -59,10 +82,9 @@ export function createReleaseNotes(templateArg, options = {}) {
     template = templateArg
   }
   return function createReleaseNotes({ props }) {
-    const releaseNotes = template(summarizeRelease(props), options).replace(
-      /\n\n[\n]+/g,
-      '\n\n'
-    )
+    const releaseNotes = props.commits
+      ? template(summarizeRelease(props), options).replace(/\n\n[\n]+/g, '\n\n')
+      : ''
     if (props.argv.includes('--print-release')) {
       console.log(releaseNotes)
     }

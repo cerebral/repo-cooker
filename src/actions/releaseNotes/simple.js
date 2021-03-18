@@ -1,20 +1,20 @@
-function Commit(item) {
+function showCommit(commit) {
   return `
-  - ${item.summary} ${
-    item.issues.length ? '(' + item.issues.join(', ') + ')' : ''
-  } - *${item.author.name}*
-    ${item.breaks
-      .map(item => {
-        return `- ${item}`
+  - ${commit.summary} ${
+    commit.issues.length ? '(' + commit.issues.join(', ') + ')' : ''
+  } - *${commit.author.name}*
+    ${commit.breaks
+      .map(breakInfo => {
+        return `- ${breakInfo}`
       })
       .join('\n')}
 `
 }
 
-function Package(item) {
+function showPackageSummary(packageSummary) {
   return `
-#### ${item.name} - ${item.version}
-  ${item.commits.map(Commit).join('\n')}
+#### ${packageSummary.name} - ${packageSummary.version}
+  ${packageSummary.commits.map(showCommit).join('\n')}
 `
 }
 
@@ -25,7 +25,7 @@ function writeBreaks(breaks) {
 
   return `
 ## ${breaks.length} breaking
-${breaks.map(Package).join('\n')}
+${breaks.map(showPackageSummary).join('\n')}
 ---
 `
 }
@@ -37,7 +37,7 @@ function writeFixes(fix) {
 
   return `
 ## ${fix.length} ${fix.length === 1 ? 'fix' : 'fixes'}
-${fix.map(Package).join('\n')}
+${fix.map(showPackageSummary).join('\n')}
 ---
 `
 }
@@ -49,12 +49,12 @@ function writeFeat(feat) {
 
   return `
 ## ${feat.length} ${feat.length === 1 ? 'feature' : 'features'}
-${feat.map(Package).join('\n')}
+${feat.map(showPackageSummary).join('\n')}
 ---
 `
 }
 
-export function simpleNotes(release, options) {
+export function simpleNotes(release) {
   return `${writeBreaks(release.summary.breaks)}
 ${writeFixes(release.summary.fix)}
 ${writeFeat(release.summary.feat)}

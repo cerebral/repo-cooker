@@ -8,6 +8,18 @@ const makeCommit = name => {
 }
 
 it('should run template on release summary', done => {
+  const commits = [
+    'foo_feat_breaks',
+    'foo_fix_breaks',
+    'foo_feat',
+    'foo_fix',
+    'foo_chore',
+    'bar_feat_breaks',
+    'bar_fix_breaks',
+    'bar_feat',
+    'bar_fix',
+    'bar_chore',
+  ].map(makeCommit)
   const commitsByPackage = {
     foo: [
       'foo_feat_breaks',
@@ -41,34 +53,46 @@ it('should run template on release summary', done => {
       newVersionByPackage,
       currentVersionByPackage,
       commitsWithoutPackage,
+      commits,
+      commitsByType: {
+        chore: commits.filter(c => c.type === 'chore'),
+        feat: commits.filter(c => c.type === 'feat'),
+        fix: commits.filter(c => c.type === 'fix'),
+      },
       summary: {
         chore: [
           {
             name: 'foo',
+            version: 'new.foo.version',
             commits: ['foo_chore'].map(makeCommit),
           },
           {
             name: 'bar',
+            version: 'new.bar.version',
             commits: ['bar_chore'].map(makeCommit),
           },
         ],
         feat: [
           {
             name: 'foo',
+            version: 'new.foo.version',
             commits: ['foo_feat_breaks', 'foo_feat'].map(makeCommit),
           },
           {
             name: 'bar',
+            version: 'new.bar.version',
             commits: ['bar_feat_breaks', 'bar_feat'].map(makeCommit),
           },
         ],
         fix: [
           {
             name: 'foo',
+            version: 'new.foo.version',
             commits: ['foo_fix_breaks', 'foo_fix'].map(makeCommit),
           },
           {
             name: 'bar',
+            version: 'new.bar.version',
             commits: ['bar_fix_breaks', 'bar_fix'].map(makeCommit),
           },
         ],
@@ -85,6 +109,7 @@ it('should run template on release summary', done => {
       ),
     }),
     {
+      commits,
       commitsByPackage,
       currentVersionByPackage,
       newVersionByPackage,

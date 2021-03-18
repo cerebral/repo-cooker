@@ -11,7 +11,7 @@ export const tags = [
   },
 ]
 
-export const master = '60e29c9dd656504be9c515c553637cf532c6def3'
+export const current = '60e29c9dd656504be9c515c553637cf532c6def3'
 
 export const commits = [
   {

@@ -3,7 +3,7 @@ language: node_js
 node_js: '14'
 cache:
   directories:
-  - node_modules
+    - node_modules
 git:
   depth: 9999
 addons:
@@ -17,26 +17,26 @@ notifications:
 env:
   - TEST_MODE=serial
 script:
-- |
-  if [[ $SKIP_TESTS != 'true' ]]; then
-    npm prune
-    npm run lint
-    npm test
-  fi
+  - |
+    if [[ $SKIP_TESTS != 'true' ]]; then
+      npm prune
+      npm run lint
+      npm test
+    fi
 after_success:
-- |
-  if [[ $TRAVIS_SECURE_ENV_VARS == 'true' ]]; then
-    git remote set-url origin https://cerebraljs:${GH_TOKEN}@github.com/cerebral/repo-cooker;
-    git config --global user.email "cerebraljs@gmail.com";
-    git config --global user.name "Cerebral JS";
-  fi
-  if [[ $TRAVIS_BRANCH == 'master' || $TRAVIS_PULL_REQUEST == 'true' ]]; then
-    npm run coverage;
-  fi
-  if [[ $TRAVIS_BRANCH == 'master' ]] && [[ $TRAVIS_PULL_REQUEST == 'false' ]]; then
-    printf "//registry.npmjs.org/:_authToken=$NPM_TOKEN\n" > ~/.npmrc
-    npm run release
-  fi
+  - |
+    if [[ $TRAVIS_SECURE_ENV_VARS == 'true' ]]; then
+      git remote set-url origin https://cerebraljs:${GH_TOKEN}@github.com/cerebral/repo-cooker;
+      git config --global user.email "cerebraljs@gmail.com";
+      git config --global user.name "Cerebral JS";
+    fi
+    if [[ $TRAVIS_BRANCH == 'main' || $TRAVIS_PULL_REQUEST == 'true' ]]; then
+      npm run coverage;
+    fi
+    if [[ $TRAVIS_BRANCH == 'main' ]] && [[ $TRAVIS_PULL_REQUEST == 'false' ]]; then
+      printf "//registry.npmjs.org/:_authToken=$NPM_TOKEN\n" > ~/.npmrc
+      npm run release
+    fi
 branches:
   except:
-  - "/^v\\d+\\.\\d+\\.\\d+$/"
+    - "/^v\\d+\\.\\d+\\.\\d+$/"

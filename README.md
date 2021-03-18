@@ -102,7 +102,7 @@ cooker.cook('publish', [
 ])
 ```
 
-For now look at [publish.test.js](https://github.com/cerebral/repo-cooker/blob/master/test/integration/publish.test.js)
+For now look at [publish.test.js](https://github.com/cerebral/repo-cooker/blob/main/test/integration/publish.test.js)
 for a full example with comments.
 
 [npm-image]: https://img.shields.io/npm/v/repo-cooker.svg?style=flat

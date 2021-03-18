@@ -13,9 +13,9 @@ export function GithubProvider({ path, runCommand }) {
   }
 
   return new Provider({
-    createRelease(tagName, body, target = 'master') {
+    createRelease(tagName, body) {
       // Has side effects so we wrap with runCommand
-      return runCommand(createRelease, [path, tagName, body, target])
+      return runCommand(createRelease, [path, tagName, body])
     },
   })
 }

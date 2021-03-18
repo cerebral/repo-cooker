@@ -18,6 +18,6 @@ export function resetRepository(path, type, ref) {
   return nodegit.Repository.open(path).then(repo =>
     nodegit.Reference.nameToId(repo, ref)
       .then(oid => repo.getCommit(oid))
-      .then(commit => nodegit.Reset(repo, commit, gitType, {}, 'master'))
+      .then(commit => nodegit.Reset(repo, commit, gitType, {}))
   )
 }

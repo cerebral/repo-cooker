@@ -8,7 +8,7 @@ it('should post new release to github', done => {
   const commands = [
     {
       cmd: 'createRelease',
-      args: [config.path, tag.name, releaseNotes, 'master'],
+      args: [config.path, tag.name, releaseNotes],
     },
   ]
   testAction(createGithubRelease, { releaseNotes, tag }, { commands }, done)
