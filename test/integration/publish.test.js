@@ -101,7 +101,7 @@ describe('publish script', () => {
       },
       {
         cmd: 'createRelease',
-        args: [basePath, 'v2017-07-09_1906', 'some release notes', 'master'],
+        args: [basePath, 'v2017-07-09_1906', 'some release notes'],
       },
     ]
 
@@ -112,8 +112,8 @@ describe('publish script', () => {
         cook.getLatestReleaseHash,
         // { hash: "e654cd..." }
 
-        // Get list of commit hashes from `props.hash` to master. If `props.hash` is 'Big Bang', returns
-        // the full history up to current master. An invalid hash returns an empty list.
+        // Get list of commit hashes from `props.hash` to release hash. If `props.hash` is 'Big Bang', returns
+        // the full history up to current commit. An invalid hash returns an empty list.
         cook.getHistoryFromHash,
         // { history: ["c456e...", "4d76f..."] }
 

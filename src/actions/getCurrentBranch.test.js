@@ -4,15 +4,15 @@ import { commits } from 'test-utils/commits'
 import { getCurrentBranch } from './'
 
 it('should find the name of the current branch', done => {
-  const master = commits[commits.length - 1]
+  const commit = commits[commits.length - 1]
   testAction(
     getCurrentBranch,
     {},
     {
       branch: {
-        date: master.date,
+        date: commit.date,
         name: 'next',
-        hash: master.hash,
+        hash: commit.hash,
       },
     },
     done

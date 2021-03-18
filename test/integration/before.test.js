@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 import { config } from 'test-utils'
-import { master, commits as testCommits } from 'test-utils/commits'
+import { current, commits as testCommits } from 'test-utils/commits'
 import { Cooker } from 'repo-cooker'
 import * as cook from 'repo-cooker/actions'
 
@@ -14,11 +14,11 @@ before(done => {
       cook.parseCommits,
       ({ props: { rawCommits, commits } }) => {
         const head = commits[commits.length - 1].hash
-        if (master !== head) {
+        if (current !== head) {
           console.log(
             "\n\nNEW commits, please update 'test/utils/commits.js' file with:\n"
           )
-          console.log(`MASTER: ${head}\n`)
+          console.log(`CURRENT: ${head}\n`)
           const newCommits = JSON.stringify(
             rawCommits.slice(testCommits.length),
             null,

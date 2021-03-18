@@ -5,15 +5,15 @@ import { commits } from 'test-utils/commits'
 import { getBranches } from './getBranches'
 
 it('should return branches information', done => {
-  const master = commits[commits.length - 1]
+  const commit = commits[commits.length - 1]
   getBranches(config.path).then(branches => {
     assert.deepEqual(
       branches,
       [
         {
-          date: master.date,
+          date: commit.date,
           name: 'next',
-          hash: master.hash,
+          hash: commit.hash,
         },
       ],
       done

@@ -4,7 +4,7 @@ import assert from 'test-utils/assert'
 import { commits } from 'test-utils/commits'
 import { getHashListFromHash } from './getHashListFromHash'
 
-it('should return hash list up to master', done => {
+it('should return hash list up to hash', done => {
   const hash = commits[0].hash
   getHashListFromHash(config.path, hash).then(list => {
     assert.deepEqual(
@@ -25,7 +25,7 @@ it('should return full history for Big Bang pseudo-hash', done => {
   })
 })
 
-it('should return empty list for master', done => {
+it('should return empty list for last', done => {
   const hash = commits[commits.length - 1].hash
   getHashListFromHash(config.path, hash).then(list => {
     assert.deepEqual(list, [], done)
