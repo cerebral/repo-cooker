@@ -1,5 +1,5 @@
 import globby from 'globby'
-import { readFileSync } from 'fs'
+import { existsSync, readFileSync } from 'fs'
 import { resolve } from '../helpers/path'
 
 export function getPackagesPaths(cwd, glob) {
@@ -13,6 +13,8 @@ export function getPackagesPaths(cwd, glob) {
     return globby
       .sync(typeof glob === 'string' ? [glob] : glob, { cwd })
       .sort()
+      .map(path => resolve(cwd, path))
+      .filter(path => existsSync(resolve(path, 'package.json')))
       .reduce((packagesMap, path) => {
         const pathArray = path.split('/')
         const packageName = pathArray.pop()
@@ -21,7 +23,7 @@ export function getPackagesPaths(cwd, glob) {
         // If package starts with scoped dir, use that as part of name
         packagesMap[
           dir[0] === '@' ? dir + '/' + packageName : packageName
-        ] = resolve(cwd, path)
+        ] = path
 
         return packagesMap
       }, {})
