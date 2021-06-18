@@ -29,7 +29,7 @@ it('should link as modules', function(done) {
   }
 
   const commands = [
-    { cmd: 'mkdirSync', args: ['/foo/bar/node_modules'] },
+    { cmd: 'mkdir', args: ['/foo/bar/node_modules'] },
     ...Object.keys(packagesPaths).map(name => ({
       cmd: 'linkAsModule',
       args: [packagesPaths[name], resolve('/foo/bar', 'node_modules', name)],
@@ -61,7 +61,7 @@ it('should not link as modules inside part of name', function(done) {
 
   const commands = [
     // /foo/bar, not /foo/bar/@repo-cooker-test
-    { cmd: 'mkdirSync', args: ['/foo/bar/node_modules'] },
+    { cmd: 'mkdir', args: ['/foo/bar/node_modules'] },
     ...Object.keys(packagesPaths).map(name => ({
       cmd: 'linkAsModule',
       args: [packagesPaths[name], resolve('/foo/bar', 'node_modules', name)],
