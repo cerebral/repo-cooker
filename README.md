@@ -19,7 +19,7 @@ Things to check before gettings started:
 1.  Monorepo has correct 'repository' entry in package.json
 2.  Names in individual packages package.json file is correct (matches glob path). For example, a package in 'packages/@foo/bar' should have '@foo/bar' as name.
 3.  REPO_COOKER_GITHUB_TOKEN is set in the environment where the script runs.
-4.  .npmrc has an authToken (npm login).
+4.  .npmrc has an authToken (npm login) and REPO_COOKER_NPM_OTP is set if you have two factor authentication
 5.  git login if publishing release (see .travis.yml as example)
 6.  'latest' npm tag for packages already released use a semver version matching /^\d+.\d+\.
     (any version with appe)
