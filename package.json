@@ -14,7 +14,7 @@
     "prepare": "npm run build",
     "pretest": "babel-node test/utils/pretest.js",
     "release": "npm run build && node ./dist/cli.js --release --no-parallel",
-    "test": "mocha --require babel-register \"src/**/*.test.js\" \"test/integration/*.test.js\"",
+    "test": "REPO_COOKER_NPM_OTP= mocha --require babel-register \"src/**/*.test.js\" \"test/integration/*.test.js\"",
     "test:watch": "npm run test -- --watch"
   },
   "repository": {
