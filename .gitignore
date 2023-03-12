@@ -10,3 +10,4 @@ yarn.lock
 /test/repo
 /.nyc_output
 /coverage
+.vscode
