@@ -1,16 +1,10 @@
-// Import through proxy for better error message.
-import { nodegit } from './nodegit'
-import { getBranches } from './getBranches'
+import * as fs from 'fs'
 
-export function getCurrentBranch(repoPath) {
-  return nodegit.Repository.open(repoPath).then(repo =>
-    repo
-      .getHeadCommit()
-      .then(commit => commit.sha())
-      .then(hash =>
-        getBranches(repoPath).then(branches =>
-          branches.find(b => b.hash === hash)
-        )
-      )
-  )
+import { currentBranch } from 'isomorphic-git'
+import { getBranchObject } from './getBranchObject'
+
+export async function getCurrentBranch(repoPath) {
+  const name = await currentBranch({ fs, dir: repoPath })
+
+  return getBranchObject(name, repoPath)
 }

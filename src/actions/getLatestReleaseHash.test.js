@@ -1,10 +1,10 @@
 /* eslint-env mocha */
-// Import through proxy for better error message.
-import { nodegit } from '../Cooker/providers/GitProvider/nodegit'
-import simple from 'simple-mock'
-import { testAction } from 'test-utils'
+import * as git from 'isomorphic-git'
+
 import { getLatestReleaseHash } from './'
+import simple from 'simple-mock'
 import { tags } from 'test-utils/commits'
+import { testAction } from 'test-utils'
 
 it('should find last tag matching release_', done => {
   const hash = tags[tags.length - 1].hash
@@ -13,7 +13,7 @@ it('should find last tag matching release_', done => {
 
 describe('getLatestReleaseHash', () => {
   before(() => {
-    simple.mock(nodegit.Tag, 'list').resolveWith([])
+    simple.mock(git, 'listTags').resolveWith([])
   })
   after(() => {
     simple.restore()

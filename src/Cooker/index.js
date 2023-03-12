@@ -1,10 +1,11 @@
 import FunctionTree, { Primitive } from 'function-tree'
+
 import { createConfig } from '../helpers/createConfig'
 import { parseArgs } from '../helpers/parseArgs'
 import { setParallelAllowed } from '../helpers/runAll'
 
 function provide(path, config) {
-  // Lazy loading of providers to avoid requiring `nodegit` or other
+  // Lazy loading of providers to avoid requiring
   // big libraries if they are not needed.
   const provider = require(path).default
   return provider(config)

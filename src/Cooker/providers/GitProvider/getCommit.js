@@ -1,45 +1,60 @@
-// Import through proxy for better error message.
-import { nodegit } from './nodegit'
-import { runAll } from '../../../helpers/runAll'
+import * as fs from 'fs'
+
+import { TREE, readCommit, walk } from 'isomorphic-git'
 
 function getAuthor(commit) {
-  const author = commit.author()
+  const author = commit.author
   return {
-    name: author.name(),
-    email: author.email(),
+    name: author.name,
+    email: author.email,
   }
 }
 
-function getChangedFiles(diffList) {
-  const files = []
-  return new Promise((resolve, reject) => {
-    runAll(
-      diffList.map(diff =>
-        diff.patches().then(patches => {
-          files.push(...patches.map(patch => patch.newFile().path()))
-        })
-      )
-    )
-      .then(() => {
-        resolve(files.sort())
-      })
-      .catch(reject)
+async function getChangedFiles(commitHash1, commitHash2, dir) {
+  return walk({
+    fs,
+    dir,
+    trees: [TREE({ ref: commitHash1 }), TREE({ ref: commitHash2 })],
+    map: async function(filepath, [A, B]) {
+      // handle the initial commit
+      if (commitHash2 === undefined) {
+        B = null
+      }
+
+      // ignore directories
+      if (filepath === '.') {
+        return
+      }
+      if (
+        (A !== null && (await A.type()) === 'tree') ||
+        (B !== null && (await B.type()) === 'tree')
+      ) {
+        return
+      }
+
+      // generate ids
+      const Aoid = A !== null ? await A.oid() : undefined
+      const Boid = B !== null ? await B.oid() : undefined
+
+      // Skip pairs where the oids are the same
+      if (Aoid === Boid) {
+        return
+      }
+
+      return filepath
+    },
   })
 }
 
-export function getCommit(repoPath, hash) {
-  return nodegit.Repository.open(repoPath)
-    .then(repo => repo.getCommit(hash))
-    .then(commit =>
-      commit
-        .getDiff()
-        .then(getChangedFiles)
-        .then(files => ({
-          author: getAuthor(commit),
-          date: commit.date().toJSON(),
-          hash: commit.sha(),
-          message: commit.message(),
-          files,
-        }))
-    )
+export async function getCommit(repoPath, hash) {
+  const commit = (await readCommit({ fs, dir: repoPath, oid: hash })).commit
+  const previousHash = commit.parent[commit.parent.length - 1]
+
+  return {
+    author: getAuthor(commit),
+    date: new Date(commit.committer.timestamp * 1000).toISOString(),
+    hash,
+    message: commit.message,
+    files: (await getChangedFiles(hash, previousHash, repoPath)).sort(),
+  }
 }

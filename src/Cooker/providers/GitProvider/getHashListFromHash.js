@@ -1,69 +1,38 @@
-// Import through proxy for better error message.
-import { nodegit } from './nodegit'
+import * as fs from 'fs'
 
-function getHashListFromHashToHash(repo, fromHash, toHash) {
+import { log, readCommit, resolveRef } from 'isomorphic-git'
+
+async function getHashListFromHashToHash(repoPath, fromHash, toHash) {
   if (!fromHash || !toHash) {
     throw new Error(
       `Missing hash parameter. For commits from origin of repository, use 'Big Bang' as hash.`
     )
   }
-
-  return new Promise((resolve, reject) => {
-    const list = []
-
-    const revwalk = repo.createRevWalk()
-    const walk = () =>
-      revwalk
-        .next()
-        .then(oid => {
-          const hash = oid.tostrS()
-          if (hash === fromHash) {
-            resolve(list)
-          } else {
-            list.unshift(hash)
-            return walk()
-          }
-        })
-        .catch(error => {
-          if (error.errno === nodegit.Error.CODE.ITEROVER) {
-            // Reached the end
-            resolve(list)
-          } else {
-            reject(error)
-          }
-        })
-
-    revwalk.sorting(nodegit.Revwalk.SORT.TIME)
-    revwalk.push(toHash)
-    // How can we detect that fromHash is in commit history ?
-    if (fromHash !== 'Big Bang') {
-      // Verify that 'fromHash' is valid first
-      repo
-        .getCommit(fromHash)
-        .then(() => {
-          revwalk.hide(fromHash)
-          walk()
-        })
-        .catch(() =>
-          reject(
-            new Error(
-              `Invalid hash value '${fromHash}' (not found in commit history).`
-            )
-          )
-        )
-    } else {
-      walk()
+  if (fromHash !== 'Big Bang') {
+    // Verify that 'fromHash' is valid first
+    try {
+      await readCommit({ fs, dir: repoPath, oid: fromHash })
+    } catch (error) {
+      throw new Error(
+        `Invalid hash value '${fromHash}' (not found in commit history).`
+      )
     }
-  })
+  }
+  const logList = (await log({ fs, dir: repoPath, ref: toHash })).map(
+    commit => commit.oid
+  )
+  if (fromHash !== 'Big Bang') {
+    logList.splice(logList.indexOf(fromHash))
+  }
+
+  return logList.reverse()
 }
 
 /** Get commit sha list upto 'hash' but not including it.
- * Returns the list as it appears in the commit history (first commit first).
+ * Returns the list in historical order (oldest commit first).
  */
-export function getHashListFromHash(repoPath, hash) {
-  return nodegit.Repository.open(repoPath).then(repo =>
-    repo
-      .getHeadCommit()
-      .then(commit => getHashListFromHashToHash(repo, hash, commit.sha()))
-  )
+export async function getHashListFromHash(repoPath, hash) {
+  const headHash = await resolveRef({ fs, dir: repoPath, ref: 'HEAD' })
+
+  return getHashListFromHashToHash(repoPath, hash, headHash)
 }
