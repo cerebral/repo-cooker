@@ -1,11 +1,11 @@
+/* eslint-env mocha */
 import assert from 'test-utils/assert'
 import { config } from 'test-utils'
-/* eslint-env mocha */
 import fs from 'fs'
 import { join } from '../../../helpers/path'
-import { resetRepository } from './resetRepository'
+import { restoreRepository } from './restoreRepository'
 
-it('should reset all changed files in repo', done => {
+it('should restore all changed files in repo', done => {
   const path = join(config.path, 'README.md')
   fs.readFile(path, 'utf8', (err, original) => {
     if (err) {
@@ -19,12 +19,12 @@ it('should reset all changed files in repo', done => {
         if (err) {
           throw new Error(err)
         }
-        resetRepository(config.path, 'hard', 'HEAD').then(() => {
-          fs.readFile(path, 'utf8', (err, resetContent) => {
+        restoreRepository(config.path).then(() => {
+          fs.readFile(path, 'utf8', (err, restoreContent) => {
             if (err) {
               throw new Error(err)
             }
-            assert.equal(resetContent, original, done)
+            assert.equal(restoreContent, original, done)
           })
         })
       }

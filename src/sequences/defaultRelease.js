@@ -1,4 +1,5 @@
 import * as cook from '../actions'
+
 import { logCommand } from '../helpers/execCommand'
 
 const publishToGithub = [
@@ -51,7 +52,7 @@ export const defaultReleaseSequence = [
     canary: cook.mapTemporaryNpmTagTo('canary'),
     otherwise: [],
   },
-  cook.resetRepository,
+  cook.restoreRepository,
   cook.createReleaseNotes('avatar'),
   cook.byBranch,
   {
