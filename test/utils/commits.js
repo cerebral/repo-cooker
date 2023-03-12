@@ -2,12 +2,12 @@ export const tags = [
   {
     tag: 'release_2017-07-21_1413',
     hash: 'c465e3323fc2c63fbeb91f9b9b43379d28f9b761',
-    date: '2017-06-29T14:52:44.000Z',
+    date: '2017-07-21T14:13:47.000Z',
   },
   {
     tag: 'release_2017-07-21_1546',
     hash: 'dabd0553827af3b6afbfc408905b10de8d3cb72d',
-    date: '2017-06-29T16:34:23.000Z',
+    date: '2017-07-21T15:46:18.000Z',
   },
 ]
 
@@ -81,7 +81,7 @@ export const commits = [
     },
     date: '2017-06-29T15:07:22.000Z',
     hash: '194bd99fcad286821c6d18cf9765a95d741cd018',
-    message: 'chore(repo-cooker-test):remove package from scope',
+    message: 'chore(repo-cooker-test):remove package from scope\n',
     files: ['packages/node_modules/repo-cooker-test/package.json'],
   },
   {
@@ -375,7 +375,7 @@ export const parsedCommits = [
     },
     date: '2017-06-29T15:07:22.000Z',
     hash: '194bd99fcad286821c6d18cf9765a95d741cd018',
-    message: 'chore(repo-cooker-test):remove package from scope',
+    message: 'chore(repo-cooker-test):remove package from scope\n',
     files: ['packages/node_modules/repo-cooker-test/package.json'],
     body: '',
     issues: [],

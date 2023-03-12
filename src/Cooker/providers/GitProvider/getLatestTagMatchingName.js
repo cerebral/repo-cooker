@@ -1,28 +1,27 @@
-// Import through proxy for better error message.
-import { nodegit } from './nodegit'
+import * as fs from 'fs'
 
-export function getLatestTagMatchingName(repoPath, regex) {
+import { listTags, readTag, resolveRef } from 'isomorphic-git'
+
+export async function getLatestTagMatchingName(repoPath, regex) {
   if (typeof regex === 'string') {
     regex = RegExp(regex)
   }
-  return nodegit.Repository.open(repoPath).then(repo =>
-    nodegit.Tag.list(repo)
-      .then(list =>
-        list
-          .sort((a, b) => (a > b ? -1 : 1))
-          .find(tagName => regex.test(tagName))
-      )
-      .then(tagName =>
-        tagName
-          ? nodegit.Reference.lookup(repo, `refs/tags/${tagName}`)
-              .then(ref => ref.peel(nodegit.Object.TYPE.COMMIT))
-              .then(ref => nodegit.Commit.lookup(repo, ref.id()))
-              .then(commit => ({
-                tag: tagName,
-                hash: commit.sha(),
-                date: commit.date().toJSON(),
-              }))
-          : null
-      )
-  )
+  const tagName = (await listTags({ fs, dir: repoPath }))
+    .sort((a, b) => (a > b ? -1 : 1))
+    .find(tagName => regex.test(tagName))
+  if (!tagName) {
+    return null
+  }
+  const hash = await resolveRef({
+    fs,
+    dir: repoPath,
+    ref: `refs/tags/${tagName}`,
+  })
+  const tag = (await readTag({ fs, dir: repoPath, oid: hash })).tag
+
+  return {
+    tag: tagName,
+    hash: tag.object,
+    date: new Date(tag.tagger.timestamp * 1000).toISOString(),
+  }
 }

@@ -1,29 +1,13 @@
-// Import through proxy for better error message.
-import { nodegit } from './nodegit'
-import { runAll } from '../../../helpers/runAll'
+import * as fs from 'fs'
 
-const BRANCH_RE = /^refs\/heads\/(.+)$/
+import { getBranchObject } from './getBranchObject'
+import { listBranches } from 'isomorphic-git'
+import { runAll } from '../../../helpers/runAll'
 
 // Return the list of branches as objects with:
 // { sha, name, date }
-export function getBranches(repoPath) {
-  return nodegit.Repository.open(repoPath).then(repo =>
-    repo
-      .getReferenceNames(nodegit.Reference.TYPE.ALL)
-      .then(list =>
-        runAll(
-          list.map(refName =>
-            nodegit.Reference.lookup(repo, refName)
-              .then(ref => ref.peel(nodegit.Object.TYPE.COMMIT))
-              .then(ref => nodegit.Commit.lookup(repo, ref.id()))
-              .then(commit => ({
-                date: commit.date().toJSON(),
-                name: (BRANCH_RE.exec(refName) || {})[1],
-                hash: commit.sha(),
-              }))
-          )
-        )
-      )
-      .then(list => list.filter(l => l.name))
-  )
+export async function getBranches(repoPath) {
+  const branches = await listBranches({ fs, dir: repoPath })
+
+  return runAll(branches.map(async name => getBranchObject(name, repoPath)))
 }
