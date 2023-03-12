@@ -86,8 +86,8 @@ describe('publish script', () => {
         options: { cwd: r.cwd },
       })),
       {
-        cmd: 'resetRepository',
-        args: [basePath, 'hard', 'HEAD'],
+        cmd: 'restoreRepository',
+        args: [basePath],
       },
       {
         cmd: 'git',
@@ -186,7 +186,7 @@ describe('publish script', () => {
         cook.mapTemporaryNpmTagTo('next'),
         // If successful we just map published tags to official release tag
 
-        cook.resetRepository,
+        cook.restoreRepository,
         // Version information is not stored in package.json so we
         // cleanup repo now.
 

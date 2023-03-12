@@ -4,7 +4,7 @@ import { getCommit } from './getCommit'
 import { getCurrentBranch } from './getCurrentBranch'
 import { getHashListFromHash } from './getHashListFromHash'
 import { getLatestTagMatchingName } from './getLatestTagMatchingName'
-import { resetRepository } from './resetRepository'
+import { restoreRepository } from './restoreRepository'
 
 export function GitProvider({ path, runCommand }) {
   return new Provider({
@@ -35,9 +35,9 @@ export function GitProvider({ path, runCommand }) {
     pushTagToRemote(tagName, remoteName = 'origin') {
       return runCommand('git', ['push', remoteName, tagName])
     },
-    resetRepository(type = 'hard', ref = 'HEAD') {
+    restoreRepository() {
       // Has side effects so we wrap with runCommand
-      return runCommand(resetRepository, [path, type, ref])
+      return runCommand(restoreRepository, [path])
     },
   })
 }
