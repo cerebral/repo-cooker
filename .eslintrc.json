@@ -16,7 +16,7 @@
         "trailingComma": "es5",
         "singleQuote": true,
         "semi": false,
-        "parser": "babylon"
+        "parser": "babel"
       }
     ],
     "standard/computed-property-even-spacing": "off"
