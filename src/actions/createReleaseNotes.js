@@ -29,7 +29,7 @@ function summarizeRelease({
 }) {
   const summary = {}
   Object.keys(commitsByPackage).forEach(name => {
-    let commitsByType = {}
+    const commitsByType = {}
 
     function insertCommit(type, commit) {
       if (summary[type] === undefined) {

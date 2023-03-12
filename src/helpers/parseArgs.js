@@ -34,12 +34,12 @@ export function parseArgs(allArgs) {
   // script
   args.shift()
 
-  for (let arg of args) {
+  for (const arg of args) {
     const isBuiltin = builtinRe.exec(ALIAS[arg] || arg)
     const isRelease = releaseRe.exec(arg)
     const isOpt = optionRe.exec(arg)
     if (arg === '--check-dependencies' || arg === '--fix-dependencies') {
-      builtin = builtinSequences['checkDependencies']
+      builtin = builtinSequences.checkDependencies
       cmdArgs.push(arg)
     } else if (isRelease) {
       const type = isRelease[2]

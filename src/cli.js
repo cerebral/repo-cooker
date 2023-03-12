@@ -46,9 +46,10 @@ if (cmdPath) {
   console.log(`Running script: ${fullCmdPath}`)
 } else {
   // Run a native signal. Just load the configuration.
-  fullCmdPath = (receiptsPath.slice(-3) === '.js'
-    ? [resolve(receiptsPath)]
-    : [resolve(`${receiptsPath}.js`), resolve(join(receiptsPath, 'index.js'))]
+  fullCmdPath = (
+    receiptsPath.slice(-3) === '.js'
+      ? [resolve(receiptsPath)]
+      : [resolve(`${receiptsPath}.js`), resolve(join(receiptsPath, 'index.js'))]
   ).find(fileExist)
 
   if (!fullCmdPath) {
@@ -72,6 +73,6 @@ const child = spawn(
     stdio: 'inherit',
   }
 )
-child.on('close', function(code) {
+child.on('close', function (code) {
   process.exit(code)
 })

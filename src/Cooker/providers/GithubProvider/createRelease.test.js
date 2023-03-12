@@ -31,7 +31,7 @@ describe('createRelease', () => {
 
   after(() => simple.restore())
 
-  it('should publish release to github', function(done) {
+  it('should publish release to github', function (done) {
     createRelease(config.path, release.name, release.body)
       .then(response => {
         assert.deepEqual(response, release, done)

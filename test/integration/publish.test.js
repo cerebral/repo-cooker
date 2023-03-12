@@ -1,4 +1,5 @@
 import { Cooker } from 'repo-cooker'
+/* eslint-env mocha */
 import * as cook from 'repo-cooker/actions'
 import request from 'request'
 import simple from 'simple-mock'
@@ -6,7 +7,6 @@ import { runCommandMock } from 'test-utils'
 import assert from 'test-utils/assert'
 import { mockNpmRegistry } from 'test-utils/npm'
 
-/* eslint-env mocha */
 import { join, resolve } from '../../src/helpers/path'
 import { buildWebsite, publishWebsite } from './actions'
 
@@ -33,7 +33,7 @@ describe('publish script', () => {
     simple.restore()
   })
 
-  it('should run a publish script without error', function(done) {
+  it('should run a publish script without error', function (done) {
     this.timeout(6000)
 
     const dryRun = runCommandMock()

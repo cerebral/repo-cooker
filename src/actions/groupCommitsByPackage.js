@@ -6,7 +6,7 @@ import { resolve } from '../helpers/path'
 */
 function matchPackage(filePath, config) {
   const fullpath = resolve(config.path, filePath)
-  for (let packageName in config.packagesPaths) {
+  for (const packageName in config.packagesPaths) {
     if (fullpath.indexOf(config.packagesPaths[packageName] + '/') === 0) {
       return packageName
     }
@@ -79,7 +79,7 @@ export function groupCommitsByPackage({ config, props }) {
           commitsWithoutPackage.push(commitWithoutPackage)
         })
       }
-      delete commitsByPackage['monorepo']
+      delete commitsByPackage.monorepo
 
       return commitsByPackage
     }, {}),

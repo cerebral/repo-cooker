@@ -1,10 +1,9 @@
 /* eslint-env mocha */
-import { config, testAction } from 'test-utils'
-
 import { linkAsModule } from './'
 import { resolve } from '../helpers/path'
+import { testAction } from 'test-utils'
 
-it('should link as modules', function(done) {
+it('should link as modules', function (done) {
   this.timeout(4000)
   const packagesPaths = {
     '@repo-cooker-test/commis': '/foo/bar/baz/@repo-cooker-test/commis',
@@ -43,12 +42,12 @@ it('should link as modules', function(done) {
   )
 })
 
-it('should skip link as modules if common path contains node_modules', function(done) {
+it('should skip link as modules if common path contains node_modules', function (done) {
   this.timeout(4000)
   testAction(linkAsModule, {}, { linkAsModule: {}, commands: [] }, done)
 })
 
-it('should not link as modules inside part of name', function(done) {
+it('should not link as modules inside part of name', function (done) {
   this.timeout(4000)
   const packagesPaths = {
     '@repo-cooker-test/commis': '/foo/bar/@repo-cooker-test/commis',

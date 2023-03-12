@@ -37,7 +37,7 @@ export function linkAsModule({ config }) {
   }
   if (commonPath.includes('node_modules')) {
     // packages are stored in a folder called node_modules: no link needed
-    return { ['linkAsModule']: {} }
+    return { linkAsModule: {} }
   }
   const nodeModules = resolve(commonPath, 'node_modules')
   if (!existsSync(nodeModules)) {

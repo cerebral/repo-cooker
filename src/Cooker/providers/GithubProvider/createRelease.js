@@ -46,8 +46,9 @@ export function createRelease(path, tagName, body) {
 
   const headers = {
     'User-Agent': 'repo-cooker',
-    Authorization: `token ${process.env.REPO_COOKER_GITHUB_TOKEN ||
-      process.env.GH_TOKEN}`,
+    Authorization: `token ${
+      process.env.REPO_COOKER_GITHUB_TOKEN || process.env.GH_TOKEN
+    }`,
     'Content-Type': 'application/json; charset=utf-8',
   }
 

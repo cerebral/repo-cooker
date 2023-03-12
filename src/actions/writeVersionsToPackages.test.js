@@ -1,6 +1,6 @@
+/* eslint-env mocha */
 import { config, testAction } from 'test-utils'
 
-/* eslint-env mocha */
 import { join } from '../helpers/path'
 import { versions } from 'test-utils/npm'
 import { writeVersionsToPackages } from './'

@@ -77,7 +77,7 @@ export function execCommand(cmd, args = [], options) {
   delete opts.pause
   return new Promise((resolve, reject) => {
     const child = spawn(cmd, args, opts)
-    let out = []
+    const out = []
     child.stdout.setEncoding('utf-8')
     child.stderr.setEncoding('utf-8')
     child.stdout.on('data', data => {
@@ -86,7 +86,7 @@ export function execCommand(cmd, args = [], options) {
     child.stderr.on('data', data => {
       out.push(data)
     })
-    child.on('close', function(code) {
+    child.on('close', function (code) {
       if (code === 0) {
         logCommand(cmd, args, options)
         console.log(PASS)

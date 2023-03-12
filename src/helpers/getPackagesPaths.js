@@ -21,9 +21,8 @@ export function getPackagesPaths(cwd, glob) {
         const dir = pathArray.pop()
 
         // If package starts with scoped dir, use that as part of name
-        packagesMap[
-          dir[0] === '@' ? dir + '/' + packageName : packageName
-        ] = path
+        packagesMap[dir[0] === '@' ? dir + '/' + packageName : packageName] =
+          path
 
         return packagesMap
       }, {})
