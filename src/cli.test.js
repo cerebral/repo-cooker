@@ -1,9 +1,9 @@
-import assert from 'test-utils/assert'
 /* eslint-env mocha */
+import assert from 'test-utils/assert'
 import { execCli } from 'test-utils'
 const TIMEOUT = 20000
 
-it('should run script in custom repo-cooker-path', function(done) {
+it('should run script in custom repo-cooker-path', function (done) {
   this.timeout(TIMEOUT)
   execCli('babel-node', ['../../src/cli.js', 'dummy', 'one', 'two'])
     .then(result => {
@@ -14,7 +14,7 @@ it('should run script in custom repo-cooker-path', function(done) {
     })
 })
 
-it('should run npm command', function(done) {
+it('should run npm command', function (done) {
   this.timeout(TIMEOUT)
   execCli('babel-node', ['../../src/cli.js', 'other-script'])
     .then(result => {
@@ -25,7 +25,7 @@ it('should run npm command', function(done) {
     })
 })
 
-it('should run builtin named release', function(done) {
+it('should run builtin named release', function (done) {
   this.timeout(TIMEOUT)
   execCli('babel-node', ['../../src/cli.js', '--release=default', '--dry-run'])
     .then(result => {
@@ -36,7 +36,7 @@ it('should run builtin named release', function(done) {
     })
 })
 
-it('should run builtin default release', function(done) {
+it('should run builtin default release', function (done) {
   this.timeout(TIMEOUT)
   execCli('babel-node', ['../../src/cli.js', '--release', '--dry-run'])
     .then(result => {
@@ -47,7 +47,7 @@ it('should run builtin default release', function(done) {
     })
 })
 
-it('should print release notes', function(done) {
+it('should print release notes', function (done) {
   this.timeout(TIMEOUT)
   execCli('babel-node', [
     '../../src/cli.js',
@@ -63,7 +63,7 @@ it('should print release notes', function(done) {
     })
 })
 
-it('should check dependencies', function(done) {
+it('should check dependencies', function (done) {
   this.timeout(TIMEOUT)
   execCli('babel-node', ['../../src/cli.js', '--check-dependencies'])
     .then(result => {
@@ -74,7 +74,7 @@ it('should check dependencies', function(done) {
     })
 })
 
-it('should fix dependencies', function(done) {
+it('should fix dependencies', function (done) {
   this.timeout(TIMEOUT)
   execCli('babel-node', ['../../src/cli.js', '--fix-dependencies'])
     .then(result => {
@@ -85,7 +85,7 @@ it('should fix dependencies', function(done) {
     })
 })
 
-it('should link bin directory', function(done) {
+it('should link bin directory', function (done) {
   this.timeout(TIMEOUT)
   execCli('babel-node', ['../../src/cli.js', '--link'])
     .then(result => {
@@ -96,7 +96,7 @@ it('should link bin directory', function(done) {
     })
 })
 
-it('should run build scripts respecting dependencies', function(done) {
+it('should run build scripts respecting dependencies', function (done) {
   this.timeout(TIMEOUT)
   execCli('babel-node', ['../../src/cli.js', '--build'])
     .then(result => {
@@ -107,7 +107,7 @@ it('should run build scripts respecting dependencies', function(done) {
     })
 })
 
-it('should run build scripts without parallel', function(done) {
+it('should run build scripts without parallel', function (done) {
   this.timeout(TIMEOUT)
   execCli('babel-node', ['../../src/cli.js', '--build', '--no-parallel'])
     .then(result => {

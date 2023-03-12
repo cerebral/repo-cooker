@@ -1,6 +1,6 @@
+/* eslint-env mocha */
 import { groupCommitsByPackage } from './'
 import { resolve } from '../helpers/path'
-/* eslint-env mocha */
 import { testAction } from 'test-utils'
 
 const commits = [

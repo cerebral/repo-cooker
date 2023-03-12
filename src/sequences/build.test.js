@@ -5,7 +5,7 @@ import { Cooker } from '..'
 import assert from 'test-utils/assert'
 import { buildSequence } from './build'
 
-it('should run build scripts respecting dependencies', function(done) {
+it('should run build scripts respecting dependencies', function (done) {
   const dryRun = runCommandMock()
   const cooker = Cooker(Object.assign({}, config, { dryRun }))
   cooker.run([

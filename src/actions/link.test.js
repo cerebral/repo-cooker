@@ -4,7 +4,7 @@ import { config, testAction } from 'test-utils'
 import { link } from './'
 import { resolve } from '../helpers/path'
 
-it('should link bin directories', function(done) {
+it('should link bin directories', function (done) {
   this.timeout(4000)
   const linkResults = {
     '@repo-cooker-test/commis': 'mock command',

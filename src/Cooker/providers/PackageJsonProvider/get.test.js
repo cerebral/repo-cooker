@@ -5,7 +5,7 @@ import { get } from './get'
 import { join } from '../../../helpers/path'
 import { readFileSync } from 'fs'
 
-it('should get package info', function(done) {
+it('should get package info', function (done) {
   const getInfo = get(config)
 
   const commisInfo = JSON.parse(

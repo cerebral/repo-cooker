@@ -1,6 +1,6 @@
+/* eslint-env mocha */
 import { execCommand, logCommand } from './execCommand'
 
-/* eslint-env mocha */
 import assert from 'test-utils/assert'
 import simple from 'simple-mock'
 

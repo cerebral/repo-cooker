@@ -1,6 +1,6 @@
+/* eslint-env mocha */
 import { config, runCommandMock } from 'test-utils'
 
-/* eslint-env mocha */
 import assert from 'test-utils/assert'
 import { publish as publishFactory } from './publish'
 

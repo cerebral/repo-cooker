@@ -22,9 +22,9 @@ function createNewVersionsTable(release) {
       )
     })
     .map(packageName => {
-      return `| ${packageName} | ${release.currentVersionByPackage[
-        packageName
-      ] || ''} | ${release.newVersionByPackage[packageName]} |`
+      return `| ${packageName} | ${
+        release.currentVersionByPackage[packageName] || ''
+      } | ${release.newVersionByPackage[packageName]} |`
     })
 
   if (!entries.length) {

@@ -1,11 +1,11 @@
+/* eslint-env mocha */
 import { config, runCommandMock } from 'test-utils'
 
-/* eslint-env mocha */
 import assert from 'test-utils/assert'
 import { join } from '../../../helpers/path'
 import { write as writeFactory } from './write'
 
-it('should write to package.json', function(done) {
+it('should write to package.json', function (done) {
   const runCommand = runCommandMock()
   const write = writeFactory({
     runCommand,

@@ -23,7 +23,7 @@ function evaluateVersion(version, type, packageName, semver) {
   }
 
   const parts = [re[1], re[2], re[3]].map(l => parseInt(l))
-  let idx = TYPES.indexOf(type)
+  const idx = TYPES.indexOf(type)
   return []
     .concat(
       parts.slice(0, idx),
@@ -39,12 +39,11 @@ export function evaluateNewVersionByPackage({
   function resolve(packageName) {
     // Bump version according to package dependencies
     return Math.max(
-      ...Object.keys(
-        forwardGraph(relatedPackagesByPackage, [packageName])
-      ).map(packageName =>
-        packageName in semverByPackage
-          ? RTYPES.indexOf(semverByPackage[packageName])
-          : -1
+      ...Object.keys(forwardGraph(relatedPackagesByPackage, [packageName])).map(
+        packageName =>
+          packageName in semverByPackage
+            ? RTYPES.indexOf(semverByPackage[packageName])
+            : -1
       )
     )
   }

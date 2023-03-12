@@ -15,7 +15,7 @@ async function getChangedFiles(commitHash1, commitHash2, dir) {
     fs,
     dir,
     trees: [TREE({ ref: commitHash1 }), TREE({ ref: commitHash2 })],
-    map: async function(filepath, [A, B]) {
+    map: async function (filepath, [A, B]) {
       // handle the initial commit
       if (commitHash2 === undefined) {
         B = null
