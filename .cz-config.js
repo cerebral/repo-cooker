@@ -25,6 +25,5 @@ module.exports = {
   },
 
   allowCustomScopes: true,
-  allowBreakingChanges: ['feat', 'fix'],
-  appendBranchNameToCommitMessage: false
+  allowBreakingChanges: ['feat', 'fix']
 }

@@ -7,7 +7,7 @@
   "scripts": {
     "start": "babel-watch src/index.js --watch src",
     "build": "cross-env BABEL_ENV=production babel src/ --out-dir=dist/ -s",
-    "commit": "git-cz",
+    "commit": "./node_modules/cz-customizable/standalone.js",
     "coverage": "nyc --reporter=lcov --reporter=json npm run test",
     "format": "npm run lint -- --fix",
     "lint": "eslint \"**/*.js\"",
@@ -42,10 +42,8 @@
     "@babel/preset-env": "^7.20.2",
     "babel-plugin-module-resolver": "^5.0.0",
     "babel-watch": "^7.7.2",
-    "commitizen": "^4.3.0",
     "cross-env": "^7.0.3",
     "cz-customizable": "^7.0.0",
-    "cz-customizable-ghooks": "^2.0.0",
     "eslint": "^8.36.0",
     "eslint-config-prettier": "^8.7.0",
     "eslint-config-standard": "^17.0.0",
@@ -55,7 +53,6 @@
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-standard": "^4.1.0",
     "foo": "1.0.0",
-    "husky": "^8.0.3",
     "mocha": "^10.2.0",
     "nyc": "^15.1.0",
     "prettier": "^2.8.4",
@@ -71,13 +68,5 @@
     "registry-url": "^5.1.0",
     "request": "^2.81.0",
     "symlink-dir": "^5.1.1"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-customizable"
-    },
-    "cz-customizable": {
-      "config": ".cz-config.js"
-    }
   }
 }
