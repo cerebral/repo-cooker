@@ -8,22 +8,21 @@ async function getHashListFromHashToHash(repoPath, fromHash, toHash) {
       `Missing hash parameter. For commits from origin of repository, use 'Big Bang' as hash.`
     )
   }
+  let since
   if (fromHash !== 'Big Bang') {
     // Verify that 'fromHash' is valid first
     try {
-      await readCommit({ fs, dir: repoPath, oid: fromHash })
+      const fromCommit = await readCommit({ fs, dir: repoPath, oid: fromHash })
+      since = new Date(fromCommit.commit.committer.timestamp * 1000)
     } catch (error) {
       throw new Error(
         `Invalid hash value '${fromHash}' (not found in commit history).`
       )
     }
   }
-  const logList = (await log({ fs, dir: repoPath, ref: toHash })).map(
+  const logList = (await log({ fs, dir: repoPath, ref: toHash, since })).map(
     commit => commit.oid
   )
-  if (fromHash !== 'Big Bang') {
-    logList.splice(logList.indexOf(fromHash))
-  }
 
   return logList.reverse()
 }
