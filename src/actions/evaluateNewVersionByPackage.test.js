@@ -1,5 +1,6 @@
-/* eslint-env mocha */
+/* eslint-env jest */
 import { testAction, testActionThrows } from 'test-utils'
+
 import { evaluateNewVersionByPackage } from './'
 
 const relatedPackagesByPackage = {

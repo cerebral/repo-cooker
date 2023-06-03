@@ -1,6 +1,6 @@
-/* eslint-env mocha */
-import { testAction } from 'test-utils'
+/* eslint-env jest */
 import { pushTagToRemote } from './'
+import { testAction } from 'test-utils'
 
 it('should reset repository', done => {
   const name = 'theTagName'

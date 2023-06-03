@@ -1,4 +1,4 @@
-/* eslint-env mocha */
+/* eslint-env jest */
 import { config, runCommandMock } from 'test-utils'
 
 import assert from 'test-utils/assert'

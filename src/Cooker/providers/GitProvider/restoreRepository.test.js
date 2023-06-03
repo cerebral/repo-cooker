@@ -1,4 +1,4 @@
-/* eslint-env mocha */
+/* eslint-env jest */
 import assert from 'test-utils/assert'
 import { config } from 'test-utils'
 import fs from 'fs'

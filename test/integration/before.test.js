@@ -1,10 +1,12 @@
-/* eslint-env mocha */
-import { config } from 'test-utils'
-import { current, commits as testCommits } from 'test-utils/commits'
-import { Cooker } from 'repo-cooker'
+/* eslint-env jest */
 import * as cook from 'repo-cooker/actions'
 
-before(done => {
+import { current, commits as testCommits } from 'test-utils/commits'
+
+import { Cooker } from 'repo-cooker'
+import { config } from 'test-utils'
+
+beforeAll(done => {
   const cooker = Cooker([], Object.assign({}, config, { dryRun: true }))
   cooker
     .run([

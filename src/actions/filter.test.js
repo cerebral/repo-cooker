@@ -1,6 +1,6 @@
-/* eslint-env mocha */
-import { testAction } from 'test-utils'
+/* eslint-env jest */
 import { filter } from './'
+import { testAction } from 'test-utils'
 
 describe('filter', () => {
   it('should filter given prop synchronously', done => {

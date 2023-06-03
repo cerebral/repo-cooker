@@ -1,7 +1,8 @@
-/* eslint-env mocha */
+/* eslint-env jest */
 import { config, runCommandMock } from 'test-utils'
-import assert from 'test-utils/assert'
+
 import { Cooker } from 'repo-cooker'
+import assert from 'test-utils/assert'
 
 export function testActionThrows(action, input, error, done, extraConfig = {}) {
   const dryRun = runCommandMock()

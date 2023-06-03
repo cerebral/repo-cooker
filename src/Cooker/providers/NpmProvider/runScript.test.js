@@ -1,6 +1,7 @@
-/* eslint-env mocha */
-import assert from 'test-utils/assert'
+/* eslint-env jest */
 import { config, runCommandMock } from 'test-utils'
+
+import assert from 'test-utils/assert'
 import { runScript as runScriptFactory } from './runScript'
 
 it('should execute script in package', done => {

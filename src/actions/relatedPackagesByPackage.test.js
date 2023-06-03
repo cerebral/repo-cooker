@@ -1,6 +1,6 @@
-/* eslint-env mocha */
-import { testAction } from 'test-utils'
+/* eslint-env jest */
 import { relatedPackagesByPackage } from './'
+import { testAction } from 'test-utils'
 
 describe('relatedPackagesByPackage', () => {
   it('should get related packages for each package', done => {

@@ -1,11 +1,11 @@
-/* eslint-env mocha */
+/* eslint-env jest */
 import { config, testAction } from 'test-utils'
 
 import { link } from './'
 import { resolve } from '../helpers/path'
 
-it('should link bin directories', function (done) {
-  this.timeout(4000)
+it('should link bin directories', done => {
+  jest.setTimeout(4000)
   const linkResults = {
     '@repo-cooker-test/commis': 'mock command',
     '@repo-cooker-test/entremetier': 'mock command',

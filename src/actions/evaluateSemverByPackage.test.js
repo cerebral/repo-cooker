@@ -1,6 +1,6 @@
-/* eslint-env mocha */
-import { testAction } from 'test-utils'
+/* eslint-env jest */
 import { evaluateSemverByPackage } from './'
+import { testAction } from 'test-utils'
 
 const commitsByPackage = {
   foo: [{ type: 'fix', breaks: [] }],
@@ -19,14 +19,17 @@ const semverByPackage = {
   baz: 'major',
 }
 
-it('should run the grouping function for every commit and group commits', done => {
-  testAction(
-    evaluateSemverByPackage,
-    { commitsByPackage },
-    { semverByPackage },
-    done
-  )
-})
+it(
+  'should run the grouping function for every commit and group commits',
+  done => {
+    testAction(
+      evaluateSemverByPackage,
+      { commitsByPackage },
+      { semverByPackage },
+      done
+    )
+  }
+)
 
 it('should bump all to major for Big Bang hash', done => {
   const semverByPackage = {

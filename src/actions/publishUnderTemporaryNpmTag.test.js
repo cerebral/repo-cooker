@@ -1,10 +1,10 @@
-/* eslint-env mocha */
+/* eslint-env jest */
 import { config, testAction } from 'test-utils'
 
 import { publishUnderTemporaryNpmTag } from './'
 
-it('should publish under temporary npm tag', function (done) {
-  this.timeout(4000)
+it('should publish under temporary npm tag', done => {
+  jest.setTimeout(4000)
   const newVersionByPackage = {
     '@repo-cooker-test/commis': '3.0.0',
     '@repo-cooker-test/poissonier': '1.2.3',

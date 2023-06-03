@@ -1,8 +1,8 @@
-/* eslint-env mocha */
+/* eslint-env jest */
 import assert from 'test-utils/assert'
 import { getDependencies } from './getDependencies'
 
-it('should get package dependencies', function (done) {
+it('should get package dependencies', done => {
   const getDeps = getDependencies({
     packagesPaths: {
       tiger: './test/deps-fixtures/tiger',

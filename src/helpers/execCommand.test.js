@@ -1,4 +1,4 @@
-/* eslint-env mocha */
+/* eslint-env jest */
 import { execCommand, logCommand } from './execCommand'
 
 import assert from 'test-utils/assert'
@@ -6,11 +6,11 @@ import simple from 'simple-mock'
 
 describe('logCommand', () => {
   const logs = []
-  before(() => {
+  beforeAll(() => {
     simple.mock(console, 'log').callFn((...args) => logs.push(args))
   })
 
-  after(() => simple.restore())
+  afterAll(() => simple.restore())
 
   it('should output commands to console', done => {
     logCommand('hello', ['a', 'b', 'c'], { some: 'option' }).then(() => {

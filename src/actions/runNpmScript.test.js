@@ -1,6 +1,7 @@
-/* eslint-env mocha */
-import { props } from 'function-tree/tags'
+/* eslint-env jest */
 import { config, testAction } from 'test-utils'
+
+import { props } from 'function-tree/tags'
 import { runNpmScript } from './'
 
 const commands = [

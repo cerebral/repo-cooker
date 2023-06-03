@@ -1,6 +1,6 @@
-/* eslint-env mocha */
-import { testAction } from 'test-utils'
+/* eslint-env jest */
 import { getDependencies } from './'
+import { testAction } from 'test-utils'
 
 describe('getDependencies', () => {
   it('should get dependencies for each package', done => {

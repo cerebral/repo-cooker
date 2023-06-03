@@ -1,4 +1,4 @@
-/* eslint-env mocha */
+/* eslint-env jest */
 import * as git from 'isomorphic-git'
 
 import { getLatestReleaseHash } from './'
@@ -12,10 +12,10 @@ it('should find last tag matching release_', done => {
 })
 
 describe('getLatestReleaseHash', () => {
-  before(() => {
+  beforeAll(() => {
     simple.mock(git, 'listTags').resolveWith([])
   })
-  after(() => {
+  afterAll(() => {
     simple.restore()
   })
 

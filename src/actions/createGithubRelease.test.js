@@ -1,5 +1,6 @@
-/* eslint-env mocha */
+/* eslint-env jest */
 import { config, testAction } from 'test-utils'
+
 import { createGithubRelease } from './'
 
 it('should post new release to github', done => {

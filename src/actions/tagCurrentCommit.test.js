@@ -1,15 +1,15 @@
-/* eslint-env mocha */
+/* eslint-env jest */
 import simple from 'simple-mock'
-import { testAction } from 'test-utils'
 import { tagCurrentCommit } from './'
+import { testAction } from 'test-utils'
 
 const date = '2017-07-09T19:06:31.620Z'
 
 describe('tagCurrentCommit', () => {
-  before(() => {
+  beforeAll(() => {
     simple.mock(Date.prototype, 'toISOString').returnWith(date)
   })
-  after(() => {
+  afterAll(() => {
     simple.restore()
   })
 

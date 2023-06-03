@@ -1,4 +1,4 @@
-/* eslint-env mocha */
+/* eslint-env jest */
 import { config, testAction } from 'test-utils'
 
 import { mapTemporaryNpmTagTo } from './'

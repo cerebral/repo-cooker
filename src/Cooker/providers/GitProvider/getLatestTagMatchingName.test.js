@@ -1,8 +1,8 @@
-/* eslint-env mocha */
-import { config } from 'test-utils'
+/* eslint-env jest */
 import assert from 'test-utils/assert'
-import { tags } from 'test-utils/commits'
+import { config } from 'test-utils'
 import { getLatestTagMatchingName } from './getLatestTagMatchingName'
+import { tags } from 'test-utils/commits'
 
 it('should return the latest tag matching given name', done => {
   getLatestTagMatchingName(config.path, 'release_').then(tag => {
