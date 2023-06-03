@@ -1,10 +1,10 @@
-/* eslint-env mocha */
+/* eslint-env jest */
 import assert from 'test-utils/assert'
 import { execCli } from 'test-utils'
 const TIMEOUT = 20000
 
-it('should run script in custom repo-cooker-path', function (done) {
-  this.timeout(TIMEOUT)
+it('should run script in custom repo-cooker-path', done => {
+  jest.setTimeout(TIMEOUT)
   execCli('babel-node', ['../../src/cli.js', 'dummy', 'one', 'two'])
     .then(result => {
       assert.match(result.output, /dummy script: \["one","two"\]/, done)
@@ -14,8 +14,8 @@ it('should run script in custom repo-cooker-path', function (done) {
     })
 })
 
-it('should run npm command', function (done) {
-  this.timeout(TIMEOUT)
+it('should run npm command', done => {
+  jest.setTimeout(TIMEOUT)
   execCli('babel-node', ['../../src/cli.js', 'other-script'])
     .then(result => {
       assert.match(result.output, 'Other Script OK', done)
@@ -25,8 +25,8 @@ it('should run npm command', function (done) {
     })
 })
 
-it('should run builtin named release', function (done) {
-  this.timeout(TIMEOUT)
+it('should run builtin named release', done => {
+  jest.setTimeout(TIMEOUT)
   execCli('babel-node', ['../../src/cli.js', '--release=default', '--dry-run'])
     .then(result => {
       assert.match(result.output, 'default release: DRY RUN OK', done)
@@ -36,8 +36,8 @@ it('should run builtin named release', function (done) {
     })
 })
 
-it('should run builtin default release', function (done) {
-  this.timeout(TIMEOUT)
+it('should run builtin default release', done => {
+  jest.setTimeout(TIMEOUT)
   execCli('babel-node', ['../../src/cli.js', '--release', '--dry-run'])
     .then(result => {
       assert.match(result.output, 'default release: DRY RUN OK', done)
@@ -47,8 +47,8 @@ it('should run builtin default release', function (done) {
     })
 })
 
-it('should print release notes', function (done) {
-  this.timeout(TIMEOUT)
+it('should print release notes', done => {
+  jest.setTimeout(TIMEOUT)
   execCli('babel-node', [
     '../../src/cli.js',
     '--release',
@@ -63,8 +63,8 @@ it('should print release notes', function (done) {
     })
 })
 
-it('should check dependencies', function (done) {
-  this.timeout(TIMEOUT)
+it('should check dependencies', done => {
+  jest.setTimeout(TIMEOUT)
   execCli('babel-node', ['../../src/cli.js', '--check-dependencies'])
     .then(result => {
       assert.match(result.output, 'check dependencies: SUCCESS !!', done)
@@ -74,8 +74,8 @@ it('should check dependencies', function (done) {
     })
 })
 
-it('should fix dependencies', function (done) {
-  this.timeout(TIMEOUT)
+it('should fix dependencies', done => {
+  jest.setTimeout(TIMEOUT)
   execCli('babel-node', ['../../src/cli.js', '--fix-dependencies'])
     .then(result => {
       assert.match(result.output, 'check dependencies: SUCCESS !!', done)
@@ -85,8 +85,8 @@ it('should fix dependencies', function (done) {
     })
 })
 
-it('should link bin directory', function (done) {
-  this.timeout(TIMEOUT)
+it('should link bin directory', done => {
+  jest.setTimeout(TIMEOUT)
   execCli('babel-node', ['../../src/cli.js', '--link'])
     .then(result => {
       assert.match(result.output, 'link: SUCCESS !!', done)
@@ -96,8 +96,8 @@ it('should link bin directory', function (done) {
     })
 })
 
-it('should run build scripts respecting dependencies', function (done) {
-  this.timeout(TIMEOUT)
+it('should run build scripts respecting dependencies', done => {
+  jest.setTimeout(TIMEOUT)
   execCli('babel-node', ['../../src/cli.js', '--build'])
     .then(result => {
       assert.match(result.output, 'build: SUCCESS !!', done)
@@ -107,8 +107,8 @@ it('should run build scripts respecting dependencies', function (done) {
     })
 })
 
-it('should run build scripts without parallel', function (done) {
-  this.timeout(TIMEOUT)
+it('should run build scripts without parallel', done => {
+  jest.setTimeout(TIMEOUT)
   execCli('babel-node', ['../../src/cli.js', '--build', '--no-parallel'])
     .then(result => {
       assert.match(result.output, 'PARALLEL: OFF', () => {})

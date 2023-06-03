@@ -1,7 +1,7 @@
-/* eslint-env mocha */
-import { config } from 'test-utils'
+/* eslint-env jest */
 import assert from 'test-utils/assert'
 import { commits } from 'test-utils/commits'
+import { config } from 'test-utils'
 import { getBranches } from './getBranches'
 
 it('should return branches information', done => {

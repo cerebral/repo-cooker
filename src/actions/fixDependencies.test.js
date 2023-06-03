@@ -1,10 +1,10 @@
-/* eslint-env mocha */
-import { testAction } from 'test-utils'
+/* eslint-env jest */
 import assert from 'test-utils/assert'
-import simple from 'simple-mock'
-import { fs } from './helpers'
-
 import { fixDependencies } from './'
+import { fs } from './helpers'
+import simple from 'simple-mock'
+import { testAction } from 'test-utils'
+
 const toInstallDeps = {
   toInstall: [
     {

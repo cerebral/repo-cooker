@@ -1,6 +1,6 @@
-/* eslint-env mocha */
-import simple from 'simple-mock'
+/* eslint-env jest */
 import request from 'request'
+import simple from 'simple-mock'
 
 export const versions = {
   'repo-cooker-test': '0.0.1',

@@ -1,6 +1,6 @@
-/* eslint-env mocha */
-import { testAction } from 'test-utils'
+/* eslint-env jest */
 import { byReleaseTarget } from './'
+import { testAction } from 'test-utils'
 
 it('should choose branch from argv', done => {
   testAction(

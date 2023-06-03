@@ -1,30 +1,33 @@
-/* eslint-env mocha */
-import assert from 'test-utils/assert'
-
+/* eslint-env jest */
 import { backwardGraph, forwardGraph } from './helpers'
 
+import assert from 'test-utils/assert'
+
 describe('helpers.backwardGraph', done => {
-  it('should walk dependency graph backwards and return visited nodes', done => {
-    /*
-    depends on
-    a --> b --> c
-      --> d
-    e --> b
-    */
-    const deps = {
-      a: ['b', 'd'],
-      b: ['c'],
-      c: [],
-      d: [],
-      e: ['b'],
-      f: [],
+  it(
+    'should walk dependency graph backwards and return visited nodes',
+    done => {
+      /*
+      depends on
+      a --> b --> c
+        --> d
+      e --> b
+      */
+      const deps = {
+        a: ['b', 'd'],
+        b: ['c'],
+        c: [],
+        d: [],
+        e: ['b'],
+        f: [],
+      }
+      assert.deepEqual(
+        backwardGraph(deps, ['c']),
+        { c: true, b: true, a: true, e: true },
+        done
+      )
     }
-    assert.deepEqual(
-      backwardGraph(deps, ['c']),
-      { c: true, b: true, a: true, e: true },
-      done
-    )
-  })
+  )
 
   it('should support circular depencencies', done => {
     /*
@@ -50,27 +53,30 @@ describe('helpers.backwardGraph', done => {
 })
 
 describe('helpers.forwardGraph', done => {
-  it('should walk dependency graph forwards and return visited nodes', done => {
-    /*
-    depends on
-    a --> b --> c
-      --> d
-    e
-    */
-    const deps = {
-      a: ['b', 'd'],
-      b: ['c'],
-      c: [],
-      d: [],
-      e: [],
-      f: [],
+  it(
+    'should walk dependency graph forwards and return visited nodes',
+    done => {
+      /*
+      depends on
+      a --> b --> c
+        --> d
+      e
+      */
+      const deps = {
+        a: ['b', 'd'],
+        b: ['c'],
+        c: [],
+        d: [],
+        e: [],
+        f: [],
+      }
+      assert.deepEqual(
+        forwardGraph(deps, ['a', 'e']),
+        { a: true, b: true, c: true, d: true, e: true },
+        done
+      )
     }
-    assert.deepEqual(
-      forwardGraph(deps, ['a', 'e']),
-      { a: true, b: true, c: true, d: true, e: true },
-      done
-    )
-  })
+  )
 
   it('should support circular depencencies', done => {
     /*

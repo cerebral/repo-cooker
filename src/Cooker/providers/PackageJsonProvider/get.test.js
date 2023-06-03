@@ -1,11 +1,11 @@
-/* eslint-env mocha */
+/* eslint-env jest */
 import assert from 'test-utils/assert'
 import { config } from 'test-utils'
 import { get } from './get'
 import { join } from '../../../helpers/path'
 import { readFileSync } from 'fs'
 
-it('should get package info', function (done) {
+it('should get package info', done => {
   const getInfo = get(config)
 
   const commisInfo = JSON.parse(

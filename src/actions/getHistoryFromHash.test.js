@@ -1,7 +1,7 @@
-/* eslint-env mocha */
-import { testAction } from 'test-utils'
-import { getHistoryFromHash } from './'
+/* eslint-env jest */
 import { commits } from 'test-utils/commits'
+import { getHistoryFromHash } from './'
+import { testAction } from 'test-utils'
 
 it('should find commits hash since provided hash', done => {
   const hash = commits[commits.length - 4].hash

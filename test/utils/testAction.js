@@ -1,7 +1,8 @@
-/* eslint-env mocha */
+/* eslint-env jest */
 import { options, runCommandMock } from 'test-utils'
-import assert from 'test-utils/assert'
+
 import { Cooker } from 'repo-cooker'
+import assert from 'test-utils/assert'
 
 export function testAction(
   action,

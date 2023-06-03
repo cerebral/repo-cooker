@@ -1,6 +1,6 @@
-/* eslint-env mocha */
-import { testAction } from 'test-utils'
+/* eslint-env jest */
 import { createReleaseNotes } from './'
+import { testAction } from 'test-utils'
 
 const makeCommit = name => {
   const [, type, breaks] = name.split('_')

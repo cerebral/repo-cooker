@@ -1,6 +1,6 @@
-/* eslint-env mocha */
-import { testAction } from 'test-utils'
+/* eslint-env jest */
 import { remap } from './'
+import { testAction } from 'test-utils'
 
 describe('remap', () => {
   it('should remap given prop', done => {

@@ -1,12 +1,13 @@
-/* eslint-env mocha */
+/* eslint-env jest */
+import { mockNpmRegistry, versions } from 'test-utils/npm'
+
+import { getCurrentVersionByPackage } from './'
 import simple from 'simple-mock'
 import { testAction } from 'test-utils'
-import { mockNpmRegistry, versions } from 'test-utils/npm'
-import { getCurrentVersionByPackage } from './'
 
 describe('getCurrentVersionByPackage', () => {
-  before(mockNpmRegistry)
-  after(() => simple.restore())
+  beforeAll(mockNpmRegistry)
+  afterAll(() => simple.restore())
 
   it('should get current version for each package', done => {
     const semverByPackage = {

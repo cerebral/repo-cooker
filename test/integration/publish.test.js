@@ -1,19 +1,20 @@
-import { Cooker } from 'repo-cooker'
-/* eslint-env mocha */
+/* eslint-env jest */
 import * as cook from 'repo-cooker/actions'
-import request from 'request'
-import simple from 'simple-mock'
-import { runCommandMock } from 'test-utils'
+
+import { buildWebsite, publishWebsite } from './actions'
+import { join, resolve } from '../../src/helpers/path'
+
+import { Cooker } from 'repo-cooker'
 import assert from 'test-utils/assert'
 import { mockNpmRegistry } from 'test-utils/npm'
-
-import { join, resolve } from '../../src/helpers/path'
-import { buildWebsite, publishWebsite } from './actions'
+import request from 'request'
+import { runCommandMock } from 'test-utils'
+import simple from 'simple-mock'
 
 const isoString = '2017-07-09T19:06:31.620Z'
 
 describe('publish script', () => {
-  before(() => {
+  beforeAll(() => {
     mockNpmRegistry()
     simple.mock(Date.prototype, 'toISOString').returnWith(isoString)
     simple.mock(request, 'post').callFn(({ url, form }, callback) => {
@@ -29,12 +30,12 @@ describe('publish script', () => {
       )
     })
   })
-  after(() => {
+  afterAll(() => {
     simple.restore()
   })
 
-  it('should run a publish script without error', function (done) {
-    this.timeout(6000)
+  it('should run a publish script without error', done => {
+    jest.setTimeout(6000)
 
     const dryRun = runCommandMock()
     const basePath = resolve('test', 'repo')

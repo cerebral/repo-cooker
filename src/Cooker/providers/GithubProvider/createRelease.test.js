@@ -1,9 +1,9 @@
-/* eslint-env mocha */
+/* eslint-env jest */
+import assert from 'test-utils/assert'
+import { config } from 'test-utils'
+import { createRelease } from './createRelease'
 import request from 'request'
 import simple from 'simple-mock'
-import { config } from 'test-utils'
-import assert from 'test-utils/assert'
-import { createRelease } from './createRelease'
 
 describe('createRelease', () => {
   const release = {
@@ -13,7 +13,7 @@ describe('createRelease', () => {
     created_at: new Date().toISOString(),
   }
 
-  before(() => {
+  beforeAll(() => {
     simple.mock(request, 'post').callFn(({ url, body }, callback) => {
       const data = JSON.parse(body)
       callback(
@@ -29,9 +29,9 @@ describe('createRelease', () => {
     })
   })
 
-  after(() => simple.restore())
+  afterAll(() => simple.restore())
 
-  it('should publish release to github', function (done) {
+  it('should publish release to github', done => {
     createRelease(config.path, release.name, release.body)
       .then(response => {
         assert.deepEqual(response, release, done)

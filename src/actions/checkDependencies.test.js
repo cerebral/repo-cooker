@@ -1,6 +1,7 @@
-/* eslint-env mocha */
-import { testAction } from 'test-utils'
+/* eslint-env jest */
 import { checkDependencies, getDependencies } from './'
+
+import { testAction } from 'test-utils'
 
 describe('checkDependencies', () => {
   it('should check dependencies for conflict', done => {
