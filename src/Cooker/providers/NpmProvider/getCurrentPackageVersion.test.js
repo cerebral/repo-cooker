@@ -21,12 +21,9 @@ describe('getCurrentPackageVersion', () => {
     })
   })
 
-  it(
-    'should return null when latest in not a semver version',
-    done => {
-      getCurrentPackageVersion('@repo-cooker-test/poissonier').then(version => {
-        assert.equal(version, null, done)
-      })
-    }
-  )
+  it('should return null when latest in not a semver version', done => {
+    getCurrentPackageVersion('@repo-cooker-test/poissonier').then(version => {
+      assert.equal(version, null, done)
+    })
+  })
 })

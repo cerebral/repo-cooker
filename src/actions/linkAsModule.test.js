@@ -42,13 +42,10 @@ it('should link as modules', done => {
   )
 })
 
-it(
-  'should skip link as modules if common path contains node_modules',
-  done => {
-    jest.setTimeout(4000)
-    testAction(linkAsModule, {}, { linkAsModule: {}, commands: [] }, done)
-  }
-)
+it('should skip link as modules if common path contains node_modules', done => {
+  jest.setTimeout(4000)
+  testAction(linkAsModule, {}, { linkAsModule: {}, commands: [] }, done)
+})
 
 it('should not link as modules inside part of name', done => {
   jest.setTimeout(4000)

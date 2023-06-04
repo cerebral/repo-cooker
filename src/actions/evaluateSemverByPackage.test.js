@@ -19,17 +19,14 @@ const semverByPackage = {
   baz: 'major',
 }
 
-it(
-  'should run the grouping function for every commit and group commits',
-  done => {
-    testAction(
-      evaluateSemverByPackage,
-      { commitsByPackage },
-      { semverByPackage },
-      done
-    )
-  }
-)
+it('should run the grouping function for every commit and group commits', done => {
+  testAction(
+    evaluateSemverByPackage,
+    { commitsByPackage },
+    { semverByPackage },
+    done
+  )
+})
 
 it('should bump all to major for Big Bang hash', done => {
   const semverByPackage = {
