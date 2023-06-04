@@ -5,7 +5,7 @@ const TIMEOUT = 20000
 
 it('should run script in custom repo-cooker-path', done => {
   jest.setTimeout(TIMEOUT)
-  execCli('babel-node', ['../../src/cli.js', 'dummy', 'one', 'two'])
+  execCli('babel-node', ['../../dist/cli.js', 'dummy', 'one', 'two'])
     .then(result => {
       assert.match(result.output, /dummy script: \["one","two"\]/, done)
     })
@@ -16,7 +16,7 @@ it('should run script in custom repo-cooker-path', done => {
 
 it('should run npm command', done => {
   jest.setTimeout(TIMEOUT)
-  execCli('babel-node', ['../../src/cli.js', 'other-script'])
+  execCli('babel-node', ['../../dist/cli.js', 'other-script'])
     .then(result => {
       assert.match(result.output, 'Other Script OK', done)
     })
@@ -27,7 +27,7 @@ it('should run npm command', done => {
 
 it('should run builtin named release', done => {
   jest.setTimeout(TIMEOUT)
-  execCli('babel-node', ['../../src/cli.js', '--release=default', '--dry-run'])
+  execCli('babel-node', ['../../dist/cli.js', '--release=default', '--dry-run'])
     .then(result => {
       assert.match(result.output, 'default release: DRY RUN OK', done)
     })
@@ -38,7 +38,7 @@ it('should run builtin named release', done => {
 
 it('should run builtin default release', done => {
   jest.setTimeout(TIMEOUT)
-  execCli('babel-node', ['../../src/cli.js', '--release', '--dry-run'])
+  execCli('babel-node', ['../../dist/cli.js', '--release', '--dry-run'])
     .then(result => {
       assert.match(result.output, 'default release: DRY RUN OK', done)
     })
@@ -50,7 +50,7 @@ it('should run builtin default release', done => {
 it('should print release notes', done => {
   jest.setTimeout(TIMEOUT)
   execCli('babel-node', [
-    '../../src/cli.js',
+    '../../dist/cli.js',
     '--release',
     '--dry-run',
     '--print-release',
@@ -65,7 +65,7 @@ it('should print release notes', done => {
 
 it('should check dependencies', done => {
   jest.setTimeout(TIMEOUT)
-  execCli('babel-node', ['../../src/cli.js', '--check-dependencies'])
+  execCli('babel-node', ['../../dist/cli.js', '--check-dependencies'])
     .then(result => {
       assert.match(result.output, 'check dependencies: SUCCESS !!', done)
     })
@@ -76,7 +76,7 @@ it('should check dependencies', done => {
 
 it('should fix dependencies', done => {
   jest.setTimeout(TIMEOUT)
-  execCli('babel-node', ['../../src/cli.js', '--fix-dependencies'])
+  execCli('babel-node', ['../../dist/cli.js', '--fix-dependencies'])
     .then(result => {
       assert.match(result.output, 'check dependencies: SUCCESS !!', done)
     })
@@ -87,7 +87,7 @@ it('should fix dependencies', done => {
 
 it('should link bin directory', done => {
   jest.setTimeout(TIMEOUT)
-  execCli('babel-node', ['../../src/cli.js', '--link'])
+  execCli('babel-node', ['../../dist/cli.js', '--link'])
     .then(result => {
       assert.match(result.output, 'link: SUCCESS !!', done)
     })
@@ -98,7 +98,7 @@ it('should link bin directory', done => {
 
 it('should run build scripts respecting dependencies', done => {
   jest.setTimeout(TIMEOUT)
-  execCli('babel-node', ['../../src/cli.js', '--build'])
+  execCli('babel-node', ['../../dist/cli.js', '--build'])
     .then(result => {
       assert.match(result.output, 'build: SUCCESS !!', done)
     })
@@ -109,7 +109,7 @@ it('should run build scripts respecting dependencies', done => {
 
 it('should run build scripts without parallel', done => {
   jest.setTimeout(TIMEOUT)
-  execCli('babel-node', ['../../src/cli.js', '--build', '--no-parallel'])
+  execCli('babel-node', ['../../dist/cli.js', '--build', '--no-parallel'])
     .then(result => {
       assert.match(result.output, 'PARALLEL: OFF', () => {})
       assert.match(result.output, 'build: SUCCESS !!', done)
