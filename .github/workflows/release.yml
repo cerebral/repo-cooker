@@ -1,0 +1,31 @@
+name: Release
+
+on:
+  workflow_run:
+    workflows: [Test]
+    types: [completed]
+    branches: [main]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+          registry-url: https://registry.npmjs.org/
+      - run: npm ci
+      - run: npm run build
+      - run: git remote set-url origin https://cerebraljs:${{ secrets.GITHUB_TOKEN }}@github.com/cerebral/repo-cooker
+      - run: git config --global user.email "cerebraljs@gmail.com"
+      - run: git config --global user.name "Cerebral JS"
+      - run: npm run coverage
+        if: github.event_name == 'pull_request'
+      - run: npm run release
+        if: github.event_name != 'pull_request'
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

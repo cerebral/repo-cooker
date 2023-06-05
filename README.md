@@ -2,6 +2,7 @@
 
 [![NPM version][npm-image]][npm-url]
 [![Build status][travis-image]][travis-url]
+[![Build status][gh-actions-image]][gh-actions-url]
 
 This is a tool for monorepo management and publishing, now with vscode
 extension support !
@@ -109,3 +110,5 @@ for a full example with comments.
 [npm-url]: https://npmjs.org/package/repo-cooker
 [travis-image]: https://img.shields.io/travis/cerebral/repo-cooker.svg?style=flat
 [travis-url]: https://travis-ci.org/cerebral/repo-cooker
+[gh-actions-image]: https://github.com/cerebral/repo-cooker/actions/workflows/main.yml/badge.svg
+[gh-actions-url]: https://github.com/cerebral/repo-cooker/actions
