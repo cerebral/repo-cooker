@@ -8,14 +8,12 @@ git:
   depth: 9999
 notifications:
   email: false
-env:
-  - TEST_MODE=serial
 script:
   - |
     if [[ $SKIP_TESTS != 'true' ]]; then
       npm prune
       npm run lint
-      npm test
+      npm test -- --runInBand
     fi
 after_success:
   - |
