@@ -43,3 +43,7 @@ beforeAll(done => {
       done(error)
     })
 })
+
+it('empty test', done => {
+  done()
+})
