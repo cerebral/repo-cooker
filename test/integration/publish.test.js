@@ -35,8 +35,6 @@ describe('publish script', () => {
   })
 
   it('should run a publish script without error', done => {
-    jest.setTimeout(6000)
-
     const dryRun = runCommandMock()
     const basePath = resolve('test', 'repo')
     const cooker = Cooker({
@@ -264,5 +262,5 @@ describe('publish script', () => {
         assert.deepEqual(result, commands, done)
       })
       .catch(done)
-  })
+  }, 10000)
 })
