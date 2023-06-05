@@ -11,7 +11,7 @@ export const tags = [
   },
 ]
 
-export const current = '60e29c9dd656504be9c515c553637cf532c6def3'
+export const current = '481b6282416989dd5d01f5d49cec30a238b27aaf'
 
 export const commits = [
   {
@@ -281,6 +281,22 @@ export const commits = [
     message:
       "chore(package.json): rename 'prepublish' script to 'prepare' in package.json\n",
     files: ['package.json'],
+  },
+  {
+    author: {
+      name: 'Henri Hulski',
+      email: 'henri.hulski@gazeta.pl',
+    },
+    date: '2023-06-04T19:25:37.000Z',
+    hash: '481b6282416989dd5d01f5d49cec30a238b27aaf',
+    message: 'chore: upgrade dependencies and update config files\n',
+    files: [
+      '.babelrc',
+      '.eslintrc.json',
+      '.prettierrc.json',
+      '.travis.yml',
+      'package.json',
+    ],
   },
 ]
 
@@ -670,5 +686,26 @@ export const parsedCommits = [
     type: 'chore',
     scope: 'package.json',
     summary: "rename 'prepublish' script to 'prepare' in package.json",
+  },
+  {
+    author: {
+      name: 'Henri Hulski',
+      email: 'henri.hulski@gazeta.pl',
+    },
+    date: '2023-06-04T19:25:37.000Z',
+    hash: '481b6282416989dd5d01f5d49cec30a238b27aaf',
+    message: 'chore: upgrade dependencies and update config files\n',
+    files: [
+      '.babelrc',
+      '.eslintrc.json',
+      '.prettierrc.json',
+      '.travis.yml',
+      'package.json',
+    ],
+    body: '',
+    issues: [],
+    breaks: [],
+    type: 'chore',
+    summary: 'upgrade dependencies and update config files',
   },
 ]
