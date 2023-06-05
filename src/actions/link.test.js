@@ -5,7 +5,6 @@ import { link } from './'
 import { resolve } from '../helpers/path'
 
 it('should link bin directories', done => {
-  jest.setTimeout(4000)
   const linkResults = {
     '@repo-cooker-test/commis': 'mock command',
     '@repo-cooker-test/entremetier': 'mock command',
@@ -24,4 +23,4 @@ it('should link bin directories', done => {
       args: [rootBin, resolve(path, 'node_modules', '.bin')],
     }))
   testAction(link, {}, { link: linkResults, commands }, done)
-})
+}, 4000)

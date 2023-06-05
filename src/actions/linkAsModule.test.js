@@ -4,7 +4,6 @@ import { resolve } from '../helpers/path'
 import { testAction } from 'test-utils'
 
 it('should link as modules', done => {
-  jest.setTimeout(4000)
   const packagesPaths = {
     '@repo-cooker-test/commis': '/foo/bar/baz/@repo-cooker-test/commis',
     '@repo-cooker-test/entremetier':
@@ -43,12 +42,10 @@ it('should link as modules', done => {
 })
 
 it('should skip link as modules if common path contains node_modules', done => {
-  jest.setTimeout(4000)
   testAction(linkAsModule, {}, { linkAsModule: {}, commands: [] }, done)
 })
 
 it('should not link as modules inside part of name', done => {
-  jest.setTimeout(4000)
   const packagesPaths = {
     '@repo-cooker-test/commis': '/foo/bar/@repo-cooker-test/commis',
     '@repo-cooker-test/entremetier': '/foo/bar/@repo-cooker-test/entremetier',
