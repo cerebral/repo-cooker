@@ -7,7 +7,7 @@ export async function getBranchObject(name, repoPath) {
   const commit = (await readCommit({ fs, dir: repoPath, oid: hash })).commit
 
   return {
-    date: new Date(commit.author.timestamp * 1000).toISOString(),
+    date: new Date(commit.committer.timestamp * 1000).toISOString(),
     name,
     hash,
   }
