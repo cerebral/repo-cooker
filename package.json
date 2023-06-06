@@ -12,7 +12,7 @@
     "format": "npm run lint -- --fix",
     "lint": "eslint \"**/*.js\"",
     "prepare": "npm run build",
-    "pretest": "babel-node test/utils/pretest.js",
+    "pretest": "npm run build && babel-node test/utils/pretest.js",
     "release": "npm run build && node ./dist/cli.js --release --no-parallel",
     "test": "REPO_COOKER_NPM_OTP= jest",
     "test:watch": "npm run test -- --watch"
