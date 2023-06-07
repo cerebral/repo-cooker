@@ -4,9 +4,15 @@ import { getCommit } from './getCommit'
 import { getCurrentBranch } from './getCurrentBranch'
 import { getHashListFromHash } from './getHashListFromHash'
 import { getLatestTagMatchingName } from './getLatestTagMatchingName'
+import { join } from '../../../helpers/path'
 import { restoreRepository } from './restoreRepository'
 
 export function GitProvider({ path, runCommand }) {
+  // GITHUB_WORKSPACE environment variable is used in github actions
+  if (process.env.GITHUB_WORKSPACE) {
+    path = join(process.env.GITHUB_WORKSPACE, path)
+  }
+
   return new Provider({
     createTagForCommit(tag, message = '') {
       return runCommand('git', [
