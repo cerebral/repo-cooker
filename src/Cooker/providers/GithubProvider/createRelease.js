@@ -46,10 +46,11 @@ export function createRelease(path, tagName, body) {
 
   const headers = {
     'User-Agent': 'repo-cooker',
-    Authorization: `token ${
+    Accept: 'application/vnd.github+json',
+    Authorization: `Bearer ${
       process.env.REPO_COOKER_GITHUB_TOKEN || process.env.GH_TOKEN
     }`,
-    'Content-Type': 'application/json; charset=utf-8',
+    'X-GitHub-Api-Version': '2022-11-28',
   }
 
   return new Promise((resolve, reject) => {
