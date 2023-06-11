@@ -21,6 +21,8 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: npm ci
       - run: npm run build
+      - run: git config user.email "cerebraljs@gmail.com"
+      - run: git config user.name "Cerebral JS"
       - run: npm run coverage
         if: github.event_name == 'pull_request'
       - name: Generate token
