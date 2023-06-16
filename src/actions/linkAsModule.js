@@ -11,7 +11,7 @@ const linkOne = function linkAsModule(sourcePackage, pkgAsModule) {
   return new Promise((resolve, reject) => {
     const dir = dirname(pkgAsModule)
     if (!existsSync(dir)) {
-      mkdirSync(dir)
+      mkdirSync(dir, { recursive: true })
     }
     symlinkDir(sourcePackage, pkgAsModule).then(
       () => {
@@ -43,7 +43,7 @@ export function linkAsModule({ config }) {
   }
   const nodeModules = resolve(commonPath, 'node_modules')
   if (!existsSync(nodeModules)) {
-    runCommand(mkdir, [nodeModules])
+    runCommand(mkdir, [nodeModules, { recursive: true }])
   }
 
   return runAll(
