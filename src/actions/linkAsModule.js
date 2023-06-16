@@ -1,8 +1,10 @@
 import { existsSync, mkdirSync } from 'fs'
+
 import { dirname } from 'path'
-import symlinkDir from 'symlink-dir'
+import { mkdir } from 'fs/promises'
 import { resolve } from '../helpers/path'
 import { runAll } from '../helpers/runAll'
+import symlinkDir from 'symlink-dir'
 
 // Alias to show 'linkAsModule'
 const linkOne = function linkAsModule(sourcePackage, pkgAsModule) {
@@ -41,7 +43,7 @@ export function linkAsModule({ config }) {
   }
   const nodeModules = resolve(commonPath, 'node_modules')
   if (!existsSync(nodeModules)) {
-    runCommand(mkdirSync, [nodeModules])
+    runCommand(mkdir, [nodeModules])
   }
 
   return runAll(
