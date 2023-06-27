@@ -5,33 +5,41 @@ import { buildWebsite, publishWebsite } from './actions'
 import { join, resolve } from '../../src/helpers/path'
 
 import { Cooker } from 'repo-cooker'
+import MockAdapter from 'axios-mock-adapter'
 import assert from 'test-utils/assert'
+import axios from 'axios'
 import { mockNpmRegistry } from 'test-utils/npm'
-import request from 'request'
 import { runCommandMock } from 'test-utils'
-import simple from 'simple-mock'
 
 const isoString = '2017-07-09T19:06:31.620Z'
 
 describe('publish script', () => {
+  let mock
+  const url = 'https://api.github.com/repos/cerebral/repo-cooker-test/releases'
+
   beforeAll(() => {
-    mockNpmRegistry()
-    simple.mock(Date.prototype, 'toISOString').returnWith(isoString)
-    simple.mock(request, 'post').callFn(({ url, form }, callback) => {
-      callback(
-        null,
-        { statusCode: 201 },
-        JSON.stringify({
-          name: form.name,
-          tag_name: form.tag_name,
-          body: form.body,
+    mock = new MockAdapter(axios)
+    mockNpmRegistry(mock)
+    mock.onPost(url).reply(function (config) {
+      return [
+        201,
+        {
+          name: config.data.name,
+          tag_name: config.data.tag_name,
+          body: config.data.body,
           created_at: new Date().toISOString(),
-        })
-      )
+        },
+      ]
     })
   })
+  beforeEach(() => {
+    jest.spyOn(Date.prototype, 'toISOString').mockReturnValue(isoString)
+  })
+  afterEach(() => {
+    jest.restoreAllMocks()
+  })
   afterAll(() => {
-    simple.restore()
+    mock.restore()
   })
 
   it('should run a publish script without error', done => {

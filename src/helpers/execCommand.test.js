@@ -2,15 +2,15 @@
 import { execCommand, logCommand } from './execCommand'
 
 import assert from 'test-utils/assert'
-import simple from 'simple-mock'
 
 describe('logCommand', () => {
   const logs = []
-  beforeAll(() => {
-    simple.mock(console, 'log').callFn((...args) => logs.push(args))
+  beforeEach(() => {
+    jest.spyOn(console, 'log').mockImplementation((...args) => logs.push(args))
   })
-
-  afterAll(() => simple.restore())
+  afterEach(() => {
+    jest.restoreAllMocks()
+  })
 
   it('should output commands to console', done => {
     logCommand('hello', ['a', 'b', 'c'], { some: 'option' }).then(() => {

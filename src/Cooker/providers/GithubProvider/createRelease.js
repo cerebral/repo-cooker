@@ -1,6 +1,6 @@
+import axios from 'axios'
 import { join } from '../../../helpers/path'
 import { readFile } from 'fs'
-import request from 'request'
 
 const REPO_URL_RE = /^.*:\/\/([^/]+)\/([^/]+)\/([^.]+)/
 
@@ -36,13 +36,13 @@ function getRepositoryInfo(path) {
 
 export function createRelease(path, tagName, body) {
   // POST /repos/:owner/:repo/releases
-  const requestBody = JSON.stringify({
+  const data = {
     tag_name: tagName,
     name: tagName,
     body,
     draft: false,
     prerelease: false,
-  })
+  }
 
   const headers = {
     'User-Agent': 'repo-cooker',
@@ -64,18 +64,14 @@ export function createRelease(path, tagName, body) {
           )
         }
         const url = `https://api.${domain}/repos/${owner}/${repo}/releases`
-        return request.post(
-          { url, headers, body: requestBody },
-          (err, response, body) => {
-            if (err) {
-              reject(new Error(err))
-            } else if (response.statusCode === 201) {
-              resolve(JSON.parse(body))
-            } else {
-              reject(new Error(body))
-            }
-          }
-        )
+        return axios
+          .post(url, data, { headers })
+          .then(response => {
+            resolve(response.data)
+          })
+          .catch(error => {
+            reject(new Error(error))
+          })
       })
       .catch(reject)
   })

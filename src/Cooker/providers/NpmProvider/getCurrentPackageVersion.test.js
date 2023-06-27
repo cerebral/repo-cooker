@@ -1,13 +1,21 @@
 /* eslint-env jest */
 import { mockNpmRegistry, versions } from 'test-utils/npm'
 
+import MockAdapter from 'axios-mock-adapter'
 import assert from 'test-utils/assert'
+import axios from 'axios'
 import { getCurrentPackageVersion } from './getCurrentPackageVersion'
-import simple from 'simple-mock'
 
 describe('getCurrentPackageVersion', () => {
-  beforeAll(mockNpmRegistry)
-  afterAll(() => simple.restore())
+  let mock
+
+  beforeAll(() => {
+    mock = new MockAdapter(axios)
+    mockNpmRegistry(mock)
+  })
+  afterAll(() => {
+    mock.restore()
+  })
 
   it('should return the "latest" dist-tag version', done => {
     getCurrentPackageVersion('repo-cooker-test').then(version => {

@@ -1,4 +1,4 @@
-import request from 'request'
+import axios from 'axios'
 import registryUrlFn from 'registry-url'
 
 const registryUrl = registryUrlFn()
@@ -10,21 +10,19 @@ export function getFromNpmRegistry(packageName) {
       return resolve(cache[packageName])
     }
 
-    request.get(
-      `${registryUrl}${packageName.replace('/', '%2F')}`,
-      (error, response, body) => {
-        if (response && response.statusCode === 404) {
+    axios
+      .get(`${registryUrl}${packageName.replace('/', '%2F')}`)
+      .then(response => {
+        cache[packageName] = response.data
+        resolve(cache[packageName])
+      })
+      .catch(error => {
+        if (error.response && error.response.status === 404) {
           cache[packageName] = null
           return resolve(cache[packageName])
+        } else {
+          reject(new Error(error))
         }
-
-        if (error) {
-          return reject(error)
-        }
-
-        cache[packageName] = JSON.parse(body)
-        resolve(cache[packageName])
-      }
-    )
+      })
   })
 }

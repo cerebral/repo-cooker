@@ -1,41 +1,32 @@
 /* eslint-env jest */
+import MockAdapter from 'axios-mock-adapter'
 import assert from 'test-utils/assert'
+import axios from 'axios'
 import { config } from 'test-utils'
 import { createRelease } from './createRelease'
-import request from 'request'
-import simple from 'simple-mock'
 
 describe('createRelease', () => {
+  let mock
   const release = {
     name: 'release_THIS_THAT',
     tag_name: 'release_THIS_THAT',
     body: 'Markdown description of release content.',
     created_at: new Date().toISOString(),
   }
+  const url = 'https://api.github.com/repos/cerebral/repo-cooker-test/releases'
 
   beforeAll(() => {
-    simple.mock(request, 'post').callFn(({ url, body }, callback) => {
-      const data = JSON.parse(body)
-      callback(
-        null,
-        { statusCode: 201 },
-        JSON.stringify({
-          name: data.name,
-          tag_name: data.tag_name,
-          body: data.body,
-          created_at: release.created_at,
-        })
-      )
-    })
+    mock = new MockAdapter(axios)
+    mock.onPost(url).reply(201, release)
+  })
+  afterAll(() => {
+    mock.restore()
   })
 
-  afterAll(() => simple.restore())
+  it('should publish release to github', async () => {
+    const result = await createRelease(config.path, release.name, release.body)
 
-  it('should publish release to github', done => {
-    createRelease(config.path, release.name, release.body)
-      .then(response => {
-        assert.deepEqual(response, release, done)
-      })
-      .catch(done)
+    expect(mock.history.post[0].url).toEqual(url)
+    assert.deepEqual(result, release)
   })
 })

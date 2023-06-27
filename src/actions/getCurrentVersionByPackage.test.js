@@ -1,13 +1,21 @@
 /* eslint-env jest */
 import { mockNpmRegistry, versions } from 'test-utils/npm'
 
+import MockAdapter from 'axios-mock-adapter'
+import axios from 'axios'
 import { getCurrentVersionByPackage } from './'
-import simple from 'simple-mock'
 import { testAction } from 'test-utils'
 
 describe('getCurrentVersionByPackage', () => {
-  beforeAll(mockNpmRegistry)
-  afterAll(() => simple.restore())
+  let mock
+
+  beforeAll(() => {
+    mock = new MockAdapter(axios)
+    mockNpmRegistry(mock)
+  })
+  afterAll(() => {
+    mock.restore()
+  })
 
   it('should get current version for each package', done => {
     const semverByPackage = {

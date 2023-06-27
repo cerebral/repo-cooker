@@ -1,6 +1,4 @@
 /* eslint-env jest */
-import request from 'request'
-import simple from 'simple-mock'
 
 export const versions = {
   'repo-cooker-test': '0.0.1',
@@ -34,12 +32,12 @@ const MOCKS = {
   'https://registry.npmjs.org/@repo-cooker-test%2Fsous-chef': {},
 }
 
-export function mockNpmRegistry() {
-  simple.mock(request, 'get').callFn((url, callback) => {
-    if (url in MOCKS) {
-      callback(null, null, JSON.stringify(MOCKS[url]))
+export function mockNpmRegistry(mock) {
+  mock.onGet(/https:\/\/registry.npmjs.org\/.+/).reply(function (config) {
+    if (config.url in MOCKS) {
+      return [200, MOCKS[config.url]]
     } else {
-      throw new Error(`Npm url '${url}' needs a mock.`)
+      throw new Error(`Npm url '${config.url}' needs a mock.`)
     }
   })
 }

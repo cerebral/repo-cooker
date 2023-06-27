@@ -2,7 +2,6 @@
 import assert from 'test-utils/assert'
 import { fixDependencies } from './'
 import { fs } from './helpers'
-import simple from 'simple-mock'
 import { testAction } from 'test-utils'
 
 const toInstallDeps = {
@@ -37,12 +36,16 @@ const conflictDeps = {
 }
 
 describe('fixDependencies', () => {
+  beforeEach(() => {
+    jest.spyOn(console, 'log').mockReturnValue(null)
+  })
+  afterEach(() => {
+    jest.restoreAllMocks()
+  })
+
   it('should throw on conflict in dependencies', done => {
     testAction(
       [
-        () => {
-          simple.mock(console, 'log').resolveWith(null)
-        },
         fixDependencies,
         () => {
           throw new Error('Should not run')
@@ -61,7 +64,6 @@ describe('fixDependencies', () => {
         packagesGlobs: ['test/deps-fixtures/*'],
       },
       error => {
-        simple.restore()
         assert.equal(error.message, 'Dependencies have conflicts.', done)
       }
     )
@@ -70,9 +72,6 @@ describe('fixDependencies', () => {
   it('should throw on conflict in devDependencies', done => {
     testAction(
       [
-        () => {
-          simple.mock(console, 'log').resolveWith(null)
-        },
         fixDependencies,
         () => {
           throw new Error('Should not run')
@@ -91,7 +90,6 @@ describe('fixDependencies', () => {
         packagesGlobs: ['test/deps-fixtures/*'],
       },
       error => {
-        simple.restore()
         assert.equal(
           error.message,
           'Dependencies need install and have conflicts.',
@@ -106,14 +104,12 @@ describe('fixDependencies', () => {
     testAction(
       [
         () => {
-          simple.mock(console, 'log').resolveWith(null)
-          simple.mock(fs, 'writeFileSync').callFn((path, data) => {
+          jest.spyOn(fs, 'writeFileSync').mockImplementation((path, data) => {
             updatedPackageJson = data
           })
         },
         fixDependencies,
         () => {
-          simple.restore()
           assert.equal(typeof updatedPackageJson, 'string')
         },
       ],
@@ -138,8 +134,7 @@ describe('fixDependencies', () => {
     testAction(
       [
         () => {
-          simple.mock(console, 'log').resolveWith(null)
-          simple.mock(fs, 'writeFileSync').callFn((path, data) => {
+          jest.spyOn(fs, 'writeFileSync').mockImplementation((path, data) => {
             updatedPackageJson = data
           })
         },
@@ -162,7 +157,6 @@ describe('fixDependencies', () => {
         packagesGlobs: ['test/deps-fixtures/*'],
       },
       () => {
-        simple.restore()
         assert.equal(typeof updatedPackageJson, 'undefined', done)
       }
     )

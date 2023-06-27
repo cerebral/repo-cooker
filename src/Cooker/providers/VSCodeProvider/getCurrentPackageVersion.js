@@ -1,4 +1,4 @@
-import request from 'request'
+import axios from 'axios'
 
 const RE = /<title>.*v([0-9.]+)<\/title>/
 const BADGES_URL = 'https://vsmarketplacebadge.apphb.com/version-short'
@@ -11,27 +11,29 @@ export function getCurrentPackageVersion(name, packageJson) {
     }
 
     const url = `${BADGES_URL}/${packageJson.publisher}.${packageJson.name}.svg`
-    request.get(url, (error, response, body) => {
-      if (response && response.statusCode === 404) {
-        cache[name] = null
-        return resolve(cache[name])
-      }
 
-      if (error) {
-        return reject(error)
-      }
-
-      const re = RE.exec(body)
-      if (!re) {
-        return reject(
-          new Error(
-            `Could not scrape url '${url}' for vscode extension version.`
+    axios
+      .get(url)
+      .then(response => {
+        const re = RE.exec(response.data)
+        if (!re) {
+          return reject(
+            new Error(
+              `Could not scrape url '${url}' for vscode extension version.`
+            )
           )
-        )
-      }
+        }
 
-      cache[name] = re[1]
-      resolve(cache[name])
-    })
+        cache[name] = re[1]
+        resolve(cache[name])
+      })
+      .catch(error => {
+        if (error.response && error.response.status === 404) {
+          cache[name] = null
+          return resolve(cache[name])
+        } else {
+          reject(new Error(error))
+        }
+      })
   })
 }
