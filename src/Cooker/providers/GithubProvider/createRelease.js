@@ -70,7 +70,21 @@ export function createRelease(path, tagName, body) {
             resolve(response.data)
           })
           .catch(error => {
-            reject(new Error(error))
+            if (error.response) {
+              let errorInfo = ''
+              for (const entry in error.response.data) {
+                errorInfo += `\n  ${entry}: '${error.response.data[entry]}'`
+              }
+              reject(
+                new Error(
+                  'Request failed with status code ' +
+                    error.response.status +
+                    errorInfo
+                )
+              )
+            } else {
+              reject(new Error(error))
+            }
           })
       })
       .catch(reject)
