@@ -16,8 +16,8 @@ function updateField(
         dependency in newVersionByPackage
           ? `${newVersionByPackage[dependency]}`
           : dependency in currentVersionByPackage
-          ? `${currentVersionByPackage[dependency]}`
-          : currentDeps[dependency]
+            ? `${currentVersionByPackage[dependency]}`
+            : currentDeps[dependency]
 
       return dependencies
     }, {}),
