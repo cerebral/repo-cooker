@@ -62,7 +62,7 @@
   "dependencies": {
     "axios": "^1.7.9",
     "cross-spawn": "^7.0.3",
-    "function-tree": "^3.3.1",
+    "function-tree": "^3.3.2",
     "globby": "^6.1.0",
     "isomorphic-git": "^1.24.3",
     "md5": "^2.3.0",
