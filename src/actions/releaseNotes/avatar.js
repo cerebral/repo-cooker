@@ -4,11 +4,13 @@ const DEFAULT_TYPE_HEADERS = {
   feat: ':fire: Feature change',
   fix: ':bug: Bug fixes',
   docs: ':paperclip: Documentation',
-  chore: ':wrench: Chores',
   style: ':pencil2: Styling',
   refactor: ':mag: Refactors',
   perf: ':runner: Performance',
   test: ':vertical_traffic_light: Tests',
+  build: ':package: Build system',
+  ci: ':construction_worker: Continuous Integration',
+  chore: ':wrench: Chores',
   ts: ':pencil: Typescript',
 }
 
