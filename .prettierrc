@@ -2,7 +2,8 @@
   "trailingComma": "es5",
   "singleQuote": true,
   "semi": false,
-  "arrowParens": "avoid",
+
+  "arrowParens": "always",
   "overrides": [
     {
       "files": "*.md",

@@ -6,8 +6,7 @@
 /repo-cooker
 .babelrc
 .cz-config.js
-.eslintignore
-.eslintrc.json
+.eslint.config.mjs
 .gitignore
 .npmignore
 .prettierrc.json

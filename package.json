@@ -1,16 +1,26 @@
 {
   "name": "repo-cooker",
   "version": "0.0.0-next",
+  "license": "MIT",
   "description": "",
+  "author": "",
   "main": "dist/index.js",
   "bin": "./dist/cli.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cerebral/repo-cooker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cerebral/repo-cooker/issues"
+  },
+  "homepage": "https://github.com/cerebral/repo-cooker#readme",
   "scripts": {
     "start": "babel-watch src/index.js --watch src",
     "build": "cross-env BABEL_ENV=production babel src/ --out-dir=dist/ -s",
     "commit": "./node_modules/cz-customizable/standalone.js",
     "coverage": "nyc --reporter=lcov --reporter=json npm run test",
-    "format": "npm run lint -- --fix",
-    "lint": "eslint \"**/*.js\"",
+    "format": "eslint --fix . && prettier --write --list-different .",
+    "lint": "eslint . && prettier --check .",
     "prepare": "npm run build",
     "pretest": "npm run build && babel-node test/utils/pretest.js",
     "release": "npm run build && node ./dist/cli.js --release --no-parallel",
@@ -18,16 +28,33 @@
     "test": "REPO_COOKER_NPM_OTP= jest",
     "test:watch": "npm run test -- --watch"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/cerebral/repo-cooker.git"
+  "dependencies": {
+    "axios": "^1.13.2",
+    "cross-spawn": "^7.0.6",
+    "function-tree": "^3.3.4",
+    "globby": "^6.1.0",
+    "isomorphic-git": "^1.35.1",
+    "md5": "^2.3.0",
+    "registry-url": "^5.1.0",
+    "symlink-dir": "^9.0.0"
   },
-  "author": "",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/cerebral/repo-cooker/issues"
+  "devDependencies": {
+    "@babel/cli": "^7.28.3",
+    "@babel/core": "^7.28.5",
+    "@babel/node": "^7.28.0",
+    "@babel/preset-env": "^7.28.5",
+    "@eslint/js": "^9.39.1",
+    "axios-mock-adapter": "^2.1.0",
+    "babel-plugin-module-resolver": "^5.0.2",
+    "babel-watch": "^7.8.1",
+    "cross-env": "^7.0.3",
+    "cz-customizable": "^7.5.1",
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
+    "jest": "^30.2.0",
+    "nyc": "^17.1.0",
+    "prettier": "^3.7.3"
   },
-  "homepage": "https://github.com/cerebral/repo-cooker#readme",
   "nyc": {
     "exclude": [
       "node_modules",
@@ -35,39 +62,5 @@
       "test",
       "**/*.test.js"
     ]
-  },
-  "devDependencies": {
-    "@babel/cli": "^7.22.9",
-    "@babel/core": "^7.22.9",
-    "@babel/node": "^7.22.6",
-    "@babel/preset-env": "^7.22.9",
-    "axios-mock-adapter": "^2.1.0",
-    "babel-plugin-module-resolver": "^5.0.0",
-    "babel-watch": "^7.8.1",
-    "cross-env": "^7.0.3",
-    "cz-customizable": "^7.0.0",
-    "eslint": "^8.45.0",
-    "eslint-config-prettier": "^8.8.0",
-    "eslint-config-standard": "^17.1.0",
-    "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^5.0.0",
-    "eslint-plugin-promise": "^6.1.1",
-    "eslint-plugin-standard": "^4.1.0",
-    "foo": "1.0.0",
-    "jest": "^29.6.1",
-    "nyc": "^15.1.0",
-    "prettier": "^3.0.0"
-  },
-  "dependencies": {
-    "axios": "^1.7.9",
-    "cross-spawn": "^7.0.3",
-    "function-tree": "^3.3.2",
-    "globby": "^6.1.0",
-    "isomorphic-git": "^1.24.3",
-    "md5": "^2.3.0",
-    "npm-registry-url": "^1.0.0",
-    "registry-url": "^5.1.0",
-    "symlink-dir": "^5.1.1"
   }
 }
