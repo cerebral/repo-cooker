@@ -1,4 +1,4 @@
-import { Cooker } from 'repo-cooker'
+import { Cooker } from '../dist/index.js'
 
 if (!process.env.REPO_COOKER_GITHUB_TOKEN && process.env.GH_TOKEN) {
   process.env.REPO_COOKER_GITHUB_TOKEN = process.env.GH_TOKEN
