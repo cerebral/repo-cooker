@@ -13,7 +13,7 @@ export function testAction(
 ) {
   const dryRun = runCommandMock()
   const fullOptions = Object.assign({}, options, { dryRun }, extraOptions)
-  const cooker = Cooker(fullOptions)
+  const cooker = Cooker(['--no-parallel'], fullOptions)
 
   cooker
     .run([
