@@ -1,4 +1,3 @@
-/* eslint-env jest */
 import { tagCurrentCommit } from './'
 import { testAction } from 'test-utils'
 
@@ -14,7 +13,7 @@ describe('tagCurrentCommit', () => {
 
   const name = 'v2017-07-09_1906'
   const tag = { name, date }
-  it('should tag current commit', done => {
+  it('should tag current commit', (done) => {
     const commands = [
       {
         cmd: 'git',

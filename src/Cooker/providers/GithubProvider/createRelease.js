@@ -13,7 +13,7 @@ function getRepositoryInfo(path) {
       }
       resolve(JSON.parse(data))
     })
-  }).then(details => {
+  }).then((details) => {
     const { repository } = details
     if (!repository) {
       throw new Error(
@@ -66,10 +66,10 @@ export function createRelease(path, tagName, body) {
         const url = `https://api.${domain}/repos/${owner}/${repo}/releases`
         return axios
           .post(url, data, { headers })
-          .then(response => {
+          .then((response) => {
             resolve(response.data)
           })
-          .catch(error => {
+          .catch((error) => {
             if (error.response) {
               let errorInfo = ''
               for (const entry in error.response.data) {

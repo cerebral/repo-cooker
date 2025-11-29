@@ -1,4 +1,3 @@
-/* eslint-env jest */
 import MockAdapter from 'axios-mock-adapter'
 import assert from 'test-utils/assert'
 import axios from 'axios'

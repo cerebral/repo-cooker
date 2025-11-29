@@ -17,7 +17,7 @@ const linkOne = function linkAsModule(sourcePackage, pkgAsModule) {
       () => {
         resolve(true)
       },
-      err => {
+      (err) => {
         console.warn(
           `Cannot create symlink '${pkgAsModule}' (there is a directory there probably).`
         )
@@ -30,11 +30,11 @@ const linkOne = function linkAsModule(sourcePackage, pkgAsModule) {
 export function linkAsModule({ config }) {
   const { runCommand } = config
   const packages = Object.keys(config.packagesPaths)
-  const packagesPaths = packages.map(k =>
+  const packagesPaths = packages.map((k) =>
     resolve(config.packagesPaths[k]).slice(0, -k.length - 1)
   )
   let commonPath = packagesPaths[0]
-  while (packagesPaths.find(p => !p.startsWith(commonPath))) {
+  while (packagesPaths.find((p) => !p.startsWith(commonPath))) {
     commonPath = dirname(commonPath)
   }
   if (commonPath.includes('node_modules')) {
@@ -47,13 +47,13 @@ export function linkAsModule({ config }) {
   }
 
   return runAll(
-    packages.map(name =>
+    packages.map((name) =>
       runCommand(linkOne, [
         config.packagesPaths[name],
         resolve(nodeModules, name),
       ])
     )
-  ).then(results => ({
+  ).then((results) => ({
     [`linkAsModule`]: Object.assign(
       {},
       ...results.map((result, idx) => ({

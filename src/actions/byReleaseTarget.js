@@ -3,7 +3,7 @@ const DEFAULT_GIT_HOST = 'github'
 
 export function byReleaseTarget({ path, props }) {
   let gitHost = DEFAULT_GIT_HOST
-  const arg = props.argv.find(arg => TO_RE.exec(arg))
+  const arg = props.argv.find((arg) => TO_RE.exec(arg))
   if (arg) {
     gitHost = TO_RE.exec(arg)[1]
   }

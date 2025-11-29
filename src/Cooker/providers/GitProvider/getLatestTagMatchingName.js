@@ -8,7 +8,7 @@ export async function getLatestTagMatchingName(repoPath, regex) {
   }
   const tagName = (await listTags({ fs, dir: repoPath }))
     .sort((a, b) => (a > b ? -1 : 1))
-    .find(tagName => regex.test(tagName))
+    .find((tagName) => regex.test(tagName))
   if (!tagName) {
     return null
   }

@@ -1,10 +1,9 @@
-/* eslint-env jest */
 import { backwardGraph, forwardGraph } from './helpers'
 
 import assert from 'test-utils/assert'
 
-describe('helpers.backwardGraph', done => {
-  it('should walk dependency graph backwards and return visited nodes', done => {
+describe('helpers.backwardGraph', () => {
+  it('should walk dependency graph backwards and return visited nodes', (done) => {
     /*
       depends on
       a --> b --> c
@@ -26,7 +25,7 @@ describe('helpers.backwardGraph', done => {
     )
   })
 
-  it('should support circular depencencies', done => {
+  it('should support circular depencencies', (done) => {
     /*
     depends on
     a --> b --> c
@@ -49,8 +48,8 @@ describe('helpers.backwardGraph', done => {
   })
 })
 
-describe('helpers.forwardGraph', done => {
-  it('should walk dependency graph forwards and return visited nodes', done => {
+describe('helpers.forwardGraph', () => {
+  it('should walk dependency graph forwards and return visited nodes', (done) => {
     /*
       depends on
       a --> b --> c
@@ -72,7 +71,7 @@ describe('helpers.forwardGraph', done => {
     )
   })
 
-  it('should support circular depencencies', done => {
+  it('should support circular depencencies', (done) => {
     /*
     depends on
     a --> b --> c

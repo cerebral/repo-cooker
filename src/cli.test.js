@@ -1,16 +1,15 @@
-/* eslint-env jest */
 import assert from 'test-utils/assert'
 import { execCli } from 'test-utils'
 const TIMEOUT = 30000
 
 it(
   'should run script in custom repo-cooker-path',
-  done => {
+  (done) => {
     execCli('babel-node', ['../../dist/cli.js', 'dummy', 'one', 'two'])
-      .then(result => {
+      .then((result) => {
         assert.match(result.output, /dummy script: \["one","two"\]/, done)
       })
-      .catch(err => {
+      .catch((err) => {
         assert.equal(err, 'should run without throwing', done)
       })
   },
@@ -19,12 +18,12 @@ it(
 
 it(
   'should run npm command',
-  done => {
+  (done) => {
     execCli('babel-node', ['../../dist/cli.js', 'other-script'])
-      .then(result => {
+      .then((result) => {
         assert.match(result.output, 'Other Script OK', done)
       })
-      .catch(err => {
+      .catch((err) => {
         assert.equal(err, 'should run without throwing', done)
       })
   },
@@ -33,16 +32,16 @@ it(
 
 it(
   'should run builtin named release',
-  done => {
+  (done) => {
     execCli('babel-node', [
       '../../dist/cli.js',
       '--release=default',
       '--dry-run',
     ])
-      .then(result => {
+      .then((result) => {
         assert.match(result.output, 'default release: DRY RUN OK', done)
       })
-      .catch(err => {
+      .catch((err) => {
         assert.equal(err, 'should run without throwing', done)
       })
   },
@@ -51,12 +50,12 @@ it(
 
 it(
   'should run builtin default release',
-  done => {
+  (done) => {
     execCli('babel-node', ['../../dist/cli.js', '--release', '--dry-run'])
-      .then(result => {
+      .then((result) => {
         assert.match(result.output, 'default release: DRY RUN OK', done)
       })
-      .catch(err => {
+      .catch((err) => {
         assert.equal(err, 'should run without throwing', done)
       })
   },
@@ -65,17 +64,17 @@ it(
 
 it(
   'should print release notes',
-  done => {
+  (done) => {
     execCli('babel-node', [
       '../../dist/cli.js',
       '--release',
       '--dry-run',
       '--print-release',
     ])
-      .then(result => {
+      .then((result) => {
         assert.match(result.output, '## Updated packages', done)
       })
-      .catch(err => {
+      .catch((err) => {
         assert.equal(err, 'should run without throwing', done)
       })
   },
@@ -84,12 +83,12 @@ it(
 
 it(
   'should check dependencies',
-  done => {
+  (done) => {
     execCli('babel-node', ['../../dist/cli.js', '--check-dependencies'])
-      .then(result => {
+      .then((result) => {
         assert.match(result.output, 'check dependencies: SUCCESS !!', done)
       })
-      .catch(err => {
+      .catch((err) => {
         assert.equal(err, 'should run without throwing', done)
       })
   },
@@ -98,12 +97,12 @@ it(
 
 it(
   'should fix dependencies',
-  done => {
+  (done) => {
     execCli('babel-node', ['../../dist/cli.js', '--fix-dependencies'])
-      .then(result => {
+      .then((result) => {
         assert.match(result.output, 'check dependencies: SUCCESS !!', done)
       })
-      .catch(err => {
+      .catch((err) => {
         assert.equal(err, 'should run without throwing', done)
       })
   },
@@ -112,12 +111,12 @@ it(
 
 it(
   'should link bin directory',
-  done => {
+  (done) => {
     execCli('babel-node', ['../../dist/cli.js', '--link'])
-      .then(result => {
+      .then((result) => {
         assert.match(result.output, 'link: SUCCESS !!', done)
       })
-      .catch(err => {
+      .catch((err) => {
         assert.equal(err, 'should run without throwing', done)
       })
   },
@@ -126,12 +125,12 @@ it(
 
 it(
   'should run build scripts respecting dependencies',
-  done => {
+  (done) => {
     execCli('babel-node', ['../../dist/cli.js', '--build'])
-      .then(result => {
+      .then((result) => {
         assert.match(result.output, 'build: SUCCESS !!', done)
       })
-      .catch(err => {
+      .catch((err) => {
         assert.equal(err, 'should run without throwing', done)
       })
   },
@@ -140,13 +139,13 @@ it(
 
 it(
   'should run build scripts without parallel',
-  done => {
+  (done) => {
     execCli('babel-node', ['../../dist/cli.js', '--build', '--no-parallel'])
-      .then(result => {
+      .then((result) => {
         assert.match(result.output, 'PARALLEL: OFF', () => {})
         assert.match(result.output, 'build: SUCCESS !!', done)
       })
-      .catch(err => {
+      .catch((err) => {
         assert.equal(err, 'should run without throwing', done)
       })
   },

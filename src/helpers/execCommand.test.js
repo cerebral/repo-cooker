@@ -1,4 +1,3 @@
-/* eslint-env jest */
 import { execCommand, logCommand } from './execCommand'
 
 import assert from 'test-utils/assert'
@@ -12,7 +11,7 @@ describe('logCommand', () => {
     jest.restoreAllMocks()
   })
 
-  it('should output commands to console', done => {
+  it('should output commands to console', (done) => {
     logCommand('hello', ['a', 'b', 'c'], { some: 'option' }).then(() => {
       assert.deepEqual(
         logs,
@@ -28,9 +27,9 @@ describe('logCommand', () => {
 })
 
 describe('execCommand', () => {
-  it('should execute command', done => {
+  it('should execute command', (done) => {
     execCommand('node', ['-e', 'console.log("Hello Repo Cooker")'], {}).then(
-      out => {
+      (out) => {
         assert.equal(out, 'Hello Repo Cooker\n', done)
       }
     )

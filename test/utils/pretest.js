@@ -11,9 +11,9 @@ const SPAWN_OPTS = { stdio: 'inherit' }
 try {
   statSync(REPO_PATH)
   // Exists. All good.
-} catch (err) {
+} catch (_err) {
   const clone = spawn('git', ['clone', REPO_URL, REPO_PATH], SPAWN_OPTS)
-  clone.on('close', code => {
+  clone.on('close', (code) => {
     if (code === 0) {
       mkdirSync(join(REPO_PATH, 'node_modules'))
       symlinkDir('dist', join(REPO_PATH, 'node_modules', 'repo-cooker'))

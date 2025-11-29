@@ -12,11 +12,11 @@ export function getFromNpmRegistry(packageName) {
 
     axios
       .get(`${registryUrl}${packageName.replace('/', '%2F')}`)
-      .then(response => {
+      .then((response) => {
         cache[packageName] = response.data
         resolve(cache[packageName])
       })
-      .catch(error => {
+      .catch((error) => {
         if (error.response && error.response.status === 404) {
           cache[packageName] = null
           return resolve(cache[packageName])

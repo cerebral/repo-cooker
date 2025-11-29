@@ -1,4 +1,3 @@
-/* eslint-env jest */
 import { config, runCommandMock } from 'test-utils'
 
 import { Cooker } from 'repo-cooker'
@@ -11,7 +10,7 @@ export function testActionThrows(action, input, error, done, extraConfig = {}) {
   let errorThrown = false
   cooker
     .run([() => input, action])
-    .catch(err => {
+    .catch((err) => {
       errorThrown = true
       assert.equal(err.message, error, done)
     })

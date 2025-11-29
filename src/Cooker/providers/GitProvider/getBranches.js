@@ -9,5 +9,5 @@ import { runAll } from '../../../helpers/runAll'
 export async function getBranches(repoPath) {
   const branches = await listBranches({ fs, dir: repoPath })
 
-  return runAll(branches.map(async name => getBranchObject(name, repoPath)))
+  return runAll(branches.map(async (name) => getBranchObject(name, repoPath)))
 }

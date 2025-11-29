@@ -4,7 +4,7 @@ function showCommit(commit) {
     commit.issues.length ? '(' + commit.issues.join(', ') + ')' : ''
   } - *${commit.author.name}*
     ${commit.breaks
-      .map(breakInfo => {
+      .map((breakInfo) => {
         return `- ${breakInfo}`
       })
       .join('\n')}

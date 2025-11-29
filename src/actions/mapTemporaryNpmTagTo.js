@@ -8,7 +8,7 @@ export function mapTemporaryNpmTagTo(tagName) {
     const packages = Object.keys(temporaryNpmTagByPackage)
 
     return runAll(
-      packages.map(name =>
+      packages.map((name) =>
         npm.replaceTag(
           name,
           newVersionByPackage[name],

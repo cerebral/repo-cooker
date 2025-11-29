@@ -18,7 +18,7 @@ function getContent(path) {
 
 function writeFile(path, data, options) {
   return new Promise((resolve, reject) => {
-    fsWriteFile(path, data, options || {}, err =>
+    fsWriteFile(path, data, options || {}, (err) =>
       err ? reject(err) : resolve()
     )
   })
@@ -29,8 +29,8 @@ export function write({ runCommand, packagesPaths }) {
     const path = join(packagesPaths[packageName], 'package.json')
 
     return getContent(path)
-      .then(content => Object.assign({}, content, newContentCb(content)))
-      .then(newContent =>
+      .then((content) => Object.assign({}, content, newContentCb(content)))
+      .then((newContent) =>
         runCommand(writeFile, [
           path,
           JSON.stringify(newContent, null, 2),

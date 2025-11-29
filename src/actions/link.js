@@ -15,7 +15,7 @@ const linkOne = function link(rootBin, packageBin) {
       () => {
         resolve(true)
       },
-      err => {
+      (err) => {
         console.warn(
           `Cannot create symlink '${packageBin}' (there is a directory there probably).`
         )
@@ -31,13 +31,13 @@ export function link({ config }) {
   const rootBin = resolve(config.path, 'node_modules', '.bin')
 
   return runAll(
-    packages.map(name =>
+    packages.map((name) =>
       runCommand(linkOne, [
         rootBin,
         resolve(config.packagesPaths[name], 'node_modules', '.bin'),
       ])
     )
-  ).then(results => ({
+  ).then((results) => ({
     [`link`]: Object.assign(
       {},
       ...results.map((result, idx) => ({

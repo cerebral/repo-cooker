@@ -1,9 +1,8 @@
-/* eslint-env jest */
 import { remap } from './'
 import { testAction } from 'test-utils'
 
 describe('remap', () => {
-  it('should remap given prop', done => {
+  it('should remap given prop', (done) => {
     const someObject = {
       foo: 'is foo',
       bar: 'is bar',
@@ -26,7 +25,7 @@ describe('remap', () => {
     )
   })
 
-  it('should remap given prop with async', done => {
+  it('should remap given prop with async', (done) => {
     const someObject = {
       foo: 'is foo',
       bar: 'is bar',

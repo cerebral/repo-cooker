@@ -1,9 +1,8 @@
-/* eslint-env jest */
 import { relatedPackagesByPackage } from './'
 import { testAction } from 'test-utils'
 
 describe('relatedPackagesByPackage', () => {
-  it('should get related packages for each package', done => {
+  it('should get related packages for each package', (done) => {
     const relatedPackagesByPackageMap = {
       '@repo-cooker-test/commis': ['@repo-cooker-test/poissonier'],
       '@repo-cooker-test/entremetier': [],

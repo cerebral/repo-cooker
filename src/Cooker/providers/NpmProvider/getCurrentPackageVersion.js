@@ -4,7 +4,7 @@ import { getFromNpmRegistry } from './getFromNpmRegistry'
 // and we must not use these temporary releases as base to compute semver.
 const SEMVER_RE = /^\d+\.\d+\.\d+$/
 export function getCurrentPackageVersion(packageName) {
-  return getFromNpmRegistry(packageName).then(registryDetails => {
+  return getFromNpmRegistry(packageName).then((registryDetails) => {
     const version =
       (registryDetails &&
         registryDetails['dist-tags'] &&

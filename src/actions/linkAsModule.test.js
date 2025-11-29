@@ -1,9 +1,8 @@
-/* eslint-env jest */
 import { linkAsModule } from './'
 import { resolve } from '../helpers/path'
 import { testAction } from 'test-utils'
 
-it('should link as modules', done => {
+it('should link as modules', (done) => {
   const packagesPaths = {
     '@repo-cooker-test/commis': '/foo/bar/baz/@repo-cooker-test/commis',
     '@repo-cooker-test/entremetier':
@@ -28,7 +27,7 @@ it('should link as modules', done => {
 
   const commands = [
     { cmd: 'mkdir', args: ['/foo/bar/node_modules', { recursive: true }] },
-    ...Object.keys(packagesPaths).map(name => ({
+    ...Object.keys(packagesPaths).map((name) => ({
       cmd: 'linkAsModule',
       args: [packagesPaths[name], resolve('/foo/bar', 'node_modules', name)],
     })),
@@ -41,11 +40,11 @@ it('should link as modules', done => {
   )
 })
 
-it('should skip link as modules if common path contains node_modules', done => {
+it('should skip link as modules if common path contains node_modules', (done) => {
   testAction(linkAsModule, {}, { linkAsModule: {}, commands: [] }, done)
 })
 
-it('should not link as modules inside part of name', done => {
+it('should not link as modules inside part of name', (done) => {
   const packagesPaths = {
     '@repo-cooker-test/commis': '/foo/bar/@repo-cooker-test/commis',
     '@repo-cooker-test/entremetier': '/foo/bar/@repo-cooker-test/entremetier',
@@ -58,7 +57,7 @@ it('should not link as modules inside part of name', done => {
   const commands = [
     // /foo/bar, not /foo/bar/@repo-cooker-test
     { cmd: 'mkdir', args: ['/foo/bar/node_modules', { recursive: true }] },
-    ...Object.keys(packagesPaths).map(name => ({
+    ...Object.keys(packagesPaths).map((name) => ({
       cmd: 'linkAsModule',
       args: [packagesPaths[name], resolve('/foo/bar', 'node_modules', name)],
     })),

@@ -1,8 +1,7 @@
-/* eslint-env jest */
 import assert from 'test-utils/assert'
 import { getDependencies } from './getDependencies'
 
-it('should get package dependencies', done => {
+it('should get package dependencies', (done) => {
   const getDeps = getDependencies({
     packagesPaths: {
       tiger: './test/deps-fixtures/tiger',
@@ -21,7 +20,7 @@ it('should get package dependencies', done => {
     },
   }
 
-  getDeps('tiger').then(deps => {
+  getDeps('tiger').then((deps) => {
     assert.deepEqual(deps, tigerDeps, done)
   })
 })

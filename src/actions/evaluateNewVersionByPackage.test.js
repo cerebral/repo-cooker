@@ -1,4 +1,3 @@
-/* eslint-env jest */
 import { testAction, testActionThrows } from 'test-utils'
 
 import { evaluateNewVersionByPackage } from './'
@@ -40,7 +39,7 @@ const tests = [
 )
 
 describe('evaluateNewVersionByPackage', () => {
-  it('should evalute new version from current and semver', done => {
+  it('should evalute new version from current and semver', (done) => {
     testAction(
       evaluateNewVersionByPackage,
       {
@@ -53,9 +52,9 @@ describe('evaluateNewVersionByPackage', () => {
     )
   })
 
-  it('should throw error on invalid current version', testDone => {
-    const done = error => (error ? testDone(error) : () => {})
-    ;['2.f.0-beta', '1.2b.4', 'ea2356'].forEach(version =>
+  it('should throw error on invalid current version', (testDone) => {
+    const done = (error) => (error ? testDone(error) : () => {})
+    ;['2.f.0-beta', '1.2b.4', 'ea2356'].forEach((version) =>
       testActionThrows(
         evaluateNewVersionByPackage,
         {
@@ -70,7 +69,7 @@ describe('evaluateNewVersionByPackage', () => {
     testDone()
   })
 
-  it('should throw errors on invalid semver type', done => {
+  it('should throw errors on invalid semver type', (done) => {
     testActionThrows(
       evaluateNewVersionByPackage,
       {
@@ -83,7 +82,7 @@ describe('evaluateNewVersionByPackage', () => {
     )
   })
 
-  it('should evaluate to 1.0.0 when no current version available', done => {
+  it('should evaluate to 1.0.0 when no current version available', (done) => {
     testAction(
       evaluateNewVersionByPackage,
       {

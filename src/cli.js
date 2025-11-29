@@ -21,7 +21,7 @@ function fileExist(path) {
   try {
     const stats = statSync(path)
     return stats.isFile()
-  } catch (err) {
+  } catch (_err) {
     return false
   }
 }

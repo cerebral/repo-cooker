@@ -22,13 +22,13 @@ function evaluateVersion(version, type, packageName, semver) {
     )
   }
 
-  const parts = [re[1], re[2], re[3]].map(l => parseInt(l))
+  const parts = [re[1], re[2], re[3]].map((l) => parseInt(l))
   const idx = TYPES.indexOf(type)
   return []
     .concat(
       parts.slice(0, idx),
       [[parts[idx] + 1]],
-      parts.slice(idx + 1).map(n => 0)
+      parts.slice(idx + 1).map((_n) => 0)
     )
     .join('.')
 }
@@ -40,7 +40,7 @@ export function evaluateNewVersionByPackage({
     // Bump version according to package dependencies
     return Math.max(
       ...Object.keys(forwardGraph(relatedPackagesByPackage, [packageName])).map(
-        packageName =>
+        (packageName) =>
           packageName in semverByPackage
             ? RTYPES.indexOf(semverByPackage[packageName])
             : -1

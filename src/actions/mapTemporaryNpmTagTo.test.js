@@ -1,9 +1,8 @@
-/* eslint-env jest */
 import { config, testAction } from 'test-utils'
 
 import { mapTemporaryNpmTagTo } from './'
 
-it('should replace temporary tag with given name', done => {
+it('should replace temporary tag with given name', (done) => {
   const temporaryNpmTagByPackage = {
     '@repo-cooker-test/commis': 'releasing',
     '@repo-cooker-test/poissonier': 'releasing',

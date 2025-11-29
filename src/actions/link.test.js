@@ -1,10 +1,9 @@
-/* eslint-env jest */
 import { config, testAction } from 'test-utils'
 
 import { link } from './'
 import { resolve } from '../helpers/path'
 
-it('should link bin directories', done => {
+it('should link bin directories', (done) => {
   const linkResults = {
     '@repo-cooker-test/commis': 'mock command',
     '@repo-cooker-test/entremetier': 'mock command',
@@ -17,8 +16,8 @@ it('should link bin directories', done => {
 
   const rootBin = resolve(config.path, 'node_modules', '.bin')
   const commands = Object.keys(config.packagesPaths)
-    .map(name => config.packagesPaths[name])
-    .map(path => ({
+    .map((name) => config.packagesPaths[name])
+    .map((path) => ({
       cmd: 'link',
       args: [rootBin, resolve(path, 'node_modules', '.bin')],
     }))

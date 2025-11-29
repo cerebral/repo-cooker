@@ -1,10 +1,9 @@
-/* eslint-env jest */
 import { config, runCommandMock } from 'test-utils'
 
 import assert from 'test-utils/assert'
 import { publish as publishFactory } from './publish'
 
-it('should execute npm publish command', done => {
+it('should execute npm publish command', (done) => {
   const runCommand = runCommandMock()
   const publish = publishFactory({
     runCommand,

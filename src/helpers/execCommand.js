@@ -25,8 +25,8 @@ export function readableCommand(cmd, args, options) {
   return {
     cmd: findName(cmd),
     args: args
-      .map(arg => (typeof arg === 'function' ? '()' : arg))
-      .map(arg => (isStringified(arg) ? '[data]' : arg)),
+      .map((arg) => (typeof arg === 'function' ? '()' : arg))
+      .map((arg) => (isStringified(arg) ? '[data]' : arg)),
     options,
   }
 }
@@ -40,7 +40,9 @@ export function logCommand(cmd, args, options) {
   const command = readableCommand(cmd, args, options)
   console.log(
     `\n\x1b[33m${command.cmd}\x1b[0m\n    ${command.args
-      .map(arg => (typeof arg === 'string' ? limit(arg) : JSON.stringify(arg)))
+      .map((arg) =>
+        typeof arg === 'string' ? limit(arg) : JSON.stringify(arg)
+      )
       .join('\n    ')}${options ? '\n    ' + JSON.stringify(options) : ''}`
   )
   return Promise.resolve([])
@@ -60,12 +62,12 @@ export function execCommand(cmd, args = [], options) {
     }
     return new Promise((resolve, reject) => {
       cmd(...args)
-        .then(x => {
+        .then((x) => {
           logCommand(cmd, args, options)
           console.log(PASS)
           resolve(x)
         })
-        .catch(err => {
+        .catch((err) => {
           logCommand(cmd, args, options)
           console.log(FAIL)
           reject(err)
@@ -80,10 +82,10 @@ export function execCommand(cmd, args = [], options) {
     const out = []
     child.stdout.setEncoding('utf-8')
     child.stderr.setEncoding('utf-8')
-    child.stdout.on('data', data => {
+    child.stdout.on('data', (data) => {
       out.push(data)
     })
-    child.stderr.on('data', data => {
+    child.stderr.on('data', (data) => {
       out.push(data)
     })
     child.on('close', function (code) {

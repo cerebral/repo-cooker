@@ -28,13 +28,13 @@ export function checkDependencies({ config, props }) {
 
   const result = {}
 
-  dependencyTypes.forEach(dependencyType => {
+  dependencyTypes.forEach((dependencyType) => {
     const operations = {}
-    Object.keys(packageDeps).forEach(packageName => {
+    Object.keys(packageDeps).forEach((packageName) => {
       const dependencies = packageDeps[packageName][dependencyType]
       const monodeps = monorepo[dependencyType]
       if (dependencies) {
-        Object.keys(dependencies).forEach(dependency => {
+        Object.keys(dependencies).forEach((dependency) => {
           // For each dependency in a specif package.
           if (packageDeps[dependency]) {
             // Dependency to our own libs: ignore
@@ -74,13 +74,13 @@ export function checkDependencies({ config, props }) {
 
     // Create summary.
     const toInstall = Object.keys(operations)
-      .filter(k => operations[k].type === 'install')
-      .map(k => operations[k])
+      .filter((k) => operations[k].type === 'install')
+      .map((k) => operations[k])
 
     // Conflicting versions.
     const conflict = Object.keys(operations)
-      .filter(k => operations[k].type === 'conflict')
-      .map(k => {
+      .filter((k) => operations[k].type === 'conflict')
+      .map((k) => {
         return operations[k]
       })
     result[dependencyType] = { toInstall, conflict }

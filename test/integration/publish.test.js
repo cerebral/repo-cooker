@@ -1,4 +1,3 @@
-/* eslint-env jest */
 import * as cook from 'repo-cooker/actions'
 
 import { buildWebsite, publishWebsite } from './actions'
@@ -42,7 +41,7 @@ describe('publish script', () => {
     mock.restore()
   })
 
-  it('should run a publish script without error', done => {
+  it('should run a publish script without error', (done) => {
     const dryRun = runCommandMock()
     const basePath = resolve('test', 'repo')
     const cooker = Cooker({
@@ -65,7 +64,7 @@ describe('publish script', () => {
       '@repo-cooker-test/commis',
       // '@repo-cooker-test/entremetier', ==> not release because it is only listed as dev dependency
       '@repo-cooker-test/poissonier',
-    ].map(name => ({
+    ].map((name) => ({
       cwd: resolve(basePath, 'packages', 'node_modules', name),
       name,
       version: versions[name],
@@ -73,21 +72,21 @@ describe('publish script', () => {
 
     const commands = [
       // No ... because we want to sort them to avoid inconsistent test failures.
-      released.map(r => ({
+      released.map((r) => ({
         cmd: 'writeFile',
         args: [join(r.cwd, 'package.json'), '[data]', { encoding: 'utf8' }],
       })),
-      ...released.map(r => ({
+      ...released.map((r) => ({
         cmd: 'npm',
         args: ['publish', '--tag', 'releasing', '--access', 'public'],
         options: { cwd: r.cwd, pause: true },
       })),
-      ...released.map(r => ({
+      ...released.map((r) => ({
         cmd: 'npm',
         args: ['dist-tag', 'add', `${r.name}@${r.version}`, 'next'],
         options: { cwd: r.cwd, pause: true },
       })),
-      ...released.map(r => ({
+      ...released.map((r) => ({
         cmd: 'npm',
         args: ['dist-tag', 'rm', r.name, 'releasing'],
         options: { cwd: r.cwd },
@@ -208,7 +207,7 @@ describe('publish script', () => {
         cook.pushTagToRemote,
         // Pushes tag to remote repository
 
-        cook.createReleaseNotes(release => `some release notes`),
+        cook.createReleaseNotes((_release) => `some release notes`),
         // The `release` object has this format:
         // {
         //   tag: 'release_2017-09-07_0900',
@@ -255,7 +254,7 @@ describe('publish script', () => {
       .then(() => {
         const result = []
         let writtenFiles
-        dryRun.commands.forEach(cmd => {
+        dryRun.commands.forEach((cmd) => {
           if (cmd.cmd === 'writeFile') {
             if (writtenFiles === undefined) {
               writtenFiles = []

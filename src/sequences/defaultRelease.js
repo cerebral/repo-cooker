@@ -27,7 +27,7 @@ export const defaultReleaseSequence = [
   cook.getCurrentVersionByPackage,
   cook.evaluateNewVersionByPackage,
   cook.filter('newVersionByPackage', (key, _, { packageJson }) =>
-    packageJson.get(key).then(info => !info.private)
+    packageJson.get(key).then((info) => !info.private)
   ),
   cook.byBranch,
   {
@@ -60,7 +60,7 @@ export const defaultReleaseSequence = [
     main: publishToGithub,
     otherwise: [
       ({ git }) => {
-        return git.getCurrentBranch().then(branch => {
+        return git.getCurrentBranch().then((branch) => {
           logCommand('skip github release', [], { branch: branch.name })
         })
       },

@@ -15,7 +15,7 @@ function groupCommitsByType(commits) {
     {},
     ...Object.keys(groups)
       .sort()
-      .map(k => ({ [k]: groups[k] }))
+      .map((k) => ({ [k]: groups[k] }))
   )
 }
 
@@ -28,7 +28,7 @@ function summarizeRelease({
   tag,
 }) {
   const summary = {}
-  Object.keys(commitsByPackage).forEach(name => {
+  Object.keys(commitsByPackage).forEach((name) => {
     const commitsByType = {}
 
     function insertCommit(type, commit) {
@@ -46,7 +46,7 @@ function summarizeRelease({
       commitsByType[type].commits.push(commit)
     }
 
-    commitsByPackage[name].forEach(commit => {
+    commitsByPackage[name].forEach((commit) => {
       insertCommit(commit.type, commit)
     })
   })

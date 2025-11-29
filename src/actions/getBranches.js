@@ -1,3 +1,3 @@
 export function getBranches({ git }) {
-  return git.getBranches().then(branches => ({ branches }))
+  return git.getBranches().then((branches) => ({ branches }))
 }

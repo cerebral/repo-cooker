@@ -4,15 +4,15 @@ import { runAll } from '../helpers/runAll'
 export function publishByType(ctx) {
   const { config, packageJson, props } = ctx
   const packages = Object.keys(props.newVersionByPackage).filter(
-    name =>
+    (name) =>
       props.newVersionByPackage[name] !== props.currentVersionByPackage[name]
   )
 
   // Need to ensure successful release of all packages, so
   // we publish under a temporary tag first
   return runAll(
-    packages.map(name =>
-      packageJson.get(name).then(info => {
+    packages.map((name) =>
+      packageJson.get(name).then((info) => {
         if (info.private) {
           return null
         } else {
@@ -35,8 +35,8 @@ export function publishByType(ctx) {
       })
     )
   )
-    .then(results => results.filter(result => result !== null))
-    .then(results =>
+    .then((results) => results.filter((result) => result !== null))
+    .then((results) =>
       runAll(
         results.map(({ name, type }) => ctx[type].publish(name, 'releasing'))
       )
@@ -52,10 +52,10 @@ export function publishByType(ctx) {
             {}
           ),
         }))
-        .then(arg =>
+        .then((arg) =>
           config.dryRun
             ? arg
-            : new Promise(resolve => setTimeout(() => resolve(arg), 3000))
+            : new Promise((resolve) => setTimeout(() => resolve(arg), 3000))
         )
     )
 }

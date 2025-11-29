@@ -1,4 +1,3 @@
-/* eslint-env jest */
 import * as cook from 'repo-cooker/actions'
 
 import { current, commits as testCommits } from 'test-utils/commits'
@@ -6,7 +5,7 @@ import { current, commits as testCommits } from 'test-utils/commits'
 import { Cooker } from 'repo-cooker'
 import { config } from 'test-utils'
 
-beforeAll(done => {
+beforeAll((done) => {
   const cooker = Cooker([], Object.assign({}, config, { dryRun: true }))
   cooker
     .run([
@@ -38,12 +37,12 @@ beforeAll(done => {
         done()
       },
     ])
-    .catch(error => {
+    .catch((error) => {
       console.log(error)
       done(error)
     })
 })
 
-it('empty test', done => {
+it('empty test', (done) => {
   done()
 })

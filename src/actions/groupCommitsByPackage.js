@@ -63,7 +63,7 @@ export function groupCommitsByPackage({ config, props }) {
       /*
         Put commit into each package array
       */
-      affectedPackages.forEach(packageName => {
+      affectedPackages.forEach((packageName) => {
         if (!commitsByPackage[packageName]) {
           commitsByPackage[packageName] = []
         }
@@ -75,7 +75,7 @@ export function groupCommitsByPackage({ config, props }) {
         Move commits not related to any package to commitsWithoutPackage
       */
       if (commitsByPackage.monorepo) {
-        commitsByPackage.monorepo.forEach(commitWithoutPackage => {
+        commitsByPackage.monorepo.forEach((commitWithoutPackage) => {
           commitsWithoutPackage.push(commitWithoutPackage)
         })
       }

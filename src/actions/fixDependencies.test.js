@@ -1,4 +1,3 @@
-/* eslint-env jest */
 import assert from 'test-utils/assert'
 import { fixDependencies } from './'
 import { fs } from './helpers'
@@ -43,7 +42,7 @@ describe('fixDependencies', () => {
     jest.restoreAllMocks()
   })
 
-  it('should throw on conflict in dependencies', done => {
+  it('should throw on conflict in dependencies', (done) => {
     testAction(
       [
         fixDependencies,
@@ -63,13 +62,13 @@ describe('fixDependencies', () => {
         path: '.',
         packagesGlobs: ['test/deps-fixtures/*'],
       },
-      error => {
+      (error) => {
         assert.equal(error.message, 'Dependencies have conflicts.', done)
       }
     )
   })
 
-  it('should throw on conflict in devDependencies', done => {
+  it('should throw on conflict in devDependencies', (done) => {
     testAction(
       [
         fixDependencies,
@@ -89,7 +88,7 @@ describe('fixDependencies', () => {
         path: '.',
         packagesGlobs: ['test/deps-fixtures/*'],
       },
-      error => {
+      (error) => {
         assert.equal(
           error.message,
           'Dependencies need install and have conflicts.',
@@ -99,7 +98,7 @@ describe('fixDependencies', () => {
     )
   })
 
-  it('should fix install with --fix-dependencies', done => {
+  it('should fix install with --fix-dependencies', (done) => {
     let updatedPackageJson
     testAction(
       [
@@ -129,7 +128,7 @@ describe('fixDependencies', () => {
     )
   })
 
-  it('should not fix install with --fix-dependencies on conflict', done => {
+  it('should not fix install with --fix-dependencies on conflict', (done) => {
     let updatedPackageJson
     testAction(
       [

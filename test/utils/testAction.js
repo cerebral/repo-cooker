@@ -1,4 +1,3 @@
-/* eslint-env jest */
 import { options, runCommandMock } from 'test-utils'
 
 import { Cooker } from 'repo-cooker'
@@ -36,7 +35,7 @@ export function testAction(
         )
       },
     ])
-    .catch(error => {
+    .catch((error) => {
       if (catcher) {
         catcher(error)
       } else {

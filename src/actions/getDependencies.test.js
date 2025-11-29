@@ -1,9 +1,8 @@
-/* eslint-env jest */
 import { getDependencies } from './'
 import { testAction } from 'test-utils'
 
 describe('getDependencies', () => {
-  it('should get dependencies for each package', done => {
+  it('should get dependencies for each package', (done) => {
     const dependencies = {
       lion: {
         dependencies: {

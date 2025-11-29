@@ -1,11 +1,10 @@
-/* eslint-env jest */
 import { config, runCommandMock } from 'test-utils'
 
 import assert from 'test-utils/assert'
 import { join } from '../../../helpers/path'
 import { write as writeFactory } from './write'
 
-it('should write to package.json', done => {
+it('should write to package.json', (done) => {
   const runCommand = runCommandMock()
   const write = writeFactory({
     runCommand,

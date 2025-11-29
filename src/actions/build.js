@@ -1,9 +1,9 @@
 import { runAll } from '../helpers/runAll'
 
 function buildPackages(npm, names) {
-  return runAll(names.map(name => npm.runScript(name, 'build'))).then(
-    results => {
-      const failures = results.filter(result => result && !result.pass)
+  return runAll(names.map((name) => npm.runScript(name, 'build'))).then(
+    (results) => {
+      const failures = results.filter((result) => result && !result.pass)
       if (failures.length) {
         throw new Error(`running npm scripts 'build' failed.`)
       }
@@ -25,7 +25,7 @@ export function build({ props, npm }) {
     }
 
     const ready = todo.filter(
-      name => related[name].filter(n => built[n] === undefined).length === 0
+      (name) => related[name].filter((n) => built[n] === undefined).length === 0
     )
 
     if (!ready.length) {
@@ -38,9 +38,9 @@ export function build({ props, npm }) {
       )
     }
 
-    return buildPackages(npm, ready).then(results => {
+    return buildPackages(npm, ready).then((results) => {
       Object.assign(built, results)
-      return buildReady(todo.filter(n => built[n] === undefined))
+      return buildReady(todo.filter((n) => built[n] === undefined))
     })
   }
   return buildReady(Object.keys(related)).then(() => ({ build: built }))

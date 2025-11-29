@@ -1,4 +1,3 @@
-/* eslint-env jest */
 import { config, testAction } from 'test-utils'
 
 import { join } from '../helpers/path'
@@ -12,7 +11,7 @@ describe('writeVersionsToPackages', () => {
     written.sort((a, b) => (a.path < b.path ? -1 : 1))
   }
 
-  it('should write other versions in package.json', done => {
+  it('should write other versions in package.json', (done) => {
     const currentVersionByPackage = versions
     const newVersionByPackage = {
       '@repo-cooker-test/commis': '4.5.6',

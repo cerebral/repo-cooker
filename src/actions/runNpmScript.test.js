@@ -1,4 +1,3 @@
-/* eslint-env jest */
 import { config, testAction } from 'test-utils'
 
 import { props } from 'function-tree/tags'
@@ -34,7 +33,7 @@ const testNpmScript = {
   'repo-cooker-test': false,
 }
 
-it('should run npm script if exists', done => {
+it('should run npm script if exists', (done) => {
   testAction(
     runNpmScript('test', ['foo']),
     {},
@@ -43,7 +42,7 @@ it('should run npm script if exists', done => {
   )
 })
 
-it('should run npm script tag', done => {
+it('should run npm script tag', (done) => {
   testAction(
     runNpmScript(props`npmScript`, ['foo']),
     { npmScript: 'test' },

@@ -20,7 +20,7 @@ const PROVIDER = {
 }
 const USE_ALL = Object.assign(
   {},
-  ...Object.keys(PROVIDER).map(k => ({ [k]: true }))
+  ...Object.keys(PROVIDER).map((k) => ({ [k]: true }))
 )
 
 export function Cooker(argv, theOptions) {
@@ -46,9 +46,9 @@ export function Cooker(argv, theOptions) {
     Object.assign(
       { config },
       ...Object.keys(use)
-        .filter(k => use[k])
-        .map(k => ({ [k]: provide(PROVIDER[k], config) })),
-      ...Object.keys(customProviders).map(k => ({
+        .filter((k) => use[k])
+        .map((k) => ({ [k]: provide(PROVIDER[k], config) })),
+      ...Object.keys(customProviders).map((k) => ({
         [k]: customProviders[k](config),
       }))
     )
@@ -85,7 +85,7 @@ export function Cooker(argv, theOptions) {
   }
 
   ft.cook = (name, ...args) => {
-    return ft.run(name, ...args).catch(err => {
+    return ft.run(name, ...args).catch((err) => {
       console.log('')
       console.log(err.payload.error.stack)
       if (options.useDevtools) {

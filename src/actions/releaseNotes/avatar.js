@@ -11,19 +11,19 @@ const DEFAULT_TYPE_HEADERS = {
   build: ':package: Build system',
   ci: ':construction_worker: Continuous Integration',
   chore: ':wrench: Chores',
-  ts: ':pencil: Typescript',
+  typing: ':pencil: Typing',
 }
 
 function createNewVersionsTable(release) {
   const entries = Object.keys(release.newVersionByPackage)
-    .filter(packageName => {
+    .filter((packageName) => {
       return (
         release.newVersionByPackage[packageName] &&
         release.newVersionByPackage[packageName] !==
           release.currentVersionByPackage[packageName]
       )
     })
-    .map(packageName => {
+    .map((packageName) => {
       return `| ${packageName} | ${
         release.currentVersionByPackage[packageName] || ''
       } | ${release.newVersionByPackage[packageName]} |`
@@ -57,7 +57,7 @@ function createChangeTable(header, pkgCount, commits) {
 | package | summary | commit | issues | author | gravatar |
 |:---|:---|:---|:---|:---|---|
 ${commits
-  .map(commit => {
+  .map((commit) => {
     return `| ${affected(commit, pkgCount)} | ${commit.summary} | ${
       commit.hash
     } | ${commit.issues.join(', ')} | ${commit.author.name} | ![${
@@ -69,7 +69,7 @@ ${commits
 }
 
 function createBreakingTable(release) {
-  const breaking = release.commits.filter(commit => commit.breaks.length > 0)
+  const breaking = release.commits.filter((commit) => commit.breaks.length > 0)
   const pkgCount = Object.keys(release.currentVersionByPackage).length
 
   if (breaking.length === 0) {
@@ -80,10 +80,10 @@ function createBreakingTable(release) {
 | package | summary | commit | issues | author | gravatar |
 |:---|:---|:---|:---|:---|---|
 ${breaking
-  .map(commit => {
+  .map((commit) => {
     return `| ${affected(commit, pkgCount)} | ${
       commit.summary
-    } <ul>${commit.breaks.map(text => `<li>*${text}*</li>`).join('')}</ul> | ${
+    } <ul>${commit.breaks.map((text) => `<li>*${text}*</li>`).join('')}</ul> | ${
       commit.hash
     } | ${commit.issues.join(', ')} | ${commit.author.name} | ![${
       commit.author.name
@@ -96,7 +96,7 @@ ${breaking
 function createChangesTables(release, typeHeaders) {
   const pkgCount = Object.keys(release.currentVersionByPackage).length
   return Object.keys(typeHeaders)
-    .map(type =>
+    .map((type) =>
       createChangeTable(
         typeHeaders[type],
         pkgCount,

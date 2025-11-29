@@ -13,14 +13,14 @@ export function replaceTag(config) {
       }
     ).then(
       () =>
-        new Promise((resolve, reject) =>
+        new Promise((resolve, _reject) =>
           // We accept failure for this operation (somehow this happens for no reason
           // when everything is OK).
           runCommand('npm', ['dist-tag', 'rm', packageName, fromTag], {
             cwd,
           })
-            .then(result => resolve(result))
-            .catch(err => {
+            .then((result) => resolve(result))
+            .catch((err) => {
               console.log(err)
               resolve('')
             })

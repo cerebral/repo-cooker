@@ -14,14 +14,14 @@ async function getHashListFromHashToHash(repoPath, fromHash, toHash) {
     try {
       const fromCommit = await readCommit({ fs, dir: repoPath, oid: fromHash })
       since = new Date(fromCommit.commit.committer.timestamp * 1000)
-    } catch (error) {
+    } catch (_err) {
       throw new Error(
         `Invalid hash value '${fromHash}' (not found in commit history).`
       )
     }
   }
   const logList = (await log({ fs, dir: repoPath, ref: toHash, since })).map(
-    commit => commit.oid
+    (commit) => commit.oid
   )
 
   return logList.reverse()

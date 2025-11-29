@@ -6,14 +6,14 @@ export function runScript(config) {
   return function runScript(packageName, scriptName, args = []) {
     const cwd = packagesPaths[packageName]
     return getPackageInfo(packageName, cwd)
-      .then(info => (info.scripts || {})[scriptName])
-      .then(exists =>
+      .then((info) => (info.scripts || {})[scriptName])
+      .then((exists) =>
         exists
           ? runCommand('npm', ['run', scriptName, ...args], {
               cwd,
             })
-              .then(output => ({ pass: true, output }))
-              .catch(error => ({ pass: false, error }))
+              .then((output) => ({ pass: true, output }))
+              .catch((error) => ({ pass: false, error }))
           : false
       )
   }

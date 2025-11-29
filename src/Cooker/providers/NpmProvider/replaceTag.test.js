@@ -1,10 +1,9 @@
-/* eslint-env jest */
 import { config, runCommandMock } from 'test-utils'
 
 import assert from 'test-utils/assert'
 import { replaceTag as replaceTagFactory } from './replaceTag'
 
-it('should execute npm dist-tag add and remove', done => {
+it('should execute npm dist-tag add and remove', (done) => {
   const runCommand = runCommandMock()
   const replaceTag = replaceTagFactory({
     runCommand,

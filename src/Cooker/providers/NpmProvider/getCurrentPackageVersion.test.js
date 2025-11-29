@@ -1,4 +1,3 @@
-/* eslint-env jest */
 import { mockNpmRegistry, versions } from 'test-utils/npm'
 
 import MockAdapter from 'axios-mock-adapter'
@@ -17,20 +16,20 @@ describe('getCurrentPackageVersion', () => {
     mock.restore()
   })
 
-  it('should return the "latest" dist-tag version', done => {
-    getCurrentPackageVersion('repo-cooker-test').then(version => {
+  it('should return the "latest" dist-tag version', (done) => {
+    getCurrentPackageVersion('repo-cooker-test').then((version) => {
       assert.equal(version, versions['repo-cooker-test'], done)
     })
   })
 
-  it('should return null when no version available', done => {
-    getCurrentPackageVersion('@repo-cooker-test/sous-chef').then(version => {
+  it('should return null when no version available', (done) => {
+    getCurrentPackageVersion('@repo-cooker-test/sous-chef').then((version) => {
       assert.equal(version, null, done)
     })
   })
 
-  it('should return null when latest in not a semver version', done => {
-    getCurrentPackageVersion('@repo-cooker-test/poissonier').then(version => {
+  it('should return null when latest in not a semver version', (done) => {
+    getCurrentPackageVersion('@repo-cooker-test/poissonier').then((version) => {
       assert.equal(version, null, done)
     })
   })

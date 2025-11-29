@@ -14,7 +14,7 @@ export function getCurrentPackageVersion(name, packageJson) {
 
     axios
       .get(url)
-      .then(response => {
+      .then((response) => {
         const re = RE.exec(response.data)
         if (!re) {
           return reject(
@@ -27,7 +27,7 @@ export function getCurrentPackageVersion(name, packageJson) {
         cache[name] = re[1]
         resolve(cache[name])
       })
-      .catch(error => {
+      .catch((error) => {
         if (error.response && error.response.status === 404) {
           cache[name] = null
           return resolve(cache[name])

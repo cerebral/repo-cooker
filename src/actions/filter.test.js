@@ -1,9 +1,8 @@
-/* eslint-env jest */
 import { filter } from './'
 import { testAction } from 'test-utils'
 
 describe('filter', () => {
-  it('should filter given prop synchronously', done => {
+  it('should filter given prop synchronously', (done) => {
     const someObject = {
       foo: 'is foo',
       bar: 'is bar',
@@ -26,7 +25,7 @@ describe('filter', () => {
     )
   })
 
-  it('should filter given prop asynchronously', done => {
+  it('should filter given prop asynchronously', (done) => {
     const someObject = {
       foo: 'is foo',
       bar: 'is bar',

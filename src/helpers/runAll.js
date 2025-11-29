@@ -10,8 +10,8 @@ export function runAll(tasks) {
     return Promise.all(tasks)
   } else {
     return tasks.reduce((previous, task) => {
-      return previous.then(all =>
-        task.then(result => {
+      return previous.then((all) =>
+        task.then((result) => {
           return [...all, result]
         })
       )

@@ -23,14 +23,14 @@ export function parseCommit(commit) {
   let issues = []
   const breaks = []
   let current = body
-  lines.forEach(line => {
+  lines.forEach((line) => {
     if (breakingRe.test(line)) {
       current = breaks
     } else if (issuesRe.test(line)) {
       issues = issuesRe
         .exec(line)[1]
         .split(',')
-        .map(s => s.trim())
+        .map((s) => s.trim())
       current = body
     } else {
       current.push(line.trim())
@@ -42,7 +42,7 @@ export function parseCommit(commit) {
     {
       body: body.join('\n').trim(),
       issues,
-      breaks: breaks.filter(b => b !== ''),
+      breaks: breaks.filter((b) => b !== ''),
     },
     parseHeader(header)
   )

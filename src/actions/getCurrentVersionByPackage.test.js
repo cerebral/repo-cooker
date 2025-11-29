@@ -1,4 +1,3 @@
-/* eslint-env jest */
 import { mockNpmRegistry, versions } from 'test-utils/npm'
 
 import MockAdapter from 'axios-mock-adapter'
@@ -17,7 +16,7 @@ describe('getCurrentVersionByPackage', () => {
     mock.restore()
   })
 
-  it('should get current version for each package', done => {
+  it('should get current version for each package', (done) => {
     const semverByPackage = {
       '@repo-cooker-test/commis': 'minor',
       'repo-cooker-test': 'minor',
@@ -40,7 +39,7 @@ describe('getCurrentVersionByPackage', () => {
     )
   })
 
-  it('should default to null when no NPM release available', done => {
+  it('should default to null when no NPM release available', (done) => {
     const semverByPackage = {
       '@repo-cooker-test/sous-chef': 'minor',
     }

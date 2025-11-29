@@ -1,9 +1,8 @@
-/* eslint-env jest */
 import { config, testAction } from 'test-utils'
 
 import { publishUnderTemporaryNpmTag } from './'
 
-it('should publish under temporary npm tag', done => {
+it('should publish under temporary npm tag', (done) => {
   const newVersionByPackage = {
     '@repo-cooker-test/commis': '3.0.0',
     '@repo-cooker-test/poissonier': '1.2.3',

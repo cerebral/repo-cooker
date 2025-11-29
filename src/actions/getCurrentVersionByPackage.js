@@ -14,8 +14,8 @@ export function getCurrentVersionByPackage(ctx) {
 
   return (
     runAll(
-      touchedPackages.map(name =>
-        packageJson.get(name).then(info => {
+      touchedPackages.map((name) =>
+        packageJson.get(name).then((info) => {
           const type = info.publishTo || 'npm'
           const getter = ctx[type]
           if (!getter) {
@@ -25,13 +25,13 @@ export function getCurrentVersionByPackage(ctx) {
           }
           return getter
             .getCurrentPackageVersion(name, info)
-            .then(version => ({ name, version }))
+            .then((version) => ({ name, version }))
         })
       )
     )
       // Sort packages by name for consistent output
-      .then(results => results.sort((a, b) => (a.name < b.name ? -1 : 1)))
-      .then(results => ({
+      .then((results) => results.sort((a, b) => (a.name < b.name ? -1 : 1)))
+      .then((results) => ({
         currentVersionByPackage: results.reduce((acc, r) => {
           acc[r.name] = r.version
           return acc

@@ -13,8 +13,8 @@ export function getPackagesPaths(cwd, glob) {
     return globby
       .sync(typeof glob === 'string' ? [glob] : glob, { cwd })
       .sort()
-      .map(path => resolve(cwd, path))
-      .filter(path => existsSync(resolve(path, 'package.json')))
+      .map((path) => resolve(cwd, path))
+      .filter((path) => existsSync(resolve(path, 'package.json')))
       .reduce((packagesMap, path) => {
         const pathArray = path.split('/')
         const packageName = pathArray.pop()

@@ -69,7 +69,7 @@ export function writeVersionsToPackages({
   const packages = Object.keys(newVersionByPackage)
 
   return runAll(
-    packages.map(name =>
+    packages.map((name) =>
       packageJson.write(
         name,
         createWriteCallback(name, newVersionByPackage, currentVersionByPackage)

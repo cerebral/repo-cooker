@@ -1,4 +1,3 @@
-/* eslint-env jest */
 import { groupCommitsByPackage } from './'
 import { resolve } from '../helpers/path'
 import { testAction } from 'test-utils'
@@ -44,7 +43,7 @@ const commits = [
   },
 ]
 
-it('should run the grouping function for every commit and group commits', done => {
+it('should run the grouping function for every commit and group commits', (done) => {
   const commitsByPackage = {
     '@repo-cooker-test/commis': [commits[0], commits[1], commits[2]],
     '@repo-cooker-test/entremetier': [
@@ -58,7 +57,7 @@ it('should run the grouping function for every commit and group commits', done =
   testAction(groupCommitsByPackage, { commits }, { commitsByPackage }, done)
 })
 
-it('should not get confused by similar package names', done => {
+it('should not get confused by similar package names', (done) => {
   const commits = [
     {
       hash: 'foobar',
