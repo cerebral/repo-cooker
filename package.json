@@ -22,7 +22,7 @@
     "format": "eslint --fix . && prettier --write --list-different .",
     "lint": "eslint . && prettier --check .",
     "prepare": "npm run build",
-    "pretest": "npm run build && babel-node test/utils/pretest.js",
+    "pretest": "npm run build && node test/utils/pretest.js",
     "release": "npm run build && node ./dist/cli.js --release --no-parallel",
     "release:preview": "npm run build && node ./dist/cli.js --dry-run --release --print-release",
     "test": "REPO_COOKER_NPM_OTP= jest",
@@ -41,7 +41,6 @@
   "devDependencies": {
     "@babel/cli": "^7.28.3",
     "@babel/core": "^7.28.5",
-    "@babel/node": "^7.28.0",
     "@babel/preset-env": "^7.28.5",
     "@eslint/js": "^9.39.1",
     "axios-mock-adapter": "^2.1.0",

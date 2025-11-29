@@ -63,16 +63,10 @@ if (cmdPath) {
   }
 }
 
-console.log(
-  `> babel-node --presets @babel/preset-env ${fullCmdPath} ${args.join(' ')}`
-)
-const child = spawn(
-  'babel-node',
-  ['--presets', '@babel/preset-env', fullCmdPath, ...args],
-  {
-    stdio: 'inherit',
-  }
-)
+console.log(`> node ${fullCmdPath} ${args.join(' ')}`)
+const child = spawn('node', [fullCmdPath, ...args], {
+  stdio: 'inherit',
+})
 child.on('close', function (code) {
   process.exit(code)
 })

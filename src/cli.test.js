@@ -5,7 +5,7 @@ const TIMEOUT = 30000
 it(
   'should run script in custom repo-cooker-path',
   (done) => {
-    execCli('babel-node', ['../../dist/cli.js', 'dummy', 'one', 'two'])
+    execCli('node', ['../../dist/cli.js', 'dummy', 'one', 'two'])
       .then((result) => {
         assert.match(result.output, /dummy script: \["one","two"\]/, done)
       })
@@ -19,7 +19,7 @@ it(
 it(
   'should run npm command',
   (done) => {
-    execCli('babel-node', ['../../dist/cli.js', 'other-script'])
+    execCli('node', ['../../dist/cli.js', 'other-script'])
       .then((result) => {
         assert.match(result.output, 'Other Script OK', done)
       })
@@ -33,11 +33,7 @@ it(
 it(
   'should run builtin named release',
   (done) => {
-    execCli('babel-node', [
-      '../../dist/cli.js',
-      '--release=default',
-      '--dry-run',
-    ])
+    execCli('node', ['../../dist/cli.js', '--release=default', '--dry-run'])
       .then((result) => {
         assert.match(result.output, 'default release: DRY RUN OK', done)
       })
@@ -51,7 +47,7 @@ it(
 it(
   'should run builtin default release',
   (done) => {
-    execCli('babel-node', ['../../dist/cli.js', '--release', '--dry-run'])
+    execCli('node', ['../../dist/cli.js', '--release', '--dry-run'])
       .then((result) => {
         assert.match(result.output, 'default release: DRY RUN OK', done)
       })
@@ -65,7 +61,7 @@ it(
 it(
   'should print release notes',
   (done) => {
-    execCli('babel-node', [
+    execCli('node', [
       '../../dist/cli.js',
       '--release',
       '--dry-run',
@@ -84,7 +80,7 @@ it(
 it(
   'should check dependencies',
   (done) => {
-    execCli('babel-node', ['../../dist/cli.js', '--check-dependencies'])
+    execCli('node', ['../../dist/cli.js', '--check-dependencies'])
       .then((result) => {
         assert.match(result.output, 'check dependencies: SUCCESS !!', done)
       })
@@ -98,7 +94,7 @@ it(
 it(
   'should fix dependencies',
   (done) => {
-    execCli('babel-node', ['../../dist/cli.js', '--fix-dependencies'])
+    execCli('node', ['../../dist/cli.js', '--fix-dependencies'])
       .then((result) => {
         assert.match(result.output, 'check dependencies: SUCCESS !!', done)
       })
@@ -112,7 +108,7 @@ it(
 it(
   'should link bin directory',
   (done) => {
-    execCli('babel-node', ['../../dist/cli.js', '--link'])
+    execCli('node', ['../../dist/cli.js', '--link'])
       .then((result) => {
         assert.match(result.output, 'link: SUCCESS !!', done)
       })
@@ -126,7 +122,7 @@ it(
 it(
   'should run build scripts respecting dependencies',
   (done) => {
-    execCli('babel-node', ['../../dist/cli.js', '--build'])
+    execCli('node', ['../../dist/cli.js', '--build'])
       .then((result) => {
         assert.match(result.output, 'build: SUCCESS !!', done)
       })
@@ -140,7 +136,7 @@ it(
 it(
   'should run build scripts without parallel',
   (done) => {
-    execCli('babel-node', ['../../dist/cli.js', '--build', '--no-parallel'])
+    execCli('node', ['../../dist/cli.js', '--build', '--no-parallel'])
       .then((result) => {
         assert.match(result.output, 'PARALLEL: OFF', () => {})
         assert.match(result.output, 'build: SUCCESS !!', done)
