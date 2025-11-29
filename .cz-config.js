@@ -3,7 +3,7 @@
 module.exports = {
   types: [
     { value: 'feat', name: 'feat:     A new feature' },
-    { value: 'fix', name: 'fix:      A bug Fix' },
+    { value: 'fix', name: 'fix:      A bug fix' },
     { value: 'docs', name: 'docs:     Documentation only changes' },
     {
       value: 'style',
@@ -46,5 +46,6 @@ module.exports = {
   },
 
   allowCustomScopes: true,
-  allowBreakingChanges: ['feat', 'fix'],
+  allowBreakingChanges: ['feat', 'fix', 'typing', 'refactor', 'perf'],
+  appendBranchNameToCommitMessage: false,
 }
