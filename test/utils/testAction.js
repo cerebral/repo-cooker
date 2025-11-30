@@ -3,6 +3,21 @@ import { options, runCommandMock } from 'test-utils'
 import { Cooker } from 'repo-cooker'
 import assert from 'test-utils/assert'
 
+function normalizeOutput(output) {
+  return Object.keys(output).reduce((acc, key) => {
+    const value = output[key]
+    // Sort commands array to handle non-deterministic async order
+    if (key === 'commands' && Array.isArray(value)) {
+      acc[key] = [...value].sort((a, b) =>
+        (a.options?.cwd || '').localeCompare(b.options?.cwd || '')
+      )
+    } else {
+      acc[key] = value
+    }
+    return acc
+  }, {})
+}
+
 export function testAction(
   action,
   input,
@@ -13,7 +28,7 @@ export function testAction(
 ) {
   const dryRun = runCommandMock()
   const fullOptions = Object.assign({}, options, { dryRun }, extraOptions)
-  const cooker = Cooker(['--no-parallel'], fullOptions)
+  const cooker = Cooker(fullOptions)
 
   cooker
     .run([
@@ -26,11 +41,13 @@ export function testAction(
       action,
       ({ props }) => {
         assert.deepEqual(
-          Object.keys(output).reduce((acc, key) => {
-            acc[key] = props[key]
-            return acc
-          }, {}),
-          output,
+          normalizeOutput(
+            Object.keys(output).reduce((acc, key) => {
+              acc[key] = props[key]
+              return acc
+            }, {})
+          ),
+          normalizeOutput(output),
           done
         )
       },

@@ -3,8 +3,7 @@ import { runAll } from '../helpers/runAll'
 export function runNpmScript(scriptNameTag, args = [], providedPackageNames) {
   return function runNpmScript({ config, npm, resolve }) {
     const scriptName = resolve.value(scriptNameTag)
-    const packages =
-      providedPackageNames || Object.keys(config.packagesPaths).sort()
+    const packages = providedPackageNames || Object.keys(config.packagesPaths)
 
     return runAll(
       packages.map((name) => npm.runScript(name, scriptName, args))
