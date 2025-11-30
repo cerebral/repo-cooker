@@ -1,10 +1,10 @@
-const { Cooker } = require('../dist/index.js')
+import { Cooker } from '../dist/index.js'
 
 if (!process.env.REPO_COOKER_GITHUB_TOKEN && process.env.GH_TOKEN) {
   process.env.REPO_COOKER_GITHUB_TOKEN = process.env.GH_TOKEN
 }
 
-module.exports.cooker = Cooker(process.argv, {
+export const cooker = Cooker(process.argv, {
   devtools: null,
   path: '.',
 })

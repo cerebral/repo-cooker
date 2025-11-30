@@ -52,7 +52,7 @@ Things to check before gettings started:
 
 ### `repo-cooker/index.js`
 
-This is the settings file.
+This is the configuration file. Allowed extensions are `.js`, `.mjs` and `.cjs`.
 
 ```js
 import {Cooker} from 'repo-cooker'

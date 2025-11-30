@@ -35,7 +35,11 @@ let cmdPath
 if (cmd) {
   cmdPath = [
     join(receiptsPath, `${cmd}.js`),
+    join(receiptsPath, `${cmd}.mjs`),
+    join(receiptsPath, `${cmd}.cjs`),
     join(receiptsPath, `${cmd}/index.js`),
+    join(receiptsPath, `${cmd}/index.mjs`),
+    join(receiptsPath, `${cmd}/index.cjs`),
   ].find(fileExist)
 }
 
@@ -47,9 +51,18 @@ if (cmdPath) {
 } else {
   // Run a native signal. Just load the configuration.
   fullCmdPath = (
-    receiptsPath.slice(-3) === '.js'
+    receiptsPath.slice(-3) === '.js' ||
+    receiptsPath.slice(-4) === '.mjs' ||
+    receiptsPath.slice(-4) === '.cjs'
       ? [resolve(receiptsPath)]
-      : [resolve(`${receiptsPath}.js`), resolve(join(receiptsPath, 'index.js'))]
+      : [
+          resolve(`${receiptsPath}.js`),
+          resolve(`${receiptsPath}.mjs`),
+          resolve(`${receiptsPath}.cjs`),
+          resolve(join(receiptsPath, 'index.js')),
+          resolve(join(receiptsPath, 'index.mjs')),
+          resolve(join(receiptsPath, 'index.cjs')),
+        ]
   ).find(fileExist)
 
   if (!fullCmdPath) {
