@@ -5,7 +5,9 @@
   "description": "",
   "author": "",
   "main": "dist/index.js",
-  "bin": "./dist/cli.js",
+  "bin": {
+    "repo-cooker": "dist/cli.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cerebral/repo-cooker.git"
