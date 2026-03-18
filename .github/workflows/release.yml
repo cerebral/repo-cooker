@@ -47,5 +47,3 @@ jobs:
         if: github.event_name != 'pull_request'
         env:
           REPO_COOKER_GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-          REPO_COOKER_NPM_OTP: ${{secrets.REPO_COOKER_NPM_OTP}}
