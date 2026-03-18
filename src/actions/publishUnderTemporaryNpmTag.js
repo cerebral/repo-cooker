@@ -1,11 +1,8 @@
+import { logCommand } from '../helpers/execCommand'
 import { runAll } from '../helpers/runAll'
 
-export function publishUnderTemporaryNpmTag({
-  config,
-  npm,
-  packageJson,
-  props,
-}) {
+export function publishUnderTemporaryNpmTag(ctx) {
+  const { config, packageJson, props } = ctx
   const packages = Object.keys(props.newVersionByPackage).filter(
     (name) =>
       props.newVersionByPackage[name] !== props.currentVersionByPackage[name]
@@ -15,16 +12,40 @@ export function publishUnderTemporaryNpmTag({
   // we publish under a temporary tag first
   return runAll(
     packages.map((name) =>
-      packageJson.get(name).then((info) => (info.private ? null : name))
+      packageJson.get(name).then((info) => {
+        if (info.private) {
+          return null
+        } else {
+          const type = info.publishTo || 'npm'
+          if (!ctx[type]) {
+            throw new Error(
+              `Missing provider for publishType '${type}' for package '${name}'.`
+            )
+          } else if (ctx[type].validateVersion) {
+            const newVersion = props.newVersionByPackage[name]
+            if (!ctx[type].validateVersion(newVersion)) {
+              logCommand('skip publish', [type, name], {
+                version: newVersion,
+              })
+              return null
+            }
+          }
+          return { name, type }
+        }
+      })
     )
   )
-    .then((names) => names.filter((name) => name !== null))
-    .then((names) =>
-      runAll(names.map((name) => npm.publish(name, 'releasing')))
+    .then((results) => results.filter((result) => result !== null))
+    .then((results) =>
+      runAll(
+        results.map(({ name, type }) => ctx[type].publish(name, 'releasing'))
+      )
         .then(() => ({
-          temporaryNpmTagByPackage: names.reduce(
-            (temporaryNpmTagByPackage, name) => {
-              temporaryNpmTagByPackage[name] = 'releasing'
+          temporaryNpmTagByPackage: results.reduce(
+            (temporaryNpmTagByPackage, { name, type }) => {
+              if (type === 'npm') {
+                temporaryNpmTagByPackage[name] = 'releasing'
+              }
 
               return temporaryNpmTagByPackage
             },

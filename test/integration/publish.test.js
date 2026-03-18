@@ -78,19 +78,19 @@ describe('publish script', () => {
       })),
       ...released.map((r) => ({
         cmd: 'npm',
-        args: ['publish', '--tag', 'releasing', '--access', 'public'],
+        args: ['publish', '--tag', 'next', '--access', 'public'],
         options: { cwd: r.cwd, pause: true },
       })),
-      ...released.map((r) => ({
-        cmd: 'npm',
-        args: ['dist-tag', 'add', `${r.name}@${r.version}`, 'next'],
-        options: { cwd: r.cwd, pause: true },
-      })),
-      ...released.map((r) => ({
-        cmd: 'npm',
-        args: ['dist-tag', 'rm', r.name, 'releasing'],
-        options: { cwd: r.cwd },
-      })),
+      // ...released.map((r) => ({
+      //   cmd: 'npm',
+      //   args: ['dist-tag', 'add', `${r.name}@${r.version}`, 'next'],
+      //   options: { cwd: r.cwd, pause: true },
+      // })),
+      // ...released.map((r) => ({
+      //   cmd: 'npm',
+      //   args: ['dist-tag', 'rm', r.name, 'releasing'],
+      //   options: { cwd: r.cwd },
+      // })),
       {
         cmd: 'restoreRepository',
         args: [basePath],
@@ -178,7 +178,7 @@ describe('publish script', () => {
         // script also runs them but we want to make sure none fail before moving
         // forward.
 
-        cook.publishUnderTemporaryNpmTag,
+        // cook.publishUnderTemporaryNpmTag,
         // Needs npm to be logged in:
         // > npm login
         //
@@ -189,8 +189,12 @@ describe('publish script', () => {
         //   {name: 'http', tag: 'releasing'},
         // }
 
-        cook.mapTemporaryNpmTagTo('next'),
+        // cook.mapTemporaryNpmTagTo('next'),
         // If successful we just map published tags to official release tag
+
+        cook.publishUnderFinalNpmTag('next'),
+        // When publishing with the npm trusted publishing workflow we're not able to
+        // change the tag on publish, so we need to publish under the final tag directly
 
         cook.restoreRepository,
         // Version information is not stored in package.json so we

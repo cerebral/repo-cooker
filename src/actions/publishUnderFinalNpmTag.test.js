@@ -1,6 +1,6 @@
 import { config, testAction } from 'test-utils'
 
-import { publishUnderTemporaryNpmTag } from '.'
+import { publishUnderFinalNpmTag } from '.'
 
 it('should publish under temporary npm tag', (done) => {
   const newVersionByPackage = {
@@ -13,16 +13,16 @@ it('should publish under temporary npm tag', (done) => {
     '@repo-cooker-test/poissonier': '1.2.0',
     '@repo-cooker-test/entremetier': '1.2.3',
   }
-  const temporaryNpmTagByPackage = {
-    '@repo-cooker-test/commis': 'releasing',
-    '@repo-cooker-test/poissonier': 'releasing',
+  const canaryNpmTagByPackage = {
+    '@repo-cooker-test/commis': 'canary',
+    '@repo-cooker-test/poissonier': 'canary',
     // entremetier ignored due to unchanged version
   }
 
   const commands = [
     {
       cmd: 'npm',
-      args: ['publish', '--tag', 'releasing', '--access', 'public'],
+      args: ['publish', '--tag', 'canary', '--access', 'public'],
       options: {
         cwd: config.packagesPaths['@repo-cooker-test/commis'],
         pause: true,
@@ -30,7 +30,7 @@ it('should publish under temporary npm tag', (done) => {
     },
     {
       cmd: 'npm',
-      args: ['publish', '--tag', 'releasing', '--access', 'public'],
+      args: ['publish', '--tag', 'canary', '--access', 'public'],
       options: {
         cwd: config.packagesPaths['@repo-cooker-test/poissonier'],
         pause: true,
@@ -38,9 +38,9 @@ it('should publish under temporary npm tag', (done) => {
     },
   ]
   testAction(
-    publishUnderTemporaryNpmTag,
+    publishUnderFinalNpmTag('canary'),
     { currentVersionByPackage, newVersionByPackage },
-    { temporaryNpmTagByPackage, commands },
+    { canaryNpmTagByPackage, commands },
     done
   )
 })
